@@ -1,4 +1,4 @@
 venv
 migrations
 instance
-website/__pycache__
+__pycache__
