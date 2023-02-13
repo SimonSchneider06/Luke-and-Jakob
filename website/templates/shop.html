@@ -1,0 +1,29 @@
+{% extends "base.html" %} {% block title %}L&J Shop{% endblock %}
+
+{% block head %} 
+<link rel="stylesheet" href="{{url_for('static', filename = 'css/shop.css')}}">
+{% endblock %}
+
+{% block content %}
+    <div class="container-md">
+        <h1 align="center">This is the Shop</h1>
+        <br>
+        {% if products %} 
+        
+        {% for product in products %}
+        <a class="product-link" href="{{url_for('views.product_site',product_name = product.name)}}">
+        <div class="product-container">
+            <img class="product-img" src="{{url_for('static', filename = get_file_by_product_name(product.name) )}}" alt="Product Image of Guitar named {{product.name}}">
+            <div class="product-info">
+                <h3>{{product.name}}</h3>
+                <h4>{{product.price}}€</h4>
+                <!-- <h4>{{product.rating}}</h4> -->
+            </div>
+        </div> 
+        </a>
+
+        {% endfor %}
+
+        {% endif %}
+    </div>
+{% endblock %}

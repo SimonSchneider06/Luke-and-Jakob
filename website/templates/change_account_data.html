@@ -1,0 +1,25 @@
+{% extends "base.html" %}{% block title %}Change Account Data{% endblock %}
+
+{% block content %}
+<div class="container">
+<form method = "POST">
+    <h3 align="center">Account Daten Ändern</h3>
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" name="name" placeholder="Vor- und Nachname Eingeben" value="{{current_user.name}}">
+    </div>
+    <br>
+    <div class="form-group">
+        <label for="telNumber">Telefon</label>
+        <input type="tel" class="form-control" id="telNumber" name="telNumber" placeholder="z.B. 011 49 89 1234567" value="{{current_user.telNumber}}">
+    </div>
+    <br>
+    <div class="form-group">
+        <label for="alter">Alter</label>
+        <input type="number" class="form-control" id="alter" name="alter" min="18" max="99" placeholder="Alter Eingeben" value="{{current_user.alter}}">
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary">Bestätigen</button>
+</form>
+</div>
+{% endblock %}

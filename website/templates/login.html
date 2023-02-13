@@ -1,0 +1,22 @@
+{% extends "base.html" %}{% block title %}Login{% endblock %}
+
+    {% block content %}
+    <div class="container">
+    <form method = "POST">
+        <h3 align="center">Anmelden</h3>
+        <h6 align="center">Noch nicht Registriert? <a href="/signUp">Registrieren</a></h6>
+        <h6 align="center"><a href="/forgot_password">Passwort vergessen?</a></h6>
+        <div class="form-group">
+            <label for="email">Email Adresse</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Email Eingeben">
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="passwort">Passwort</label>
+            <input type="password" class="form-control" id="passwort" name="passwort" placeholder="Passwort Eingeben">
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary">Anmelden</button>
+    </form>
+    </div>
+    {% endblock %}

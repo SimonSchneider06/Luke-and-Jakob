@@ -1,0 +1,36 @@
+{% extends "base.html" %}{% block title %}Change Product{% endblock %}
+
+{% block content %}
+<div class="container">
+<form method = "POST" enctype="multipart/form-data">    <!--look add_product.html-->
+    <h3 align="center">Product Daten Ändern</h3>
+    <div class="form-group">
+        <label for="product-name">Productname</label>
+        <input type="text" class="form-control" id="product-name" name="product-name" placeholder="Productname Eingeben" value="{{product.name}}">
+    </div>
+    <br>
+    <div class="form-group">
+        <label for="price">Preis</label>
+        <input type="number" class="form-control" id="price" name="price" placeholder="Preis eingeben" value="{{product.price}}">
+    </div>
+    <br>
+    <div class="form-group">
+        <label for="image-deck">Produktbild - Frontbild</label>
+        <input type="file" name="image-deck" id="image-deck" class="form-control" placeholder="Bild(er) einfügen" accept="image/*">
+    </div>
+    <br>
+    <div class="form-group">
+        <label for="image">Produktbilder</label>
+        <input type="file" name="image" id="image" class="form-control" placeholder="Bild(er) einfügen" accept="image/*" multiple>
+    </div>
+    <br>
+    <div class="form-group">
+        <label for="stock">Productanzahl</label>
+        <input type="number" class="form-control" id="stock" name="stock"  placeholder="Productanzahl Eingeben" value="{{product.stock}}">
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary">Bestätigen</button>
+    <a class="btn btn-danger" href="{{url_for('admin.delete_product',id = product.id)}}">Delete</a>
+</form>
+</div>
+{% endblock %}

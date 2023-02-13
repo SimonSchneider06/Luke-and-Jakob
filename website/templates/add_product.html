@@ -1,0 +1,35 @@
+{% extends "base.html" %} {% block title %} Update Product {% endblock %} 
+
+{% block content %} 
+<div class="container">
+    <form method = "POST" enctype="multipart/form-data"> <!--enctype required because of image which is uploaded-->
+        <h3 align="center">Produkt Hinzufügen</h3>
+        <div class="form-group">
+            <label for="product-name">Produktname</label>
+            <input type="text" class="form-control" id="product-name" name="product-name" placeholder="Produktname Eingeben">
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="price">Produktpreis</label>
+            <input type="number" class="form-control" id="price" name="price" placeholder="Preis Eingeben">
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="image-deck">Produktbild - Frontbild</label>
+            <input type="file" name="image-deck" id="image-deck" class="form-control" placeholder="Bild(er) einfügen" accept="image/*">
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="image">Produktbilder</label>
+            <input type="file" name="image" id="image" class="form-control" placeholder="Bild(er) einfügen" accept="image/*" multiple>
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="stock">Lageranzahl</label>
+            <input type="number" class="form-control" id="stock" name="stock" placeholder="Lageranzahl Eingeben">
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary">Product Hinzufügen</button>
+    </form>
+    </div>
+{% endblock %}

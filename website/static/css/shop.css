@@ -1,0 +1,17 @@
+.product-link{
+    text-decoration:none;
+}
+.product-container{
+    display:flex;
+    padding:1em;
+    background-color:lightblue;
+}
+.product-img{
+    width:30vw;
+    height: 30vh;
+}
+.product-info{
+    text-align:center;
+    margin:0 auto;
+    color:black;
+}

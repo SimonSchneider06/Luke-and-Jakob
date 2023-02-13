@@ -1,0 +1,26 @@
+{% extends "base.html" %} {% block title %}Change User Role {% endblock %} 
+
+{% block content %} 
+<div class="container">
+    <form method = "POST">
+        <h3 align="center">Change User</h3>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Vor- und Nachname Eingeben" value="{{our_user.name}}">
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Email eingeben" value="{{our_user.email}}">
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="role">Role</label>
+            <input type="text" class="form-control" id="role" name="role" placeholder="User Role eingeben" value="{{role.name}}">
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary">Bestätigen</button>
+        <a class="btn btn-danger" href="{{url_for('admin.delete_user',id = our_user.id)}}">Delete</a>
+    </form>
+    </div>
+{% endblock %} 
