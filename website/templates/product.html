@@ -2,5 +2,12 @@
 
 
 {% block content %}
-
+    <div class="container-md">
+        <form action="" method="post">
+            <img class="product-img" src="{{url_for('static', filename = get_file_by_product_name(product.name) )}}" alt="">
+            <br>
+            <button class="btn btn-primary">Add to cart</button>
+        </form>
+    </div>
+    
 {% endblock %}
