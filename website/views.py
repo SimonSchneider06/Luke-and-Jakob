@@ -1,4 +1,4 @@
-from flask import Blueprint,render_template,request
+from flask import Blueprint,render_template,request,session
 from flask_login import current_user,login_required
 from .models import Guitar
 
@@ -28,7 +28,12 @@ def shop():
     products = Guitar.query.order_by(Guitar.id)
     return render_template("shop.html",products = products)  
 
-@views.route("/product/<product_name>") #String default converter -> werkzeug routing rules
+@views.route("/product/<product_name>", methods = ["GET", "POST"]) #String default converter -> werkzeug routing rules
 def product_site(product_name):
+    #Gets product or returns 404 if it doesn't exist
     product = Guitar.query.filter_by(name = product_name).first_or_404()
+
+    if request.method == "POST":
+        pass
+
     return render_template("product.html", product = product)
