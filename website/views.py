@@ -1,4 +1,4 @@
-from flask import Blueprint,render_template,request,session
+from flask import Blueprint,render_template,request,session,redirect,url_for
 from flask_login import current_user,login_required
 from .models import Guitar
 
@@ -34,6 +34,15 @@ def product_site(product_name):
     product = Guitar.query.filter_by(name = product_name).first_or_404()
 
     if request.method == "POST":
-        pass
+
+        #if cart already exists adds product id of product to it
+        if "cart" in session:
+            session["cart"].extend([product.id])
+
+        #else set it equal
+        else:
+            session["cart"] = [product.id]
+
+        return redirect(url_for("views.product_site", product_name = product.name))
 
     return render_template("product.html", product = product)
