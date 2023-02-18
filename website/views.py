@@ -28,6 +28,9 @@ def shopping_cart():
             product = Guitar.query.filter_by(id = product_id).first()
             products.append(product)
 
+    else:
+        products = None
+
     return render_template("shopping_cart.html",products = products)
 
 @views.route("/shop")
