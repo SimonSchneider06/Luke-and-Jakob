@@ -21,7 +21,14 @@ def design_your_dream():
 
 @views.route("/cart",methods = ["POST", "GET"])
 def shopping_cart():
-    return render_template("shopping_cart.html")
+
+    if "cart" in session:
+        products = []
+        for product_id in session["cart"]:
+            product = Guitar.query.filter_by(id = product_id).first()
+            products.append(product)
+
+    return render_template("shopping_cart.html",products = products)
 
 @views.route("/shop")
 def shop():
