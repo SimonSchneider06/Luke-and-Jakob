@@ -34,6 +34,7 @@ def add_product():
         name = request.form.get("product-name")
         price = request.form.get("price")
         stock = request.form.get("stock")
+        description = request.form.get("description")
         
         front_img = request.files.getlist("image-deck")
         uploaded_images = request.files.getlist("image")
@@ -59,7 +60,8 @@ def add_product():
 
                 new_guitar = Guitar(name = name,
                 price = price,
-                stock = stock)
+                stock = stock,
+                description = description)
                 
                 db.session.add(new_guitar)
                 db.session.commit()
