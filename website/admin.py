@@ -34,6 +34,7 @@ def add_product():
         name = request.form.get("product-name")
         price = request.form.get("price")
         stock = request.form.get("stock")
+        description = request.form.get("description")
         
         front_img = request.files.getlist("image-deck")
         uploaded_images = request.files.getlist("image")
@@ -59,7 +60,8 @@ def add_product():
 
                 new_guitar = Guitar(name = name,
                 price = price,
-                stock = stock)
+                stock = stock,
+                description = description)
                 
                 db.session.add(new_guitar)
                 db.session.commit()
@@ -81,6 +83,7 @@ def change_product(id):
         product_name = request.form.get("product-name")
         price = request.form.get("price")
         stock = request.form.get("stock")
+        description = request.form.get("description")
 
         front_img = request.files.getlist("image-deck")
         uploaded_images = request.files.getlist("image")
@@ -117,6 +120,7 @@ def change_product(id):
                         product.name = product_name
                         product.price = price
                         product.stock = stock
+                        product.description = description
                         db.session.commit()
                         flash("Product Daten erfolgreich verändert",category = "success")
                         return redirect(url_for("admin.admin_page"))

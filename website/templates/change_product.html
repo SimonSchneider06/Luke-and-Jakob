@@ -29,6 +29,13 @@
         <input type="number" class="form-control" id="stock" name="stock"  placeholder="Productanzahl Eingeben" value="{{product.stock}}">
     </div>
     <br>
+    <div class="form-group">
+        <label for="description">Beschreibung</label>
+        <textarea name="description" id="description" class="form-control">
+            {{product.description}}
+        </textarea>
+    </div>
+    <br>
     <button type="submit" class="btn btn-primary">Bestätigen</button>
     <a class="btn btn-danger" href="{{url_for('admin.delete_product',id = product.id)}}">Delete</a>
 </form>
