@@ -109,7 +109,7 @@ def change_product(id):
             if product:
                 
                 #checks the images
-                folder_path = save_uploaded_img(front_img,product_name, True)
+                folder_path = save_uploaded_img(front_img,product_name)
                 if folder_path == None:
                     flash("Images were not valid please try again", category="error")
 
