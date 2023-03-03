@@ -12,7 +12,7 @@ def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = '7lK83(?ki2.Pieqr_!Mn]iZ'
     app.config["SQLALCHEMY_DATABASE_URI"] = f'sqlite:///{DB_NAME}'
-    app.config["MAX_CONTENT_LENGTH"] = 1024 * 1024
+    app.config["MAX_CONTENT_LENGTH"] = 1024 * 1024 * 15
     app.config["UPLOAD_EXTENSIONS"] = [".JPG", ".png"]
     app.config["UPLOAD_PATH"] = "./website/static/Bilder/Produktbilder"
 
