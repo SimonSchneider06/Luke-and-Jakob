@@ -11,10 +11,13 @@
             <div class="product-header">
                 <img class="product-img-big" src="{{url_for('static', filename = get_file_by_product_name(product.name) )}}" alt="Guitar image">
                 <br>
-                <div class="product-info">
-                    <h2><b>{{product.name}}</b></h2>
-                    <h3>Preis: {{product.price}}€</h3>
-                    <p>Anzahl: {{product.stock}}</p>
+                <div>
+                    <div class="product-info">
+                        <h2><b>{{product.name}}</b></h2>
+                        <h3>Preis: {{product.price}}€</h3>
+                        <p>Anzahl: {{product.stock}}</p>
+                    </div>
+                    <br>
                     <div class="product-desc">
                         <h3>Produktbeschreibung</h3>
                         <p>{{product.description}}</p>
