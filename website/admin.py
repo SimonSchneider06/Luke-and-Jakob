@@ -127,7 +127,8 @@ def change_product(id):
                         
                     except:
                         flash("Es ist ein Fehler unterlaufen bitte versuchen sie es erneut", category = "error")
-                        return render_template("change_product.html",product = product)
+                        # return render_template("change_product.html",product = product)
+                        return redirect(url_for("admin.change_product",id = product.id ))
         
 
     return render_template("change_product.html",product = product)
