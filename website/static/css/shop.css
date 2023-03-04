@@ -7,7 +7,7 @@
     background-color:lightblue;
 }
 .product-img{
-    width:30vw;
+    width:max-content;
     height: 30vh;
 }
 .product-info{
