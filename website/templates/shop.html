@@ -13,9 +13,9 @@
         <div class="row row-cols-auto img-grid">
         
             {% for product in products %}
-            
+            <div class="col">
             <a class="product-link" href="{{url_for('views.product_site',product_name = product.name)}}">
-            <div class="card col width margin-bottom">
+            <div class="card width margin-bottom">
                 <img class="card-img-top" src="{{url_for('static', filename = get_file_by_product_name(product.name) )}}" alt="Product Image of Guitar named {{product.name}}">
                 <div class="card-body">
                     <h3 class="card-title">{{product.name}}</h3>
@@ -24,7 +24,7 @@
                 </div>
             </div> 
             </a>
-
+            </div>
             {% endfor %}
 
         </div>
