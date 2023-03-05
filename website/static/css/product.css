@@ -1,4 +1,9 @@
-.product-header{
+.container-md{
     display:flex;
-    align-items:center;
+}
+.product-content{
+    flex:5 5 70%;
+}
+.action-column-right{
+    flex:1 1 10%;
 }
