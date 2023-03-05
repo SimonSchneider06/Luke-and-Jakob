@@ -5,24 +5,29 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container-md">
-        <h1 align="center">This is the Shop</h1>
+    <div class="container-md text-center">
+        <h1>Our Products</h1>
         <br>
-        {% if products %} 
-        
-        {% for product in products %}
-        <a class="product-link" href="{{url_for('views.product_site',product_name = product.name)}}">
-        <div class="product-container">
-            <img class="product-img" src="{{url_for('static', filename = get_file_by_product_name(product.name) )}}" alt="Product Image of Guitar named {{product.name}}">
-            <div class="product-info">
-                <h3>{{product.name}}</h3>
-                <h4>{{product.price}}€</h4>
-                <!-- <h4>{{product.rating}}</h4> -->
-            </div>
-        </div> 
-        </a>
 
-        {% endfor %}
+        {% if products %} 
+        <div class="row row-cols-auto img-grid">
+        
+            {% for product in products %}
+            
+            <a class="product-link" href="{{url_for('views.product_site',product_name = product.name)}}">
+            <div class="card col width margin-bottom">
+                <img class="card-img-top" src="{{url_for('static', filename = get_file_by_product_name(product.name) )}}" alt="Product Image of Guitar named {{product.name}}">
+                <div class="card-body">
+                    <h3 class="card-title">{{product.name}}</h3>
+                    <h4>{{product.price}}€</h4>
+                    <!-- <h4>{{product.rating}}</h4> -->
+                </div>
+            </div> 
+            </a>
+
+            {% endfor %}
+
+        </div>
 
         {% endif %}
     </div>
