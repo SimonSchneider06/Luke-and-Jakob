@@ -6,26 +6,31 @@
 {% endblock head %}
 
 {% block content %}
-    <div class="container-md">
-        <form action="" method="post">
-            <div class="product-header">
-                <img class="product-img-big" src="{{url_for('static', filename = get_file_by_product_name(product.name) )}}" alt="Guitar image of model {{product.name}}">
-                <br>
-                <div>
+    <form action="" method="post">
+
+        <div class="container-md">
+            <div class="product-content">
+                <div class="product-header">
+                    <div class="div-img-big">
+                        <img class="product-img-big" src="{{url_for('static', filename = get_file_by_product_name(product.name) )}}" alt="Guitar image of model {{product.name}}">
+                    </div>
                     <div class="product-info">
                         <h2><b>{{product.name}}</b></h2>
                         <h3>Preis: {{product.price}}€</h3>
                         <p>Anzahl: {{product.stock}}</p>
                     </div>
-                    <br>
-                    <div class="product-desc">
-                        <h3>Produktbeschreibung</h3>
-                        <p>{{product.description}}</p>
-                    </div>
+                </div>
+                <div class="product-img-list"></div>
+                <div class="product-desc">
+                    <h3>Produktbeschreibung</h3>
+                    <p>{{product.description}}</p>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary">Add to cart</button>
-        </form>
-    </div>
-    
+            <div class="action-column-right">
+                <button type="submit" class="btn btn-primary">Add to cart</button>
+            </div>
+        </div>
+        
+    </form>
+
 {% endblock %}
