@@ -4,3 +4,11 @@
 .margin-bottom{
     margin-bottom:1em;
 }
+.product-link{
+    text-decoration:none;
+    color:rgb(33, 37, 41);
+}
+.card:hover{
+    color:white;
+    background-color:rgb(33, 37, 41);
+}
