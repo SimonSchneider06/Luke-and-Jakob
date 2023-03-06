@@ -12,3 +12,13 @@
     color:white;
     background-color:rgb(33, 37, 41);
 }
+.img-grid{
+    margin:none;
+}
+@media(max-width:39em){
+    .img-grid{
+        display:block;
+        margin:0 auto;
+        width:18rem;
+    }
+}
