@@ -1,34 +1,22 @@
-{% extends "base.html" %} {% block title %}{{product.name}}{% endblock %}
+{% extends "base.html" %} {% block title %}Luke & Jakob | {{product.name}}{% endblock %}
 
 {% block head %} 
 <link rel="stylesheet" href="{{url_for('static', filename = 'css/product.css')}}">
-<link rel="stylesheet" href="{{url_for('static', filename = 'css/shop.css')}}">
 {% endblock head %}
 
 {% block content %}
     <form action="" method="post">
 
         <div class="container-md">
-            <div class="product-content">
-                <div class="product-header">
-                    <div class="div-img-big">
-                        <img class="product-img-big" src="{{url_for('static', filename = get_file_by_product_name(product.name) )}}" alt="Guitar image of model {{product.name}}">
-                    </div>
-                    <div class="product-info">
-                        <h2><b>{{product.name}}</b></h2>
-                        <h3>Preis: {{product.price}}€</h3>
-                        <p>Anzahl: {{product.stock}}</p>
-                    </div>
-                </div>
-                <div class="product-img-list"></div>
-                <div class="product-desc">
-                    <h3>Produktbeschreibung</h3>
-                    <p>{{product.description}}</p>
-                </div>
+            <div class="img-full-screen">
+                <img src="{{url_for('static', filename = get_file_by_product_name(product.name) )}}" alt="Guitar image of model {{product.name}}">
             </div>
-            <div class="action-column-right">
-                <button type="submit" class="btn btn-primary">Add to cart</button>
+            <div id="title">{{product.name}}</div>
+            <div class="row-2">
+                <div class="column-2"></div>
+                <div class="column-2"></div>
             </div>
+            <div class="row-2"></div>
         </div>
         
     </form>
