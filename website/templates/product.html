@@ -7,16 +7,21 @@
 {% block content %}
     <form action="" method="post">
 
-        <div class="container-md">
-            <div class="img-full-screen">
-                <img src="{{url_for('static', filename = get_file_by_product_name(product.name) )}}" alt="Guitar image of model {{product.name}}">
-            </div>
+        <div class="container-fluid">
+            <img class="img-full-screen" src="{{url_for('static', filename = get_file_by_product_name(product.name) )}}" alt="Guitar image of model {{product.name}}">
             <div id="title">{{product.name}}</div>
             <div class="row-2">
-                <div class="column-2"></div>
+                <div class="column-2">
+                    <img src="" alt="">
+                    <img src="" alt="">
+                    <img src="" alt="">
+                    <img src="" alt="">
+                </div>
                 <div class="column-2"></div>
             </div>
-            <div class="row-2"></div>
+            <div class="row-2">
+                <p>{{product.description}}</p>
+            </div>
         </div>
         
     </form>
