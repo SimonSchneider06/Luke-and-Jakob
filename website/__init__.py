@@ -51,7 +51,7 @@ def create_app():
 
 #------gets file path -------------------------------------
 
-def get_file_by_product_name(product_name):
+def get_file_by_product_name(product_name,img_number):
 
     folder = app.config["UPLOAD_PATH"] + f"/{product_name}"
     
@@ -62,7 +62,7 @@ def get_file_by_product_name(product_name):
             file_name = file.split(".")[0]
 
             #filename is a string !!!!!!
-            if file_name == "0":
+            if file_name == f"{img_number}":
                 full_path = path + f"/{file}"
     
     return full_path
