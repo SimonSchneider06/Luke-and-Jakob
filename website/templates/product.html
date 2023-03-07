@@ -8,11 +8,11 @@
     <form action="" method="post">
 
         <div class="container-fluid">
-            <img class="img-full-screen" src="{{url_for('static', filename = get_file_by_product_name(product.name) )}}" alt="Guitar image of model {{product.name}}">
+            <img class="img-full-screen" src="{{url_for('static', filename = get_file_by_product_name(product.name,0) )}}" alt="Guitar image of model {{product.name}}">
             <div id="title">{{product.name}}</div>
             <div class="row-2">
                 <div class="column-2">
-                    <img src="" alt="">
+                    <img src="{{url_for('static',filename = get_file_by_product_name(product.name,1) )}}" alt="">
                     <img src="" alt="">
                     <img src="" alt="">
                     <img src="" alt="">
