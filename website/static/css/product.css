@@ -1,9 +1,18 @@
-.container-md{
+.container-fluid{
     display:flex;
     flex-direction:column;
 }
 .img-full-screen{
-    width:100vh;
-    height:100vh;
+    height:85vh;
+}
+#title{
+    margin:1.5em;
+    font-size:xx-large;
     text-align:center;
+}
+.row-2{
+    display:flex;
+}
+.img-3{
+    width:25%;
 }
