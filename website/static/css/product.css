@@ -16,3 +16,15 @@
 .img-3{
     width:10%;
 }
+#img-big{
+    display: block;
+    margin:0 auto;
+    width: 80vw;
+    padding:1em;
+    background-color: rgb(33, 37, 41);
+    height: 80vh;
+    z-index: 2;
+    position: absolute;
+    top:15%;
+    left:10%;
+}
