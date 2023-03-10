@@ -24,7 +24,7 @@
     background-color: rgb(33, 37, 41);
     height: 80vh;
     z-index: 2;
-    position: absolute;
-    top:15%;
-    left:10%;
+    position:fixed;
+    top:15vh;
+    left:10vh;
 }
