@@ -9,11 +9,16 @@ function closeSearch(){
 }
 
 //making the product-imgs bigger on click
+const imgHolderEl = document.getElementById("pop-up-img");
 const imgs = document.getElementsByClassName("img-3");
 let clicked_img = "";
 
 for(let i = 0; i<imgs.length; i++){
     imgs[i].addEventListener("click",() => {
         //open new window with big img in the middle
+
+        //make pop-up-img visible
+        imgHolderEl.style.display = "block";
+        
     })
 }
