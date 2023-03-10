@@ -9,7 +9,8 @@ function closeSearch(){
 }
 
 //making the product-imgs bigger on click
-const imgHolderEl = document.getElementById("pop-up-img");
+const imgHolderEl = document.getElementById("pop-up-div");
+const popUpImg = document.getElementById("pop-up-img");
 const imgs = document.getElementsByClassName("img-3");
 let clicked_img = "";
 
@@ -19,6 +20,7 @@ for(let i = 0; i<imgs.length; i++){
 
         //make pop-up-img visible
         imgHolderEl.style.display = "block";
-        
+        let path = imgs[i].src;
+        popUpImg.src = path;
     })
 }
