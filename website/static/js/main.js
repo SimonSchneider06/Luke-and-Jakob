@@ -14,6 +14,7 @@ const popUpImg = document.getElementById("pop-up-img");
 const imgs = document.getElementsByClassName("img-3");
 let clicked_img = "";
 
+//ads event to every img in imgs
 for(let i = 0; i<imgs.length; i++){
     imgs[i].addEventListener("click",() => {
         //open new window with big img in the middle
@@ -24,3 +25,11 @@ for(let i = 0; i<imgs.length; i++){
         popUpImg.src = path;
     })
 }
+
+//selecting the pop-up-close el
+const popUpCloseBtn = document.getElementById("pop-up-close");
+
+//adding event to close imgHolderEl
+popUpCloseBtn.addEventListener("click",() => {
+    imgHolderEl.style.display = "none";
+})
