@@ -17,7 +17,7 @@
     width:10%;
 }
 #pop-up-img{
-    display: block;
+    display: none;
     margin:0 auto;
     width: 80vw;
     padding:1em;
