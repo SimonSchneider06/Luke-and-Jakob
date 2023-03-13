@@ -28,11 +28,13 @@
     top:15vh;
     left:10vw;
     border:0.1em solid rgb(33, 37, 41);
+    justify-content: center;
+    align-items: center;
 }
 #pop-up-img{
     display: block;
     margin:0 auto;
-    height: 70vh;
+    width: 70vw;
 }
 #pop-up-close{
     position: absolute;
