@@ -12,9 +12,13 @@
             <div id="title">{{product.name}}</div>
             <div class="row-2">
                 <div class="column-2">
-                    <img class="img-3" src="{{url_for('static',filename = get_file_by_product_name(product.name,1) )}}" alt="">
-                    <img class="img-3" src="{{url_for('static',filename = get_file_by_product_name(product.name,2) )}}" alt="">
-                    <img class="img-3" src="{{url_for('static',filename = get_file_by_product_name(product.name,3) )}}" alt="">
+                    <div class="row-2">
+                        <img class="img-3 m-2" src="{{url_for('static',filename = get_file_by_product_name(product.name,1) )}}" alt="">
+                        <img class="img-3 m-2" src="{{url_for('static',filename = get_file_by_product_name(product.name,2) )}}" alt="">
+                    </div>
+                    <div class="row-2">
+                        <img class="img-3 m-2" src="{{url_for('static',filename = get_file_by_product_name(product.name,3) )}}" alt="">
+                    </div>
                 </div>
                 <div class="column-2"></div>
             </div>
