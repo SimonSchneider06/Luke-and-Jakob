@@ -19,6 +19,7 @@ nav{
 ul{
     text-align: center;
     margin: 0;
+    display :block ;
 }
 ul li{
     display: inline-block;
@@ -55,10 +56,14 @@ ul li a.text:hover{
     background-color: white;
     color: black;
 }
-ul footer{
+#navbar-links {
+    display: inline-block;
+    transform: translate(26%, 0%);
+}
+#navbar-social {
     position: relative;
-    top:-2px;
-    margin-right:40px;
+    top: -2px;
+    margin-right: 40px;
     float: right;
 }
 .overlay{
@@ -153,9 +158,12 @@ nav .checkbtn{
     nav ul li a.text{
         font-size:20px;
     }
-    nav ul footer{
-        float:none;
-        margin-right:0;
+    #navbar-social {
+        float: none;
+        margin-right: 0;
+    }
+    #navbar-links {
+        transform: none;
     }
     a.text:hover,a.text:active{
         background:none;
