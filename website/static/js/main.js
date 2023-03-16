@@ -13,7 +13,7 @@ function closeSearch(){
 // getting the html elements
 const imgHolderEl = document.getElementById("pop-up-div");
 const popUpImg = document.getElementById("pop-up-img");
-const imgs = document.getElementsByClassName("img-3"); //list of all imgs
+const imgs = document.getElementsByClassName("img-4"); //list of all imgs
 let clicked_img = "";
 
 //ads event to every img in imgs
@@ -24,6 +24,12 @@ for(let i = 0; i<imgs.length; i++){
         imgHolderEl.style.display = "flex";
         let path = imgs[i].src;
         popUpImg.src = path;
+        if(window.innerHeight > window.innerWidth){
+            popUpImg.style.width = "70vw";
+        }
+        else{
+            popUpImg.style.height = "70vh";
+        }
     })
 }
 
