@@ -12,9 +12,17 @@
 }
 .row-2{
     display:flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.column-2{
+    flex-direction:column;
+    justify-content:center;
+    border:0.1em solid #91A3B0;
+    border-radius:10%;
 }
 .width-10{
-    width:10%;
+    width:10vw;
 }
 #pop-up-div{
     display: none;
