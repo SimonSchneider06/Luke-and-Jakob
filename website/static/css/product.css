@@ -12,14 +12,19 @@
 }
 .row-2{
     display:flex;
-    align-items: center;
+    align-items:center;
     justify-content: space-between;
 }
 .column-2{
-    flex-direction:column;
-    justify-content:center;
+    margin:1em;
+    padding:0.5em;
     border:0.1em solid #91A3B0;
     border-radius:10%;
+}
+.center{
+    display: flex;
+    flex-direction:column;
+    justify-content:center;
 }
 .width-10{
     width:10vw;
