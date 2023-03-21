@@ -18,16 +18,27 @@
 .column-2{
     margin:1em;
     padding:0.5em;
-    border:0.1em solid #91A3B0;
-    border-radius:10%;
 }
 .center{
     display: flex;
     flex-direction:column;
     justify-content:center;
 }
-.width-10{
-    width:10vw;
+.inline-block{
+    flex:1 1 100%;
+    display:inline-block;
+}
+.img-4{
+    border:0.05em solid #91A3B0;
+    transition: box-shadow 0.5s;
+}
+.img-4:hover{
+    cursor:pointer;
+    box-shadow:0.3em 0.3em rgb(33, 37, 41);
+}
+.width-5{
+    width:5em;
+    height:5em;
 }
 #pop-up-div{
     display: none;

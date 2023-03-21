@@ -14,7 +14,6 @@ function closeSearch(){
 const imgHolderEl = document.getElementById("pop-up-div");
 const popUpImg = document.getElementById("pop-up-img");
 const imgs = document.getElementsByClassName("img-4"); //list of all imgs
-let clicked_img = "";
 
 //ads event to every img in imgs
 for(let i = 0; i<imgs.length; i++){
