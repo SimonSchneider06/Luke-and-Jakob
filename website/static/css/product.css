@@ -41,11 +41,17 @@
 }
 .img-4:hover{
     cursor:pointer;
-    box-shadow:0.3em 0.3em rgb(33, 37, 41);
+    box-shadow:0.2em 0.2em rgb(33, 37, 41);
 }
 .width-5{
     width:5em;
     height:5em;
+}
+.underlined{
+    border-bottom:#91A3B0 solid 0.05em;
+}
+.margin-2{
+    margin:0.5em 0.5em 0.5em 0;
 }
 #pop-up-div{
     display: none;
