@@ -1,11 +1,42 @@
 {% extends "base.html" %} {% block title %} Einkaufswagen {% endblock %}
 
+{% block head %} 
+<link rel="stylesheet" href="{{url_for('static',filename='css/shopping-cart.css')}}">
+{% endblock %}
+
 {% block content %} 
-    <h1>Einkaufswagen</h1>
+    <h1 align="center">Ihr Einkaufswagen</h1>
     {% if products %} 
-        {% for product in products %} 
-            <p>{{product.name}}</p>
-        {% endfor %} 
+        <div class="container">
+            <div class="row">
+                {% for product in products %} 
+                    <div class="">
+                        <img src="" alt="">
+                        <div>
+                            <h3>{{product.name}}</h3>
+                            <h3>{{product.price}}</h3>
+                        </div>                        
+                        <input type="number" id="quantity" name="quantity" min="1" max="99">
+                        <a href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                          </svg>
+                        </a>
+                    </div>
+                {% endfor %} 
+            </div>
+            <div class="column">
+                <h2>Gesamtpreis</h2>
+                <h4 id="price-all"></h4>
+                <button class="btn btn-primary">Zur Kasse</button>
+            </div>    
+        </div>
+    {% else %} 
+        <div class="container flex-center">
+            <h3>Ihr Einkaufswagen ist zur Zeit leer</h3>
+        </div>
+
     {% endif %} 
 
 {% endblock %} 
