@@ -13,7 +13,6 @@ nav{
     background-color: black;
     height: 70px;
     position:sticky;
-    top:0;
     z-index: 1;
 }
 ul{
@@ -26,11 +25,11 @@ ul li{
     padding: 5px;
     list-style-type: none;
 }
-a.logo{
-    padding:0px;
-    position: absolute;
-    top:25px;
-    left:20px;
+a.logo {
+    padding: 0px;
+    position: relative;
+    top: 22.5px;
+    left: 20px;
     z-index: 2;
 }
 
@@ -50,7 +49,7 @@ ul li a#searchbtn{
 }
 ul li a#cart{
     position:relative;
-    top:-3px;
+    top: -1px;
 } 
 ul li a.text:hover{
     background-color: white;
@@ -58,13 +57,14 @@ ul li a.text:hover{
 }
 #navbar-links {
     display: inline-block;
-    transform: translate(26%, 0%);
+    transform: translate(26%, -35%);
 }
 #navbar-social {
     position: relative;
-    top: -2px;
+    top: 0px;
     margin-right: 40px;
     float: right;
+    transform: translate(0%, -33%);
 }
 .overlay{
     width:100%;
@@ -72,7 +72,6 @@ ul li a.text:hover{
     display:none;
     position:fixed;
     z-index:2;
-    top:0;
     left:0;
     background-color:rgba(0, 0, 0, 0.9);
 }
