@@ -24,12 +24,22 @@ def shopping_cart():
 
     if "cart" in session:
         products = []
+        #debugging purpose only
+        print(session["cart"])
+
         for product_id in session["cart"]:
             product = Guitar.query.filter_by(id = product_id).first()
+            #debugging purpose only
+            print(product)
+            
+            #not debugging
             products.append(product)
 
     else:
         products = None
+
+    #debugging purpose only
+    print("-----------Products-------------",products)
 
     return render_template("shopping_cart.html",products = products)
 
@@ -48,10 +58,15 @@ def product_site(product_name):
         #if cart already exists adds product id of product to it
         if "cart" in session:
             session["cart"].extend([product.id])
+            #debugging purpose only
+            print("-------SESSION------",session["cart"])
 
         #else set it equal
         else:
             session["cart"] = [product.id]
+
+        #debugging purpose only
+        print("-------SESSION------",session["cart"])
 
         return redirect(url_for("views.product_site", product_name = product.name))
 
