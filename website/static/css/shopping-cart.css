@@ -30,3 +30,19 @@
 .between{
     justify-content:space-between;
 }
+.big{
+    align-items:start;
+}
+.max-300p{
+    max-width:300px;
+}
+.min-80p{
+    min-width:80px;
+}
+.m-auto{
+    margin:0 auto;
+}
+.bi-trash{
+    position: relative;
+    top:-0.2em;
+}
