@@ -22,7 +22,8 @@ def design_your_dream():
 @views.route("/cart",methods = ["POST", "GET"])
 def shopping_cart():
 
-    if "cart" in session:
+    #checks if session exists and isnt empty
+    if "cart" in session and session["cart"] != None:
         products = []
         #debugging purpose only
         print(session["cart"])
@@ -55,9 +56,23 @@ def product_site(product_name):
 
     if request.method == "POST":
 
+        #checks if session exists and isnt empty
         #if cart already exists adds product id of product to it
-        if "cart" in session:
-            session["cart"].extend([product.id])
+        if "cart" in session and session["cart"] != None:
+            #makes empty list of shopping cart
+            cart = []
+
+            #goes through current session and adds every product in list
+            for product_id in session["cart"]:
+                cart.append(product_id)
+                
+            #checks if product already in shopping cart and if not adds it in cart
+            if product.id not in cart:
+                cart.append(product.id)
+
+            #save cart in session
+            session["cart"] = cart
+
             #debugging purpose only
             print("-------SESSION------",session["cart"])
 
