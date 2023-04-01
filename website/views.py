@@ -86,3 +86,30 @@ def product_site(product_name):
         return redirect(url_for("views.product_site", product_name = product.name))
 
     return render_template("product.html", product = product)
+
+
+
+@views.route("/cart-delete-product/<int:product_id>",methods = ["GET"])
+def delete_cart_item(product_id):
+    
+    #checks if product in session
+    if product_id in session["cart"]:
+
+        #makes an list to work with
+        cart = session["cart"]
+
+        #loops through elements of cart
+        for id in cart:
+            #if id in cart equals product_id , delete item
+            if id == product_id:
+                cart.remove(id)
+
+        #set session equal to new list
+        session["cart"] = cart
+
+        #redirects user to shopping cart
+        return redirect(url_for("views.shopping_cart"))
+    
+    else:
+        #redirects user to shopping cart
+        return redirect(url_for("views.shopping_cart"))
