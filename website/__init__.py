@@ -42,27 +42,10 @@ def create_app():
     @login_manager.user_loader
     def load_user(id):
         return User.query.get(int(id))
+    
+    from .helper_functions import get_file_by_product_name
 
     #integrates function to jinja2 
     app.jinja_env.globals.update(get_file_by_product_name = get_file_by_product_name)
 
     return app
-
-
-#------gets file path -------------------------------------
-
-def get_file_by_product_name(product_name,img_number):
-
-    folder = app.config["UPLOAD_PATH"] + f"/{product_name}"
-    
-    path = f"Bilder/Produktbilder/{product_name}"
-    
-    for (_, __ , filenames) in walk(folder):
-        for file in filenames:
-            file_name = file.split(".")[0]
-
-            #filename is a string !!!!!!
-            if file_name == f"{img_number}":
-                full_path = path + f"/{file}"
-    
-    return full_path

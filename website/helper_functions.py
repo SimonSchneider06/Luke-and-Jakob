@@ -1,4 +1,5 @@
-
+from os import walk
+from flask import current_app as app
 
 def add_cart_item(cart, add_product_id):
 
@@ -22,3 +23,22 @@ def add_cart_item(cart, add_product_id):
         new_cart.append([add_product_id,1])
 
     return new_cart
+
+
+#------gets file path -------------------------------------
+
+def get_file_by_product_name(product_name,img_number):
+
+    folder = app.config["UPLOAD_PATH"] + f"/{product_name}"
+    
+    path = f"Bilder/Produktbilder/{product_name}"
+    
+    for (_, __ , filenames) in walk(folder):
+        for file in filenames:
+            file_name = file.split(".")[0]
+
+            #filename is a string !!!!!!
+            if file_name == f"{img_number}":
+                full_path = path + f"/{file}"
+    
+    return full_path
