@@ -2,6 +2,8 @@ from flask import Blueprint,render_template,request,session,redirect,url_for
 from flask_login import current_user,login_required
 from .models import Guitar
 
+from .helper_functions import add_cart_item
+
 views = Blueprint('views',__name__)
 
 @views.route('/',methods = ['GET','POST'])
@@ -26,7 +28,8 @@ def shopping_cart():
     if "cart" in session and session["cart"] != None:
         products = []
 
-        for product_id in session["cart"]:
+        for product_list in session["cart"]:
+            product_id = product_list[0]
             product = Guitar.query.filter_by(id = product_id).first()
             
             #append product to list
@@ -52,24 +55,12 @@ def product_site(product_name):
         #checks if session exists and isnt empty
         #if cart already exists adds product id of product to it
         if "cart" in session and session["cart"] != None:
-            #makes empty list of shopping cart
-            cart = []
-
-            #goes through current session and adds every product in list
-            for product_id in session["cart"]:
-                cart.append(product_id)
-                
-            #checks if product already in shopping cart and if not adds it in cart
-            if product.id not in cart:
-                cart.append(product.id)
-
-            #save cart in session
-            session["cart"] = cart
-
+            session["cart"] = add_cart_item(session["cart"],product.id)
 
         #else set it equal
         else:
-            session["cart"] = [product.id]
+            #makes session cart a list of product_lists, each product_list containing the product id and the number in the shopping_cart
+            session["cart"] = [[product.id,1]]
 
         return redirect(url_for("views.product_site", product_name = product.name))
 
@@ -79,21 +70,19 @@ def product_site(product_name):
 
 @views.route("/cart-delete-product/<int:product_id>",methods = ["GET"])
 def delete_cart_item(product_id):
-    
-    #checks if product in session
-    if product_id in session["cart"]:
 
-        #makes an list to work with
-        cart = session["cart"]
+    #checks if session cart exists
+    if "cart" in session and session["cart"] != None:
+        
+        new_cart = []
 
-        #loops through elements of cart
-        for id in cart:
-            #if id in cart equals product_id , delete item
-            if id == product_id:
-                cart.remove(id)
+        for product_list in session["cart"]:
+            #if product_id not equal to deleted one, add it otherwise dont -> deleted
+            if product_list[0] != product_id:
+                new_cart.append(product_list)
 
         #set session equal to new list
-        session["cart"] = cart
+        session["cart"] = new_cart
 
         #redirects user to shopping cart
         return redirect(url_for("views.shopping_cart"))
