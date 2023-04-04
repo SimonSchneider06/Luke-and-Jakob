@@ -1,6 +1,7 @@
 from os import walk
 from flask import current_app as app
 from .models import Guitar
+from flask import session
 
 
 # adds products to shopping cart
@@ -50,3 +51,23 @@ def get_file_by_product_name(product_name,img_number):
 def get_product_by_id(id):
     product = Guitar.query.filter_by(id = id).first()
     return product
+
+#get gesamtpreis
+def get_total_price():
+    
+    total_price = 0
+
+    if session["cart"]:
+        
+        #loop through the product_lists
+        for product_list in session["cart"]:
+            
+            #get product
+            product = Guitar.query.filter_by(id = product_list[0]).first()
+
+            #price of product * menge of product = price
+            price = product.price * product_list[1]
+
+            total_price += price
+
+    return total_price
