@@ -1,6 +1,9 @@
 from os import walk
 from flask import current_app as app
+from .models import Guitar
 
+
+# adds products to shopping cart
 def add_cart_item(cart, add_product_id):
 
     #new cart
@@ -42,3 +45,8 @@ def get_file_by_product_name(product_name,img_number):
                 full_path = path + f"/{file}"
     
     return full_path
+
+#gets product by product_id
+def get_product_by_id(id):
+    product = Guitar.query.filter_by(id = id).first()
+    return product

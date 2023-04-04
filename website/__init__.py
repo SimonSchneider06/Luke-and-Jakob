@@ -43,9 +43,10 @@ def create_app():
     def load_user(id):
         return User.query.get(int(id))
     
-    from .helper_functions import get_file_by_product_name
+    from .helper_functions import get_file_by_product_name,get_product_by_id
 
     #integrates function to jinja2 
     app.jinja_env.globals.update(get_file_by_product_name = get_file_by_product_name)
+    app.jinja_env.globals.update(get_product_by_id = get_product_by_id)
 
     return app
