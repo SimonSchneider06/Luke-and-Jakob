@@ -1,3 +1,10 @@
+@font-face {
+    font-family: "Quicksand";
+    src: url("/static/fonts/Quicksand.ttf");
+}
+*{
+    font-family:"Quicksand";
+}
 .flex-center{
     display:flex;
     justify-content:center;
@@ -45,4 +52,25 @@
 .bi-trash{
     position: relative;
     top:-0.2em;
+    left:-0.5em;
+    color:black;
+    
+}
+.width-16p{
+    width:16px;
+}
+.center{
+    text-align:center;
+}
+.center-block{
+    display: block;
+    margin:0.5em auto;
+}
+.w-120p{
+    width:120px;
+}
+@media(max-width:805px){
+    .bi-trash{
+        left:0;
+    }
 }
