@@ -1,177 +1,205 @@
-body{
-    margin:0;
-    padding:0;
-    background-color:white;
-    
-}
-@font-face {
-    font-family: "Quicksand";
-    src: url("/static/fonts/Quicksand.ttf");
-}
-nav{
-    box-sizing:border-box;
-    background-color: black;
-    height: 70px;
-    position:sticky;
-    z-index: 1;
-}
-ul{
-    text-align: center;
+body {
     margin: 0;
-    display :block ;
-}
-ul li{
-    display: inline-block;
-    padding: 5px;
-    list-style-type: none;
-}
-a.logo {
-    padding: 0px;
-    position: relative;
-    top: 22.5px;
-    left: 20px;
-    z-index: 2;
+    padding: 0;
+    font-family: 'Quicksand', sans-serif;
 }
 
-ul li a.text {
-    font-family:'Quicksand';
-    font-weight:900;
-    padding: 15px;
-    margin:5px;
-    display: inline-table;
-    color:white;
-    font-size: large;
-    text-decoration:none;
-    border-radius:10px;
+.navbarr {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: black;
+    color: white;
+    position: sticky;
+    top: 0px;
+    z-index :1;
 }
-ul li a#searchbtn{
-    cursor:pointer;
+
+.navbar-logo-div {
 }
-ul li a#cart{
-    position:relative;
-    top: -1px;
-} 
-ul li a.text:hover{
+
+.navbar-logo-a {
+}
+
+.navbar-logo-img {
+    height: 30px;
+    margin-left: 20px;
+}
+
+.navbar-nav-div {
+    display: flex;
+    align-items: center;
+    transform: translate(0px, 0px);
+}
+
+.navbar-nav-text-div {
+}
+
+.navbar-nav-text-a {
+    font-weight: 500;
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: white;
+    margin: 8px;
+    padding: 12px;
+    border-radius: 15px;
+}
+
+.navbar-nav-search-div {
+}
+
+.navbar-nav-search-a {
+    color: white;
+    margin: 8px;
+    padding: 17px 12px;
+    border-radius: 15px;
+}
+
+.navbar-nav-cart-div {
+}
+
+.navbar-nav-cart-a {
+    color: white;
+    margin: 8px;
+    padding: 17px 12px;
+    border-radius: 15px;
+}
+
+.navbar-social-div {
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    transform: translate(0px, 0px);
+}
+
+.navbar-social-icon-div {
+}
+
+.navbar-social-icon-a {
+    color: white;
+    margin: 16.5px;
+    padding: 17px 12px;
+    border-radius: 15px;
+}
+
+.navbar-nav-text-div :hover, .navbar-nav-cart-div :hover, .navbar-nav-search-div :hover, .navbar-social-icon-div :hover {
     background-color: white;
     color: black;
 }
-#navbar-links {
-    display: inline-block;
-    transform: translate(26%, -35%);
-}
-#navbar-social {
-    position: relative;
-    top: 0px;
-    margin-right: 40px;
-    float: right;
-    transform: translate(0%, -33%);
-}
-.overlay{
-    width:100%;
-    height:10%;
-    display:none;
-    position:fixed;
-    z-index:2;
-    left:0;
-    background-color:rgba(0, 0, 0, 0.9);
-}
-.overlay-content{
-    position:relative;
-    top:10%;
-    width:80%;
-    text-align:center;
-    margin:auto;
-}
-.overlay .closebtn{
-    float:right;
-    position: relative;
-    top:-12px;
-    font-size:50px;
-    cursor:pointer;
-    color:white;
-}
-.overlay .closebtn:hover{
-    color:#ccc;
-}
-.overlay input[type = text]{
-    padding:15px;
-    font-size:17px;
-    border:none;
-    float:left;
-    background-color:white;
-    width:80%;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius:10px;
-}
-.overlay input[type = text]:hover{
-    background-color:#f1f1f1;
-}
-textarea:focus, .overlay input[type = text]:focus{      /*-----------------------remove blue input */
-    outline:none;
-}
-.overlay button{
-    float:left;
-    width:10%;
-    padding:15px;
-    background-color:#ddd;
-    font-size:17px;
-    border:none;
-    cursor:pointer;
-    border-top-right-radius:10px;
-    border-bottom-right-radius:10px;
-}
-.overlay button:hover{
-    background-color:#bbb;
-}
-nav .checkbtn{
-    font-size:30px;
-    color:white;
-    float:right;
-    margin-right:40px;
-    line-height: 70px;
-    cursor:pointer;
-    display:none;
-}
-#check{
-    display:none;
+
+.search-overlay {
+    width: 100%;
+    position: fixed;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index :1;
 }
 
-@media (max-width:1000px){
-    nav .checkbtn{
-        display:block;
+.navbar-overlay-search-input {
+    width: 50%;
+    margin: 15px 0px 15px 10px;
+    padding: 15px;
+    border-radius: 15px 0px 0px 15px;
+    border: none;
+    outline: none;
+    font-size: 17px;
+    box-shadow: black 0px 0px 5px;
+}
+
+.navbar-overlay-search-div {
+}
+
+.navbar-overlay-search-a {
+    margin: 0px;
+    padding: 15px 6% 15px 6%;
+    color: black;
+    background-color: white;
+    border-radius: 0px 15px 15px 0px;
+    box-shadow: black 0px 0px 5px;
+}
+
+    .navbar-overlay-search-a:hover {
+        opacity: .9;
     }
-    ul{
-        overflow-y:auto;
-        position:fixed;
-        height: 100vh;
-        width:100%;
-        background:black;
-        top:70px;
-        left:-100%;
-        text-align:center;
-        transition:all .5s;
+
+.navbar-overlay-search-x-div {
+}
+
+.navbar-overlay-search-x-span {
+    color: white;
+    text-shadow: black 0px 0px 5px;
+    margin: 0px 10px 0px 8%;
+    font-size: 75px;
+    border-radius: 15px;
+}
+
+    .navbar-overlay-search-x-span:hover {
+        cursor: pointer;
+        opacity: .8;
     }
-    nav ul li{
-        display:block;
+
+.navbar-burgermenu-button {
+    display: none;
+    order: 1;
+    margin-right: 30px;
+    padding: 0px;
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+
+.navbar-burgermenu-icon {
+    font-size: 34px;
+    color: white;
+}
+
+@media (max-width:1000px) {
+    .navbar-burgermenu-button {
+        display: initial;
     }
-    nav ul li a.text{
-        font-size:20px;
+
+    .navbarr {
+        flex-direction: column;
+        text-align: center;
+        
     }
-    #navbar-social {
-        float: none;
-        margin-right: 0;
+
+    .navbar-logo_burgermenu-div {
+        height: inherit;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
-    #navbar-links {
-        transform: none;
+
+    .navbar-burgermenu-content {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        background-color: black;
+        transform: translate(-100%, 0px);
+        margin: 0;
     }
-    a.text:hover,a.text:active{
-        background:none;
-        color:white;
+
+    .navbar-social-div {
+        padding-bottom: 25px;
     }
-    #check:checked ~ ul{
-        left:0;
+
+    .navbar-nav-div {
+        padding-top: 7px;
+    }
+
+    .navbar-nav-text-div, .navbar-nav-search-div, .navbar-nav-cart-div, .navbar-social-icon-div, .navbar-logo-div, .navbar-burgermenu-label {
+        padding: 25px 0px 25px 0px;
+    }
+
+    .navbar-nav-text-a, .navbar-nav-search-a, .navbar-nav-cart-a, .navbar-social-icon-a {
+        color: white;
     }
 }
+
 .errorpage{
     text-align:center;
     font-size:xx-large;

@@ -1,12 +1,85 @@
 
 // for searchbar 
+const searchbar = document.getElementById("myOverlay")
+const burgermenuContent = document.getElementsByClassName("navbar-burgermenu-content")
+const burgermenuButton = document.getElementsByClassName("navbar-burgermenu-button")
+let burgermenuopen = false
+let searchopen = false
+let searchwasopen = false
+let screenwidth = window.innerWidth
+const burgermenuContentId1 = document.getElementById("navbar-burgermenu-content-id1")
+const burgermenuContentId2 = document.getElementById("navbar-burgermenu-content-id2")
 
-function openSearch(){
-    document.getElementById("myOverlay").style.display = "block";
+
+function openSearch() {
+    searchbar.style.display = "flex";
+    if (burgermenuopen == true) {
+        burgermenuContentId1.style.transition = "none";
+        burgermenuContentId2.style.transition = "none";
+        burgermenuContentId1.style.marginTop = "94px";
+        searchbar.style.backgroundColor = "black";
+    }
+    if (screenwidth <= 1000) {
+        searchwasopen = true;
+    }
+    if (searchopen == true) {
+        closeSearch();
+
+    }
+    else {
+        searchopen = true;
+    }
 }
-function closeSearch(){
-    document.getElementById("myOverlay").style.display = "none";
+function closeSearch() {
+    searchbar.style.display = "none";
+    burgermenuContentId1.style.marginTop = "0px";
+    searchwasopen = false;
+    searchopen = false;
 }
+function burgermenu() {
+    if (burgermenuopen == false) {
+        burgermenuContentId1.style.transition = "all ease-in-out .5s";
+        burgermenuContentId2.style.transition = "all ease-in-out .5s";
+        burgermenuContentId1.style.transform = "none";
+        burgermenuContentId2.style.transform = "none";
+        burgermenuopen = true;
+    }
+    else if (burgermenuopen == true) {
+        closeSearch();
+        burgermenuContentId1.style.transition = "all ease-in-out .5s";
+        burgermenuContentId2.style.transition = "all ease-in-out .5s";
+        burgermenuContentId1.style.transform = "translate(-100%, 0px)";
+        burgermenuContentId2.style.transform = "translate(-100%, 0px)";
+        burgermenuopen = false;
+    }
+}
+window.addEventListener("resize", onresize)
+function onresize() {
+    screenwidth = window.innerWidth
+    if (screenwidth > 1000) {
+        burgermenuContentId1.style.transition = "none";
+        burgermenuContentId2.style.transition = "none";
+        burgermenuContentId1.style.transform = "none";
+        burgermenuContentId2.style.transform = "none";
+        burgermenuopen = false;
+        searchbar.style.backgroundColor = "initial";
+        if (searchwasopen == true) {
+            closeSearch();
+        }
+    }
+    if (screenwidth <= 1000 && burgermenuopen == false) {
+        if (searchopen == true) {
+            closeSearch();
+            searchopen = false;
+        }
+        burgermenuContentId1.style.transition = "none";
+        burgermenuContentId2.style.transition = "none";
+        burgermenuContentId1.style.transform = "translate(-100%, 0px)";
+        burgermenuContentId2.style.transform = "translate(-100%, 0px)";
+        burgermenuopen = false;
+    }
+}
+
 
 //making the product-imgs bigger on click-----------------------
 
