@@ -29,9 +29,9 @@
                                     Menge: {{ product_list[1] }}
                                 </button>
                                 <ul class="dropdown-menu min-80p">
-                                  <li><a class="dropdown-item" href="#">1</a></li>
-                                  <li><a class="dropdown-item" href="#">2</a></li>
-                                  <li><a class="dropdown-item" href="#">3</a></li>
+                                  <li><a class="dropdown-item" href="{{url_for('views.cart_quantity',product_id = product.id,quantity = 1)}}">1</a></li>
+                                  <li><a class="dropdown-item" href="{{url_for('views.cart_quantity',product_id = product.id,quantity = 2)}}">2</a></li>
+                                  <li><a class="dropdown-item" href="{{url_for('views.cart_quantity',product_id = product.id,quantity = 3)}}">3</a></li>
                                 </ul>
                             </div> 
 
