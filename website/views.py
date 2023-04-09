@@ -23,6 +23,10 @@ def design_your_dream():
 
 @views.route("/cart",methods = ["POST", "GET"])
 def shopping_cart():
+
+    if request.method == "POST":    #zur Kasse btn pressed
+        pass
+
     return render_template("shopping_cart.html")
 
 @views.route("/shop")
