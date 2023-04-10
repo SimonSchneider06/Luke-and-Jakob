@@ -4,17 +4,15 @@ from os import walk
 from flask_login import LoginManager,current_user
 from flask_migrate import Migrate
 from flask import current_app as app
+from config import config
 
 db = SQLAlchemy()
 DB_NAME = "database.db"
 
-def create_app():
+def create_app(config_name):
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = '7lK83(?ki2.Pieqr_!Mn]iZ'
-    app.config["SQLALCHEMY_DATABASE_URI"] = f'sqlite:///{DB_NAME}'
-    app.config["MAX_CONTENT_LENGTH"] = 1024 * 1024 * 15
-    app.config["UPLOAD_EXTENSIONS"] = [".JPG", ".png"]
-    app.config["UPLOAD_PATH"] = "./website/static/Bilder/Produktbilder"
+    app.config.from_object(config[config_name])
+    config[config_name].init_app(app)
 
     db.init_app(app) 
     migrate = Migrate(app,db)
