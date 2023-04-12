@@ -115,4 +115,4 @@ def change_user_data():
 
 @auth.route("/forgot_password")
 def password_reset():
-    return render_template("")
+    return render_template("/auth/forgot_password.html")
