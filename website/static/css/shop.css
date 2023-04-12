@@ -1,6 +1,9 @@
 .width{
     width:18rem;
 }
+*{
+    font-family:"Quicksand";
+}
 .margin-bottom{
     margin-bottom:1em;
 }

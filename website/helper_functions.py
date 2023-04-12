@@ -1,0 +1,73 @@
+from os import walk
+from flask import current_app as app
+from .models import Guitar
+from flask import session
+
+
+# adds products to shopping cart
+def add_cart_item(cart, add_product_id):
+
+    #new cart
+    new_cart = []
+    #variable, which checks if the product already is in the shopping_cart
+    is_new_id = True
+
+    #loops through the cart to get each list
+    for product_list in cart:
+        #first item = product_id, second = menge
+        #if new item is already in cart, add 1 to menge
+        if product_list[0] == add_product_id:
+            product_list[1] += 1
+            is_new_id = False
+        #append list
+        new_cart.append(product_list)
+
+    #if id isnt in cart, because if statement from above never executed, add it
+    if is_new_id:
+        new_cart.append([add_product_id,1])
+
+    return new_cart
+
+
+#------gets file path -------------------------------------
+
+def get_file_by_product_name(product_name,img_number):
+
+    folder = app.config["UPLOAD_PATH"] + f"/{product_name}"
+    
+    path = f"Bilder/Produktbilder/{product_name}"
+    
+    for (_, __ , filenames) in walk(folder):
+        for file in filenames:
+            file_name = file.split(".")[0]
+
+            #filename is a string !!!!!!
+            if file_name == f"{img_number}":
+                full_path = path + f"/{file}"
+    
+    return full_path
+
+#gets product by product_id
+def get_product_by_id(id):
+    product = Guitar.query.filter_by(id = id).first()
+    return product
+
+#get gesamtpreis
+def get_total_price():
+    
+    total_price = 0
+
+    if session["cart"]:
+        
+        #loop through the product_lists
+        for product_list in session["cart"]:
+            
+            #get product
+            product = Guitar.query.filter_by(id = product_list[0]).first()
+
+            #price of product * menge of product = price
+            price = product.price * product_list[1]
+
+            total_price += price
+
+    return total_price

@@ -4,17 +4,15 @@ from os import walk
 from flask_login import LoginManager,current_user
 from flask_migrate import Migrate
 from flask import current_app as app
+from config import config
 
 db = SQLAlchemy()
 DB_NAME = "database.db"
 
-def create_app():
+def create_app(config_name):
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = '7lK83(?ki2.Pieqr_!Mn]iZ'
-    app.config["SQLALCHEMY_DATABASE_URI"] = f'sqlite:///{DB_NAME}'
-    app.config["MAX_CONTENT_LENGTH"] = 1024 * 1024 * 15
-    app.config["UPLOAD_EXTENSIONS"] = [".JPG", ".png"]
-    app.config["UPLOAD_PATH"] = "./website/static/Bilder/Produktbilder"
+    app.config.from_object(config[config_name])
+    config[config_name].init_app(app)
 
     db.init_app(app) 
     migrate = Migrate(app,db)
@@ -42,27 +40,12 @@ def create_app():
     @login_manager.user_loader
     def load_user(id):
         return User.query.get(int(id))
+    
+    from .helper_functions import get_file_by_product_name,get_product_by_id,get_total_price
 
     #integrates function to jinja2 
     app.jinja_env.globals.update(get_file_by_product_name = get_file_by_product_name)
+    app.jinja_env.globals.update(get_product_by_id = get_product_by_id)
+    app.jinja_env.globals.update(get_total_price = get_total_price)
 
     return app
-
-
-#------gets file path -------------------------------------
-
-def get_file_by_product_name(product_name,img_number):
-
-    folder = app.config["UPLOAD_PATH"] + f"/{product_name}"
-    
-    path = f"Bilder/Produktbilder/{product_name}"
-    
-    for (_, __ , filenames) in walk(folder):
-        for file in filenames:
-            file_name = file.split(".")[0]
-
-            #filename is a string !!!!!!
-            if file_name == f"{img_number}":
-                full_path = path + f"/{file}"
-    
-    return full_path

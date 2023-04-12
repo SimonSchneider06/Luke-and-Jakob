@@ -1,5 +1,37 @@
+window.onresize = () => {
+    //on window resize check if class needs to be changed
+    if(window.innerWidth <= 805){
+        // align headcontainer items in column
+        headContainerEl.className = "container-xxl column m-auto mt-3";
 
-// for searchbar 
+        // align all product-containers column
+        for(let i = 0; i < productContainerRowELs.length; i++){
+            productContainerRowELs[i].className = "column border p-2 m-2 product-container";
+        }  
+    }
+    else{
+        // align headcontainer items next to each other
+        headContainerEl.className = "container-xxl row between big m-auto mt-3";
+
+        // align all product-containers row
+        for(let i = 0; i < productContainerRowELs.length; i++){
+            productContainerRowELs[i].className = "row border p-2 m-2 product-container";
+        } 
+    }
+}
+
+//shopping cart price box ---------------------
+
+// headcontainer
+const headContainerEl = document.getElementById("head-container");
+
+// product rows 
+const productContainerRowELs = document.getElementsByClassName("product-container");
+
+// 
+// const productImgEls = document.getElementsByClassName("product-img");
+
+// for searchbar --------------------
 
 function openSearch(){
     document.getElementById("myOverlay").style.display = "block";
