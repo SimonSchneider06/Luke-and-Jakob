@@ -48,7 +48,7 @@ def sign_up():
             
             return redirect(url_for("views.logged_in"))
 
-    return render_template("sign_up.html")
+    return render_template("auth/sign_up.html")
 
 @auth.route('/login',methods = ['GET',"POST"])
 def login():
@@ -70,7 +70,7 @@ def login():
         else:
             flash("Email existiert nicht")
 
-    return render_template("login.html")
+    return render_template("auth/login.html")
 
 @auth.route("/logout")
 @login_required
@@ -109,7 +109,10 @@ def change_user_data():
                 flash("Es ist ein Fehler unterlaufen bitte versuchen sie es nochmal")
                 return render_template("change_account_data.html")
 
-    return render_template("change_account_data.html")
+    return render_template("auth/change_account_data.html")
 
 #Passwort vergessen--------------------------------
 
+@auth.route("/forgot_password")
+def password_reset():
+    return render_template("")

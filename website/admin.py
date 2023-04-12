@@ -21,7 +21,7 @@ admin = Blueprint("admin",__name__)
 def admin_page():
     our_users = User.query.order_by(User.id)
     products = Guitar.query.order_by(Guitar.id)
-    return render_template("admin.html",our_users = our_users,products = products)
+    return render_template("admin/admin.html",our_users = our_users,products = products)
 
 
 #-----------add product-----------------------------------------------------
@@ -68,7 +68,7 @@ def add_product():
                 flash("Erfolgreich neues Modell hinzugefügt")
                 return redirect(url_for("admin.admin_page"))
 
-    return render_template("add_product.html")
+    return render_template("admin/add_product.html")
 
 
 #------------------------change product------------------------------------
@@ -131,7 +131,7 @@ def change_product(id):
                         return redirect(url_for("admin.change_product",id = product.id ))
         
 
-    return render_template("change_product.html",product = product)
+    return render_template("admin/change_product.html",product = product)
 
 #---------------------delete product-------------------------------------
 
@@ -174,9 +174,9 @@ def change_user(id):
 
             except:
                 flash("Es ist leider ein Fehler unterlaufen. Bitte versuchen sie es erneut", category = "error")
-                return render_template("change_user.html",role = role,our_user = user)
+                return redirect(url_for("admin.change_user",id = user.id))
 
-    return render_template("change_user.html",role = role,our_user = user)
+    return render_template("admin/change_user.html",role = role,our_user = user)
 
 #----------------------------delete user----------------------------------------
 
