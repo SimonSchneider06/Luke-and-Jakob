@@ -1,5 +1,5 @@
 
-// for searchbar 
+// for searchbar and navbar 
 const searchbar = document.getElementById("myOverlay")
 const burgermenuContent = document.getElementsByClassName("navbar-burgermenu-content")
 const burgermenuButton = document.getElementsByClassName("navbar-burgermenu-button")
@@ -17,7 +17,6 @@ function openSearch() {
         burgermenuContentId1.style.transition = "none";
         burgermenuContentId2.style.transition = "none";
         burgermenuContentId1.style.marginTop = "94px";
-        searchbar.style.backgroundColor = "black";
     }
     if (screenwidth <= 1000) {
         searchwasopen = true;
@@ -37,11 +36,14 @@ function closeSearch() {
     searchopen = false;
 }
 function burgermenu() {
+    const burgermenuIconOpen = document.getElementById("navbar-burgermenu-icon-open-id")
+    const burgermenuIconClose = document.getElementById("navbar-burgermenu-icon-close-id")
     if (burgermenuopen == false) {
         burgermenuContentId1.style.transition = "all ease-in-out .5s";
         burgermenuContentId2.style.transition = "all ease-in-out .5s";
         burgermenuContentId1.style.transform = "none";
         burgermenuContentId2.style.transform = "none";
+        setTimeout(() => { burgermenuIconClose.style.display = "flex"; burgermenuIconOpen.style.display = "none";}, 200);
         burgermenuopen = true;
     }
     else if (burgermenuopen == true) {
@@ -50,19 +52,23 @@ function burgermenu() {
         burgermenuContentId2.style.transition = "all ease-in-out .5s";
         burgermenuContentId1.style.transform = "translate(-100%, 0px)";
         burgermenuContentId2.style.transform = "translate(-100%, 0px)";
+        setTimeout(() => { burgermenuIconClose.style.display = "none"; burgermenuIconOpen.style.display = "flex"; }, 200);
         burgermenuopen = false;
     }
 }
 window.addEventListener("resize", onresize)
 function onresize() {
     screenwidth = window.innerWidth
+    const burgermenuIconOpen1 = document.getElementById("navbar-burgermenu-icon-open-id")
+    const burgermenuIconClose1 = document.getElementById("navbar-burgermenu-icon-close-id")
     if (screenwidth > 1000) {
         burgermenuContentId1.style.transition = "none";
         burgermenuContentId2.style.transition = "none";
         burgermenuContentId1.style.transform = "none";
         burgermenuContentId2.style.transform = "none";
+        burgermenuIconClose1.style.display = "none";
+        burgermenuIconOpen1.style.display = "flex";
         burgermenuopen = false;
-        searchbar.style.backgroundColor = "initial";
         if (searchwasopen == true) {
             closeSearch();
         }
@@ -76,6 +82,8 @@ function onresize() {
         burgermenuContentId2.style.transition = "none";
         burgermenuContentId1.style.transform = "translate(-100%, 0px)";
         burgermenuContentId2.style.transform = "translate(-100%, 0px)";
+        burgermenuIconClose1.style.display = "none";
+        burgermenuIconOpen1.style.display = "flex";
         burgermenuopen = false;
     }
 }

@@ -42,8 +42,8 @@ body {
     text-decoration: none;
     color: white;
     margin: 8px;
-    padding: 12px;
-    border-radius: 15px;
+    padding: 7.5px 12px;
+    border-radius: 10px;
 }
 
 .navbar-nav-search-div {
@@ -52,8 +52,8 @@ body {
 .navbar-nav-search-a {
     color: white;
     margin: 8px;
-    padding: 17px 12px;
-    border-radius: 15px;
+    padding: 13px 12px;
+    border-radius: 10px;
 }
 
 .navbar-nav-cart-div {
@@ -62,8 +62,8 @@ body {
 .navbar-nav-cart-a {
     color: white;
     margin: 8px;
-    padding: 17px 12px;
-    border-radius: 15px;
+    padding: 13px 12px;
+    border-radius: 10px;
 }
 
 .navbar-social-div {
@@ -79,8 +79,8 @@ body {
 .navbar-social-icon-a {
     color: white;
     margin: 16.5px;
-    padding: 17px 12px;
-    border-radius: 15px;
+    padding: 13px 12px;
+    border-radius: 10px;
 }
 
 .navbar-nav-text-div :hover, .navbar-nav-cart-div :hover, .navbar-nav-search-div :hover, .navbar-social-icon-div :hover {
@@ -95,16 +95,17 @@ body {
     align-items: center;
     justify-content: center;
     z-index :1;
+    background-color: black;
 }
 
 .navbar-overlay-search-input {
     width: 50%;
     margin: 15px 0px 15px 10px;
     padding: 15px;
-    border-radius: 15px 0px 0px 15px;
+    border-radius: 10px 0px 0px 10px;
     border: none;
     outline: none;
-    font-size: 17px;
+    font-size: 1rem;
     box-shadow: black 0px 0px 5px;
 }
 
@@ -116,12 +117,13 @@ body {
     padding: 15px 6% 15px 6%;
     color: black;
     background-color: white;
-    border-radius: 0px 15px 15px 0px;
+    border-radius: 0px 10px 10px 0px;
     box-shadow: black 0px 0px 5px;
 }
 
     .navbar-overlay-search-a:hover {
         opacity: .9;
+        color: initial  ;
     }
 
 .navbar-overlay-search-x-div {
@@ -132,7 +134,8 @@ body {
     text-shadow: black 0px 0px 5px;
     margin: 0px 10px 0px 8%;
     font-size: 75px;
-    border-radius: 15px;
+    border-radius: 10px;
+    transform :translate(0px, -9px) ;
 }
 
     .navbar-overlay-search-x-span:hover {
@@ -148,16 +151,23 @@ body {
     cursor: pointer;
     background: none;
     border: none;
+    align-items :center ;
 }
 
-.navbar-burgermenu-icon {
+.navbar-burgermenu-icon-open {
     font-size: 34px;
     color: white;
+    display :flex;
+}
+.navbar-burgermenu-icon-close {
+    font-size: 38px;
+    color: white;
+    display :none;
 }
 
 @media (max-width:1000px) {
     .navbar-burgermenu-button {
-        display: initial;
+        display: flex;
     }
 
     .navbarr {
@@ -192,7 +202,7 @@ body {
     }
 
     .navbar-nav-text-div, .navbar-nav-search-div, .navbar-nav-cart-div, .navbar-social-icon-div, .navbar-logo-div, .navbar-burgermenu-label {
-        padding: 25px 0px 25px 0px;
+        padding: 20px 0px 20px 0px;
     }
 
     .navbar-nav-text-a, .navbar-nav-search-a, .navbar-nav-cart-a, .navbar-social-icon-a {
