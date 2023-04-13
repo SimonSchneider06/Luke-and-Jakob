@@ -3,7 +3,12 @@ body {
     padding: 0;
     font-family: 'Quicksand', sans-serif;
 }
-
+@font-face {
+    font-family: "Quicksand";
+    src: url("/static/fonts/Quicksand.ttf");
+    font-family: "Logo";
+    src: url("/static/fonts/Logo.ttf");
+}
 .navbarr {
     height: 70px;
     display: flex;
@@ -20,6 +25,14 @@ body {
 }
 
 .navbar-logo-a {
+    font-family: Logo;
+    text-decoration: none;
+    color: white;
+    font-size :40px;
+    margin-left: 20px;
+}
+.navbar-logo-a:hover{
+    color:white ;
 }
 
 .navbar-logo-img {
@@ -37,35 +50,27 @@ body {
 }
 
 .navbar-nav-text-a {
-    font-weight: 500;
-    font-size: 1.5rem;
+    font-weight: 400;
+    font-size: 22px;
     text-decoration: none;
     color: white;
     margin: 8px;
     padding: 7.5px 12px;
-    border-radius: 10px;
+    border-radius: 8px;
 }
 
-.navbar-nav-search-div {
+.navbar-nav-searchcart-div {
 }
 
-.navbar-nav-search-a {
+.navbar-nav-searchcart-a {
     color: white;
     margin: 8px;
-    padding: 13px 12px;
-    border-radius: 10px;
+    padding: 12px;
+    border-radius: 8px;
 }
-
-.navbar-nav-cart-div {
+.navbar-nav-searchcart-i{
+    font-size :17px;
 }
-
-.navbar-nav-cart-a {
-    color: white;
-    margin: 8px;
-    padding: 13px 12px;
-    border-radius: 10px;
-}
-
 .navbar-social-div {
     margin-right: 20px;
     display: flex;
@@ -79,13 +84,17 @@ body {
 .navbar-social-icon-a {
     color: white;
     margin: 16.5px;
-    padding: 13px 12px;
-    border-radius: 10px;
+    padding: 12px;
+    border-radius: 8px;
+}
+.navbar-social-icon-i{
+    font-size :17px;
 }
 
-.navbar-nav-text-div :hover, .navbar-nav-cart-div :hover, .navbar-nav-search-div :hover, .navbar-social-icon-div :hover {
+.navbar-nav-text-div :hover, .navbar-nav-searchcart-div :hover, .navbar-social-icon-div :hover {
     background-color: white;
     color: black;
+    transition: background-color ease-in-out .1s, color ease-in-out .1s;
 }
 
 .search-overlay {
@@ -94,55 +103,50 @@ body {
     display: none;
     align-items: center;
     justify-content: center;
-    z-index :1;
+    z-index: 1;
     background-color: black;
+    padding-bottom: 20px;
+    transition: all ease-in-out .8s;
 }
 
 .navbar-overlay-search-input {
     width: 50%;
-    margin: 15px 0px 15px 10px;
-    padding: 15px;
-    border-radius: 10px 0px 0px 10px;
+    margin: 0px;
+    padding: 5px 5px 5px 10px;
     border: none;
     outline: none;
-    font-size: 1rem;
-    box-shadow: black 0px 0px 5px;
+    font-size: 1.5rem;
+    background-color:black;
+    color:white ;
 }
-
-.navbar-overlay-search-div {
-}
-
 .navbar-overlay-search-a {
     margin: 0px;
-    padding: 15px 6% 15px 6%;
-    color: black;
-    background-color: white;
-    border-radius: 0px 10px 10px 0px;
-    box-shadow: black 0px 0px 5px;
-}
-
-    .navbar-overlay-search-a:hover {
-        opacity: .9;
-        color: initial  ;
-    }
-
-.navbar-overlay-search-x-div {
-}
-
-.navbar-overlay-search-x-span {
     color: white;
-    text-shadow: black 0px 0px 5px;
-    margin: 0px 10px 0px 8%;
-    font-size: 75px;
-    border-radius: 10px;
-    transform :translate(0px, -9px) ;
+    background-color: black;
+    display: flex;
+    padding: 4px;
 }
-
-    .navbar-overlay-search-x-span:hover {
-        cursor: pointer;
-        opacity: .8;
-    }
-
+.navbar-overlay-search-a:hover {
+        opacity: .9;
+        color :white ;
+}
+.navbar-overlay-search-i{
+    font-size :20px;
+}
+.navbar-overlay-search-x-a {
+    display :flex ;
+    align-items :center ;
+    color: white;
+    margin: 0px 10px 0px 1%;
+}
+.navbar-overlay-search-x-a:hover {
+    cursor: pointer;
+    opacity: .8;
+    color :white ;
+}
+.navbar-overlay-search-x-i {
+    font-size: 30px;
+}
 .navbar-burgermenu-button {
     display: none;
     order: 1;
@@ -173,7 +177,6 @@ body {
     .navbarr {
         flex-direction: column;
         text-align: center;
-        
     }
 
     .navbar-logo_burgermenu-div {
@@ -184,6 +187,13 @@ body {
         align-items: center;
     }
 
+    .navbar-nav-div{
+        min-height : 357px;
+    }
+    .navbar-social-div{
+        min-height :217px;
+    }
+
     .navbar-burgermenu-content {
         display: flex;
         flex-direction: column;
@@ -191,6 +201,7 @@ body {
         background-color: black;
         transform: translate(-100%, 0px);
         margin: 0;
+        overflow-y: auto;
     }
 
     .navbar-social-div {
@@ -201,7 +212,7 @@ body {
         padding-top: 7px;
     }
 
-    .navbar-nav-text-div, .navbar-nav-search-div, .navbar-nav-cart-div, .navbar-social-icon-div, .navbar-logo-div, .navbar-burgermenu-label {
+    .navbar-nav-text-div, .navbar-nav-searchcart-div, .navbar-social-icon-div, .navbar-logo-div, .navbar-burgermenu-label {
         padding: 20px 0px 20px 0px;
     }
 

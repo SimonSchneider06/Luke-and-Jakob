@@ -2,33 +2,32 @@
     <div class="navbar-logo_burgermenu-div">
         <button class="navbar-burgermenu-button" onclick="burgermenu()"><i id="navbar-burgermenu-icon-open-id" class="fa-solid fa-bars navbar-burgermenu-icon-open"></i><i id="navbar-burgermenu-icon-close-id" class="fa-solid fa-xmark navbar-burgermenu-icon-close"></i></button>
 
-        <div class="navbar-logo-div"><a class="navbar-logo-a" href="/"><img class=" navbar-logo-img" src="{{url_for('static',filename = 'Bilder/logo.png')}}" /></a></div>
+        <div class="navbar-logo-div"><a class="navbar-logo-a" href="/">LUKE&JAKOB</a></div>
     </div>
     <div class="navbar-nav-div navbar-burgermenu-content" id="navbar-burgermenu-content-id1">
         <div class=" navbar-nav-text-div"><a class="navbar-nav-text-a" href="/shop">Shop</a></div>
-        <div class=" navbar-nav-text-div"><a class="navbar-nav-text-a" href="#">Über uns</a></div>
+        <div class=" navbar-nav-text-div"><a class="navbar-nav-text-a" href="#">About us</a></div>
         {% if current_user.is_authenticated %}
-        <div class=" navbar-nav-text-div"><a class="navbar-nav-text-a" href="/logout">Logout</a></div>
-        <div class=" navbar-nav-text-div"><a class="navbar-nav-text-a" href="/change_user">Account Ändern</a></div>
+        <div class=" navbar-nav-text-div"><a class="navbar-nav-text-a" href="/account">Account</a></div>
         {% if current_user.role_id == 1 %}
         <div class=" navbar-nav-text-div"><a class="navbar-nav-text-a" href="/admin">Admin</a></div>
         {% endif %}
         {% else %}
         <div class=" navbar-nav-text-div"><a class="navbar-nav-text-a" href="/signUp">Login</a></div>
         {% endif %}
-        <div class=" navbar-nav-search-div"><a class=" navbar-nav-search-a" href="#" onclick="openSearch()"><i class="fas fa-search"></i></a></div>
-        <div class=" navbar-nav-cart-div"><a class=" navbar-nav-cart-a" href="/cart"><i class="fas fa-cart-shopping"></i></a></div>
+        <div class=" navbar-nav-searchcart-div"><a class=" navbar-nav-searchcart-a"  onclick="openSearch()"><i class="bi bi-search navbar-nav-searchcart-i"></i></a></div>
+        <div class=" navbar-nav-searchcart-div"><a class=" navbar-nav-searchcart-a" href="/cart"><i class="bi bi-cart navbar-nav-searchcart-i"></i></a></div>
     </div>
 
     <div class="navbar-social-div navbar-burgermenu-content" id="navbar-burgermenu-content-id2">
-        <div class="navbar-social-icon-div"><a class="navbar-social-icon-a" href="#"><i class="fa-brands fa-instagram"></i></a></div>
-        <div class="navbar-social-icon-div"><a class="navbar-social-icon-a" href="#"><i class="fa-brands fa-youtube"></i></a></div>
-        <div class="navbar-social-icon-div"><a class="navbar-social-icon-a" href="#"><i class="fa-brands fa-tiktok"></i></a></div>
+        <div class="navbar-social-icon-div"><a class="navbar-social-icon-a" href="#"><i class="fa-brands fa-instagram navbar-social-icon-i"></i></a></div>
+        <div class="navbar-social-icon-div"><a class="navbar-social-icon-a" href="#"><i class="fa-brands fa-youtube navbar-social-icon-i"></i></a></div>
+        <div class="navbar-social-icon-div"><a class="navbar-social-icon-a" href="#"><i class="fa-brands fa-tiktok navbar-social-icon-i"></i></a></div>
     </div>
 </nav>
 
 <div id="myOverlay" class="search-overlay">
-    <input class="navbar-overlay-search-input " type="text" placeholder="Suchen.." />
-    <a class=" navbar-overlay-search-a" href="#" onclick="openSearch()"><i class="fas fa-search"></i></a>
-    <span class="navbar-overlay-search-x-span" onclick="closeSearch()">&times;</span>
+    <a class=" navbar-overlay-search-a" onclick="openSearch()"><i class="bi bi-search navbar-overlay-search-i"></i></a>
+    <input id="navbar-overlay-search-input-id" class="navbar-overlay-search-input" type="text" placeholder="search..." />
+    <a class="navbar-overlay-search-x-a" onclick="closeSearch()"><i class="fa-solid fa-xmark navbar-overlay-search-x-i"></i> </a>
 </div>

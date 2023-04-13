@@ -9,14 +9,16 @@ let searchwasopen = false
 let screenwidth = window.innerWidth
 const burgermenuContentId1 = document.getElementById("navbar-burgermenu-content-id1")
 const burgermenuContentId2 = document.getElementById("navbar-burgermenu-content-id2")
+const searchbarinput = document.getElementById("navbar-overlay-search-input-id")
 
 
 function openSearch() {
     searchbar.style.display = "flex";
+    searchbarinput.focus();
     if (burgermenuopen == true) {
         burgermenuContentId1.style.transition = "none";
         burgermenuContentId2.style.transition = "none";
-        burgermenuContentId1.style.marginTop = "94px";
+        burgermenuContentId1.style.marginTop = "66px";
     }
     if (screenwidth <= 1000) {
         searchwasopen = true;
@@ -31,25 +33,28 @@ function openSearch() {
 }
 function closeSearch() {
     searchbar.style.display = "none";
+    searchbar.style.transform = "none";
+    searchbarinput.value = "";
     burgermenuContentId1.style.marginTop = "0px";
     searchwasopen = false;
     searchopen = false;
 }
 function burgermenu() {
-    const burgermenuIconOpen = document.getElementById("navbar-burgermenu-icon-open-id")
-    const burgermenuIconClose = document.getElementById("navbar-burgermenu-icon-close-id")
+    const burgermenuIconOpen = document.getElementById("navbar-burgermenu-icon-open-id");
+    const burgermenuIconClose = document.getElementById("navbar-burgermenu-icon-close-id");
     if (burgermenuopen == false) {
-        burgermenuContentId1.style.transition = "all ease-in-out .5s";
-        burgermenuContentId2.style.transition = "all ease-in-out .5s";
+        burgermenuContentId1.style.transition = "all ease-in-out .8s";
+        burgermenuContentId2.style.transition = "all ease-in-out .8s";
         burgermenuContentId1.style.transform = "none";
         burgermenuContentId2.style.transform = "none";
         setTimeout(() => { burgermenuIconClose.style.display = "flex"; burgermenuIconOpen.style.display = "none";}, 200);
         burgermenuopen = true;
     }
     else if (burgermenuopen == true) {
-        closeSearch();
-        burgermenuContentId1.style.transition = "all ease-in-out .5s";
-        burgermenuContentId2.style.transition = "all ease-in-out .5s";
+        searchbar.style.transform = "translate(-100%, 0px)";
+        setTimeout(() => { closeSearch()}, 800);
+        burgermenuContentId1.style.transition = "all ease-in-out .8s";
+        burgermenuContentId2.style.transition = "all ease-in-out .8s";
         burgermenuContentId1.style.transform = "translate(-100%, 0px)";
         burgermenuContentId2.style.transform = "translate(-100%, 0px)";
         setTimeout(() => { burgermenuIconClose.style.display = "none"; burgermenuIconOpen.style.display = "flex"; }, 200);
