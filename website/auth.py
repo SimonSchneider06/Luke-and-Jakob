@@ -76,7 +76,7 @@ def login():
         if user:
             if check_password_hash(user.passwort,passwort):
                 flash("Erfogreich Angemeldet",category = "success")
-                login_user(user,remember = True)
+                login_user(user,remember = user.rememberMe)
                 return redirect(url_for("views.logged_in"))
 
             else:
@@ -99,30 +99,45 @@ def logout():
 @login_required
 def change_user_data():
     if request.method == "POST":
-        name = request.form.get("name")
-        telNumber = request.form.get("telNumber")
-        alter = request.form.get("alter")
+
+        #name
+        firstName = request.form.get("firstName")
+        lastName = request.form.get("lastName")
+        #address
+        street = request.form.get("street")
+        houseNumber = request.form.get("houseNumber")
+        plz = request.form.get("PLZ")
+        city = request.form.get("city")
+        country = request.form.get("selectCountry")
+        #remember user
+        rememberMe = request.form.get("rememberMe") #can be on or off
+        
+        #convert rememberMe to boolean value
+        if rememberMe == "on":
+            rememberMe = True
+        else:
+            rememberMe = False
 
         user = current_user
 
-        if len(name) < 4:
-            flash("Vor- und Nachname müssen länger als 4 Zeichen sein",category = "error")
-        elif len(telNumber) != 14:
-            flash("Ihre Telefon Nummer muss 14 Zeichen lang sein",category = "error")
-        else:
-            try:
-                user.name = name
-                user.telNumber = telNumber
-                user.alter = alter
-                
-                db.session.commit()
-                flash("Erfolgreich Daten geändert",category = "success")
+        try:
+            user.firstName = firstName
+            user.lastName = lastName
+            user.street = street
+            user.houseNumber = houseNumber
+            user.plz = plz
+            user.city = city
+            user.country = country
+            user.rememberMe = rememberMe
             
-                return redirect(url_for("views.logged_in"))
-            
-            except:
-                flash("Es ist ein Fehler unterlaufen bitte versuchen sie es nochmal")
-                return render_template("change_account_data.html")
+            db.session.commit()
+            flash("Erfolgreich Daten geändert",category = "success")
+        
+            return redirect(url_for("views.logged_in"))
+        
+        except:
+            flash("Es ist ein Fehler unterlaufen bitte versuchen sie es nochmal")
+            return redirect(url_for("auth.change_user_data"))
 
     return render_template("auth/change_account_data.html")
 
