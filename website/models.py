@@ -7,11 +7,23 @@ from sqlalchemy.sql import func
 class User(db.Model,UserMixin):
     id = db.Column(db.Integer,primary_key = True)
     email = db.Column(db.String(150),unique = True)
-    name = db.Column(db.String(200))
-    telNumber = db.Column(db.Integer)
-    alter = db.Column(db.Integer)
-    passwort = db.Column(db.String(200))
+    #name
+    firstName = db.Column(db.String(50))
+    lastName = db.Column(db.String(50))
+    #address
+    street = db.Column(db.String(50))
+    houseNumber = db.Column(db.String(10))
+    plz = db.Column(db.String(10))
+    city = db.Column(db.String(50))
+    country = db.Column(db.String(50))
+    #password
+    passwort = db.Column(db.String(50))
+    #remember user after login
+    rememberMe = db.Column(db.Boolean)
+    #date added
     date_added = db.Column(db.DateTime(timezone = True),default = func.now())
+
+    #relationships
     role_id = db.Column(db.Integer,db.ForeignKey("role.id"))
 
 

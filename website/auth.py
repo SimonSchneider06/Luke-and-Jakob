@@ -12,38 +12,53 @@ auth = Blueprint("auth",__name__)
 def sign_up():
     if request.method == "POST":
         email = request.form.get("email")
-        name = request.form.get("name")
-        telNumber = request.form.get("telNumber")
-        alter = request.form.get("alter")
+        #name
+        firstName = request.form.get("firstName")
+        lastName = request.form.get("lastName")
+        #address
+        street = request.form.get("street")
+        houseNumber = request.form.get("houseNumber")
+        plz = request.form.get("PLZ")
+        city = request.form.get("city")
+        country = request.form.get("selectCountry")
+        #password
         passwort1 = request.form.get("passwort1")
         passwort2 = request.form.get("passwort2")
+        rememberMe = request.form.get("rememberMe") #can be on or off
         role = Role.query.filter_by(name = "Customer").first()
 
         user = User.query.filter_by(email = email).first()
+
+        #convert rememberMe in boolean value
+        if rememberMe == "on":
+            rememberMe = True
+        else:
+            rememberMe = False
 
         if user:
             flash("Email existiert bereits ",category="error")
         if len(email) < 4:
             flash("Email muss länger als 4 Zeichen sein",category = "error")
-        elif len(name) < 4:
-            flash("Vor- und Nachname müssen länger als 4 Zeichen sein",category = "error")
-        elif len(telNumber) != 12:
-            flash("Ihre Telefon Nummer muss 12 Zeichen lang sein",category = "error")
         elif passwort1 != passwort2:
             flash("Die Passwörter stimmen nicht überein",category = "error")
         elif len(passwort1) < 7:
             flash("Das Passwort muss mindestens 7 Zeichen lang sein",category = "error")
         else:
             new_user = User(email = email,
-                name = name,
-                telNumber = telNumber,
-                alter = alter,
+                firstName = firstName,
+                lastName = lastName,
+                street = street,
+                houseNumber = houseNumber,
+                plz = plz,
+                city = city,
+                country = country,
+                rememberMe = rememberMe,
                 passwort = generate_password_hash(passwort1,method = "sha256"),
                 role = role)
             
             db.session.add(new_user)
             db.session.commit()
-            login_user(new_user,remember = True)
+            login_user(new_user,remember = new_user.rememberMe)
             flash("Erfolgreich Registriert",category = "success")
             
             return redirect(url_for("views.logged_in"))
@@ -116,3 +131,11 @@ def change_user_data():
 @auth.route("/forgot_password")
 def password_reset():
     return render_template("/auth/forgot_password.html")
+
+
+#account page
+
+@auth.route("/account")
+@login_required
+def account_page():
+    return render_template("/auth/account.html")
