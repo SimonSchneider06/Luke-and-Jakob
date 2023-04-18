@@ -14,10 +14,12 @@ const searchbarinput = document.getElementById("navbar-overlay-search-input-id")
 
 function openSearch() {
     searchbar.style.display = "flex";
+    searchbar.style.transition = "all ease-in-out .2s";
+    searchbar.style.transform = "translate(0%, 0px)";
     searchbarinput.focus();
     if (burgermenuopen == true) {
-        burgermenuContentId1.style.transition = "none";
-        burgermenuContentId2.style.transition = "none";
+        burgermenuContentId1.style.transition = "all ease-in-out .2s";
+        burgermenuContentId2.style.transition = "all ease-in-out .2s";
         burgermenuContentId1.style.marginTop = "66px";
     }
     if (screenwidth <= 1000) {
@@ -32,8 +34,12 @@ function openSearch() {
     }
 }
 function closeSearch() {
-    searchbar.style.display = "none";
-    searchbar.style.transform = "none";
+    setTimeout(() => { searchbar.style.display = "none";}, 200);
+    searchbar.style.transition = "all ease-in-out .2s";
+    if (burgermenuopen == false && screenwidth <= 1000) {
+        searchbar.style.transition = "none";
+    }
+    searchbar.style.transform = "translate(0px, -100%)";
     searchbarinput.value = "";
     burgermenuContentId1.style.marginTop = "0px";
     searchwasopen = false;
@@ -51,6 +57,7 @@ function burgermenu() {
         burgermenuopen = true;
     }
     else if (burgermenuopen == true) {
+        searchbar.style.transition = "all ease-in-out .8s";
         searchbar.style.transform = "translate(-100%, 0px)";
         setTimeout(() => { closeSearch()}, 800);
         burgermenuContentId1.style.transition = "all ease-in-out .8s";

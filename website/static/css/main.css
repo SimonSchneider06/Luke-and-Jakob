@@ -18,7 +18,7 @@ body {
     color: white;
     position: sticky;
     top: 0px;
-    z-index :1;
+    z-index: 2;
 }
 
 .navbar-logo-div {
@@ -98,15 +98,16 @@ body {
 }
 
 .search-overlay {
+    display :none;
+    transform:translate(0px, -100%);
     width: 100%;
     position: fixed;
-    display: none;
     align-items: center;
     justify-content: center;
     z-index: 1;
     background-color: black;
     padding-bottom: 20px;
-    transition: all ease-in-out .8s;
+    transition: all ease-in-out .2s;
 }
 
 .navbar-overlay-search-input {
