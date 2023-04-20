@@ -1,7 +1,9 @@
 from os import walk
 from flask import current_app as app
 from .models import Guitar
-from flask import session
+from flask import session, render_template
+from flask_mail import Message
+from website import mail
 
 
 # adds products to shopping cart
@@ -71,3 +73,17 @@ def get_total_price():
             total_price += price
 
     return total_price
+
+
+#send email
+
+def send_email(to,subject,template,**kwargs):
+    msg = Message(app.config["MAIL_PREFIX"] + " " + subject, sender = app.config["MAIL_USERNAME"], recipients = [to])
+    msg.body = render_template("/email/" + template + ".txt", **kwargs)
+    msg.html = render_template("/email/" + template + ".html", **kwargs)
+    mail.send(msg)
+
+#send password reset email
+def send_password_reset_email(user):
+    token = user.generate_password_reset_token()
+    send_email(user.email,"Password Reset","reset_password",user = user,token = token)

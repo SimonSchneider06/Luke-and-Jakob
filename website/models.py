@@ -1,6 +1,9 @@
 from . import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
+import jwt
+from time import time
+from flask import current_app as app
 
 #------------user and roles--------------------------
 
@@ -25,6 +28,22 @@ class User(db.Model,UserMixin):
 
     #relationships
     role_id = db.Column(db.Integer,db.ForeignKey("role.id"))
+
+
+    #generate token to reset password using jwt
+    def generate_password_reset_token(self,expiration = 600):
+        return jwt.encode(
+            {"reset_password":self.id,"exp":time() + expiration},app.config["SECRET_KEY"],algorithm="HS256"
+        )
+
+    #to verify a password reset token, if token valid return user with given id ,else return none
+    @staticmethod
+    def verify_password_reset_token(token):
+        try:
+            id = jwt.decode(token,app.config["SECRET_KEY"],algorithms="HS256")["reset_password"]
+        except:
+            return
+        return User.query.get(id)
 
 
 class Role(db.Model):

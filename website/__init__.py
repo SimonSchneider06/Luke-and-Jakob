@@ -5,9 +5,11 @@ from flask_login import LoginManager,current_user
 from flask_migrate import Migrate
 from flask import current_app as app
 from config import config
+from flask_mail import Mail
 
 db = SQLAlchemy()
 DB_NAME = "database.db"
+mail = Mail()
 
 def create_app(config_name):
     app = Flask(__name__)
@@ -16,6 +18,7 @@ def create_app(config_name):
 
     db.init_app(app) 
     migrate = Migrate(app,db)
+    mail.init_app(app)
 
     from .views import views
     from .auth import auth

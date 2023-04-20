@@ -3,6 +3,7 @@ from .models import User,Role
 from werkzeug.security import generate_password_hash,check_password_hash
 from . import db
 from flask_login import login_user,logout_user,current_user,login_required
+from .helper_functions import send_password_reset_email
 
 auth = Blueprint("auth",__name__)
 
@@ -143,9 +144,49 @@ def change_user_data():
 
 #Passwort vergessen--------------------------------
 
-@auth.route("/forgot_password")
+@auth.route("/forgot_password",methods = ["POST","GET"])
 def password_reset():
+    if current_user.is_authenticated:
+        return redirect(url_for("views.home"))
+
+    if request.method == "POST":
+        #gets email from submit field
+        email = request.form.get("email")
+        
+        user = User.query.filter_by(email = email).first()
+
+        #checks if user exists
+        if user:
+            send_password_reset_email(user)
+
+        flash("Ihnen wurde eine Email gesendet", category = "success")
+        return redirect(url_for("auth.login"))
+
+
     return render_template("/auth/forgot_password.html")
+
+#site for new password after password reset through email
+@auth.route("/reset_password/<token>",methods = ["GET","POST"])
+def new_password(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('views.home'))
+    
+    user = User.verify_password_reset_token(token)
+    #if token not verified
+    if not user:
+        return redirect(url_for("views.home"))
+    
+    if request.method == "POST":
+        password1 = request.form.get("password1")
+        password2 = request.form.get("password2")
+
+        if password1 == password2:
+            user.password = generate_password_hash(password1,method = "sha256")
+            db.session.commit()
+            flash("Ihr Passwort wurde erfolgreich zurückgesetzt",category = "success")
+            return redirect(url_for('views.home'))
+        
+    return render_template("auth/new_password.html")
 
 
 #account page
