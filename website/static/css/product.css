@@ -2,9 +2,6 @@
     display:flex;
     flex-direction:column;
 }
-*{
-    font-family:"Quicksand";
-}
 .img-full-screen{
     height:85vh;
 }
