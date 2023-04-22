@@ -3,24 +3,32 @@
 {% block content %} 
 <div class="container">
     <form method = "POST">
-        <h3 align="center">Change User</h3>
-        <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" name="name" placeholder="Vor- und Nachname Eingeben" value="{{our_user.name}}">
+        <h3 class="text-center">User Rolle ändern</h3>
+
+        <div class="d-flex flex-column align-items-center">
+            <div class="w-50 p-3 mt-3">
+                <h3>Allgemeine Informationen</h3>
+                <ul class="mt-4 mb-4 list-group list-group-flush text-start">
+                    <li class="list-group-item">Name: {{user.firstName}} {{user.lastName}}</li> 
+                    <li class="list-group-item">Email: {{user.email}}</li>
+                    <li class="list-group-item">Rolle: {{user.role.name}}</li>       
+                </ul>
+            </div>
+        
+            <div class="w-50 p-3 mb-3 mt-3">
+                <select class="form-select form-select-lg" aria-label="Rolle auswählen" name="selectRole" id="selectRole">
+                    <option selected value="">Neue Rolle auswählen</option>
+                    <option value="Admin">Admin</option>
+                    <option value="Customer">Customer</option>
+                </select>
+            </div>
+            <div class="w-50 d-flex justify-content-between">
+                <button type="submit" aria-label="Neue Rolle Bestätigen" class="btn btn-primary">Bestätigen</button>
+                <a class="btn btn-danger" aria-label="User löschen" href="{{url_for('admin.delete_user',id = user.id)}}">Delete</a>
+            </div>
+            
         </div>
-        <br>
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" class="form-control" id="email" name="email" placeholder="Email eingeben" value="{{our_user.email}}">
-        </div>
-        <br>
-        <div class="form-group">
-            <label for="role">Role</label>
-            <input type="text" class="form-control" id="role" name="role" placeholder="User Role eingeben" value="{{role.name}}">
-        </div>
-        <br>
-        <button type="submit" class="btn btn-primary">Bestätigen</button>
-        <a class="btn btn-danger" href="{{url_for('admin.delete_user',id = our_user.id)}}">Delete</a>
+        
     </form>
     </div>
 {% endblock %} 

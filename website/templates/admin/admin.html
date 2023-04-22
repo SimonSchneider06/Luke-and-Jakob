@@ -7,11 +7,20 @@
 <h2>Users</h2>
 <form action="POST">
     <table class="table table-hover table-primary table-striped">
+        <tr class="table-primary">
+            <td>Id</td>
+            <td>Vorname</td>
+            <td>Nachname</td>
+            <td>Email</td>
+            <td>Rolle</td>
+        </tr>
     {% for our_user in our_users %} 
         <tr class="table-primary">
-        <td>
-        {{our_user.id}} - <a href="{{url_for('admin.change_user',id = our_user.id)}}">{{our_user.name}}</a> - {{our_user.email}} - {{our_user.role.name}}
-        </td>
+            <td>{{our_user.id}}</td>
+            <td><a href="{{url_for('admin.change_user',id = our_user.id)}}">{{our_user.firstName}}</a></td>
+            <td>{{our_user.lastName}}</td>
+            <td>{{our_user.email}}</td>
+            <td>{{our_user.role.name}}</td>
         </tr>
     {% endfor %}
     </table>

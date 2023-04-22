@@ -160,9 +160,15 @@ def delete_product(id):
 @admin_required()
 def change_user(id):
     user = User.query.filter_by(id = id).first()
-    role = Role.query.filter_by(id = user.role_id).first()
+    
     if request.method == "POST":
-        role_name = request.form.get("role")
+        role_name = request.form.get("selectRole")
+
+        if role_name == "": #if nothing selected throw error
+            flash("Bitte wählen sie eine Rolle aus", category = "error")
+            return redirect(url_for("admin.change_user",id = user.id))
+        
+        
         user_role = Role.query.filter_by(name = role_name).first()
 
         if user_role:
@@ -176,7 +182,7 @@ def change_user(id):
                 flash("Es ist leider ein Fehler unterlaufen. Bitte versuchen sie es erneut", category = "error")
                 return redirect(url_for("admin.change_user",id = user.id))
 
-    return render_template("admin/change_user.html",role = role,our_user = user)
+    return render_template("admin/change_user.html",user = user)
 
 #----------------------------delete user----------------------------------------
 
