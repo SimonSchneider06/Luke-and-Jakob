@@ -168,8 +168,8 @@ def password_reset():
 #site for new password after password reset through email
 @auth.route("/reset_password/<token>",methods = ["GET","POST"])
 def new_password(token):
-    if current_user.is_authenticated:
-        return redirect(url_for('views.home'))
+    # if current_user.is_authenticated:
+    #     return redirect(url_for('views.home'))
     
     user = User.verify_password_reset_token(token)
     #if token not verified
