@@ -1,0 +1,31 @@
+{% extends "./part_templates/base.html" %} {% block title %}Luke&Jakob Konto{% endblock %} 
+
+{% block content %} 
+
+<div class="container">
+    <h1 class="text-center">Mein Konto</h1>
+    
+    <div class="d-flex flex-column align-items-center">
+        <div class="w-50 p-3 mt-3 mb-3">
+            <h3>Allgemeine Informationen</h3>
+            <ul class="mt-4 mb-4 list-group list-group-flush text-start">
+                <li class="list-group-item">Name: {{current_user.firstName}} {{current_user.lastName}}</li> 
+                <li class="list-group-item">Email: {{current_user.email}}</li>       
+            </ul>
+        </div>
+        <div class="w-50 p-3 mt-3 mb-3">
+            <h3>Addresse</h3>
+            <ul class="mt-4 mb-4 list-group list-group-flush text-start">
+                <li class="list-group-item">Straße und Hausnummer: {{current_user.street}} {{current_user.houseNumber}}</li> 
+                <li class="list-group-item">PLZ und Stadt: {{current_user.plz}} {{current_user.city}}</li> 
+                <li class="list-group-item">Land: {{current_user.country}}</li>      
+            </ul>
+        </div>
+        <div class="w-50">
+            <a href="{{url_for('auth.change_user_data')}}" aria-label="Persönliche Daten ändern" class="btn btn-primary">Daten Ändern</a>
+            <a href="{{url_for('auth.new_password', token = current_user.generate_password_reset_token() )}}" aria-label="Passwort ändern" class="btn btn-danger">Passwort Ändern</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
