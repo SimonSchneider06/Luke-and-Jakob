@@ -1,4 +1,4 @@
-from flask import Blueprint,render_template,request,session,redirect,url_for
+from flask import Blueprint,render_template,request,session,redirect,url_for,flash
 from flask_login import current_user,login_required
 from .models import Guitar
 
@@ -51,6 +51,7 @@ def product_site(product_name):
             #makes session cart a list of product_lists, each product_list containing the product id and the number in the shopping_cart
             session["cart"] = [[product.id,1]]
 
+        flash("Produkt erfolgreich im Einkaufswagen hinzugefügt", category = "success")
         return redirect(url_for("views.product_site", product_name = product.name))
 
     return render_template("product.html", product = product)
