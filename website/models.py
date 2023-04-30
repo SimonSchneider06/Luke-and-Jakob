@@ -64,4 +64,5 @@ class Guitar(db.Model):
     name = db.Column(db.String(150), unique = True)
     price = db.Column(db.Integer)
     stock = db.Column(db.Integer)
+    stripe_price_id = db.Column(db.String(100))
     description = db.Column(db.Text)

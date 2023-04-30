@@ -30,6 +30,11 @@
     </div>
     <br>
     <div class="form-group">
+        <label for="stripe_price_id">Stripe Price ID</label>
+        <input type="text" class="form-control" id="stripe_price_id" name="stripe_price_id" placeholder="Stripe Price Id" value="{{product.stripe_price_id}}">
+    </div>
+    <br>
+    <div class="form-group">
         <label for="description">Beschreibung</label>
         <textarea name="description" id="description" class="form-control">
             {{product.description}}

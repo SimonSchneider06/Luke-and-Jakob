@@ -35,6 +35,7 @@ def add_product():
         price = request.form.get("price")
         stock = request.form.get("stock")
         description = request.form.get("description")
+        stripe_price_id = request.form.get("stripe_price_id")
         
         front_img = request.files.getlist("image-deck")
         uploaded_images = request.files.getlist("image")
@@ -46,8 +47,15 @@ def add_product():
 
         
         guitar_name = Guitar.query.filter_by(name = name).first()
+        #checks if guitarname already exists
         if guitar_name:
             flash("Gitarren Name existiert schon", category="error")
+            return redirect(url_for("admin.add_product"))
+        
+        #checks if all fields contain information
+        elif name == "" or price == "" or stock == "" or description == "" or stripe_price_id == "":
+            flash("Bitte füllen sie alle Felder aus", category = "error")
+            return redirect(url_for("admin.add_product"))
 
         else:
             folder_path = save_uploaded_img(front_img,name)
@@ -56,12 +64,13 @@ def add_product():
             else:
                 #flash("Image saved successfully", category = "success")
 
-            #after looping through the images store the guitar model
+                #after looping through the images store the guitar model
 
                 new_guitar = Guitar(name = name,
                 price = price,
                 stock = stock,
-                description = description)
+                description = description,
+                stripe_price_id = stripe_price_id)
                 
                 db.session.add(new_guitar)
                 db.session.commit()
@@ -84,6 +93,7 @@ def change_product(id):
         price = request.form.get("price")
         stock = request.form.get("stock")
         description = request.form.get("description")
+        stripe_price_id = request.form.get("stripe_price_id")
 
         front_img = request.files.getlist("image-deck")
         uploaded_images = request.files.getlist("image")
@@ -121,6 +131,7 @@ def change_product(id):
                         product.price = price
                         product.stock = stock
                         product.description = description
+                        product.stripe_price_id = stripe_price_id
                         db.session.commit()
                         flash("Product Daten erfolgreich verändert",category = "success")
                         return redirect(url_for("admin.admin_page"))

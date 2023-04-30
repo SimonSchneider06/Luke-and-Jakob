@@ -3,7 +3,7 @@
 {% block content %} 
 <div class="container">
     <form method = "POST" enctype="multipart/form-data"> <!--enctype required because of image which is uploaded-->
-        <h3 align="center">Produkt Hinzufügen</h3>
+        <h3 class="text-center">Produkt Hinzufügen</h3>
         <div class="form-group">
             <label for="product-name">Produktname</label>
             <input type="text" class="form-control" id="product-name" name="product-name" placeholder="Produktname Eingeben">
@@ -27,6 +27,11 @@
         <div class="form-group">
             <label for="stock">Lageranzahl</label>
             <input type="number" class="form-control" id="stock" name="stock" placeholder="Lageranzahl Eingeben">
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="stripe_price_id">Stripe Price ID</label>
+            <input type="text" class="form-control" id="stripe_price_id" name="stripe_price_id" placeholder="Stripe Price Id">
         </div>
         <br>
         <div class="form-group">

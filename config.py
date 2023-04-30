@@ -19,6 +19,9 @@ class Config:
     MAX_CONTENT_LENGTH = 1024 * 1024 * 15
     UPLOAD_EXTENSIONS = [".JPG", ".png"]
     UPLOAD_PATH = "./website/static/Bilder/Produktbilder"
+    STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY")
+    STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY")
+    FLASK_APP = os.environ.get("FLASK_APP")
 
     @staticmethod
     def init_app(app):
