@@ -2,21 +2,25 @@
 
     {% block content %}
     <div class="container">
-    <form method = "POST">
-        <h3 align="center">Anmelden</h3>
-        <h6 align="center">Noch nicht Registriert? <a href="/signUp">Registrieren</a></h6>
-        <h6 align="center"><a href="/forgot_password">Passwort vergessen?</a></h6>
-        <div class="form-group">
-            <label for="email">Email Adresse</label>
-            <input type="email" class="form-control" id="email" name="email" placeholder="Email Eingeben">
+        <div class="mb-3 mt-3">
+            <h3 class="text-center" >Anmelden</h3>
+            <h6 class="text-center" >Noch nicht Registriert? <a href="{{url_for('auth.sign_up')}}">Registrieren</a></h6>
+            <h6 class="text-center" ><a href="{{url_for('auth.password_reset')}}">Passwort vergessen?</a></h6>
         </div>
-        <br>
-        <div class="form-group">
-            <label for="passwort">Passwort</label>
-            <input type="password" class="form-control" id="passwort" name="passwort" placeholder="Passwort Eingeben">
+        <div class="mb-3 mt-3">
+            <form class="row g-3" action="{{url_for('auth.login')}}" method = "POST">
+                <div class="form-floating col-12">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
+                    <label for="email">Email addresse</label>
+                </div>
+                <div class="form-floating col-12">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Passwort">
+                    <label for="password">Passwort</label>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary" aria-label="Anmelden">Anmelden</button>
+                </div>
+            </form>
         </div>
-        <br>
-        <button type="submit" class="btn btn-primary">Anmelden</button>
-    </form>
     </div>
     {% endblock %}

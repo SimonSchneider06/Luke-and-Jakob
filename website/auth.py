@@ -70,7 +70,7 @@ def sign_up():
 def login():
     if request.method == "POST":
         email = request.form.get("email")
-        passwort = request.form.get("passwort")
+        passwort = request.form.get("password")
 
         user = User.query.filter_by(email = email).first()
 

@@ -2,47 +2,42 @@
 
 {% block content %}
 <div class="container">
-<form method = "POST" enctype="multipart/form-data">    <!--look add_product.html-->
-    <h3 align="center">Product Daten Ändern</h3>
-    <div class="form-group">
-        <label for="product-name">Productname</label>
-        <input type="text" class="form-control" id="product-name" name="product-name" placeholder="Productname Eingeben" value="{{product.name}}">
+    <form action="{{url_for('admin.add_product')}}" method = "POST" enctype="multipart/form-data"> <!--enctype required because of image which is uploaded-->
+        <h3 class="text-center">Produkt Ändern</h3>
+        <div class="mb-3 mt-3 row g-3">
+            <div class="form-floating col-md-6">
+                <input type="text" class="form-control" id="product-name" name="product-name" placeholder="Produktname Eingeben"value="{{product.name}}">
+                <label for="product-name">Produktname Eingeben</label>
+            </div>
+            <div class="form-floating col-md-6">
+                <input type="number" class="form-control" id="price" name="price" placeholder="Produktpreis Eingeben" value="{{product.price}}">
+                <label for="price">Produktpreis Eingeben</label>
+            </div>
+            <div class="form-group col-12">
+                <label for="image-deck">Produktbild - Frontbild</label>
+                <input type="file" class="form-control" id="image-deck" name="image-deck" placeholder="Produktbild - Frontbild" accept="image/*">
+            </div>
+            <div class="form-group col-12">
+                <label for="image">Produktbilder Einfügen</label>
+                <input type="file" class="form-control" id="image" name="image" placeholder="Produktbilder Einfügen" accept="image/*" multiple>
+            </div>
+            <div class="form-floating col-md-6">
+                <input type="number" class="form-control" id="stock" name="stock" placeholder="Lageranzahl Eingeben"value="{{product.stock}}">
+                <label for="stock">Lageranzahl Eingeben</label>
+            </div>
+            <div class="form-floating col-md-6">
+                <input type="text" class="form-control" id="stripe_price_id" name="stripe_price_id" placeholder="Stripe Price Id" value="{{product.stripe_price_id}}">
+                <label for="stripe_price_id">Stripe Price Id</label>
+            </div>
+            <div class="form-floating col-12">
+                <textarea name="description" id="description" class="form-control">{{product.description}}</textarea>
+                <label for="description">Beschreibung</label>
+            </div>
+            <div class="col-12">
+                <button type="submit" aria-label="Produkt Hinzufügen" class="btn btn-primary">Produkt Hinzufügen</button>
+                <a class="btn btn-danger" href="{{url_for('admin.delete_product',id = product.id)}}">Delete</a>
+            </div>
+        </div>
+    </form>
     </div>
-    <br>
-    <div class="form-group">
-        <label for="price">Preis</label>
-        <input type="number" class="form-control" id="price" name="price" placeholder="Preis eingeben" value="{{product.price}}">
-    </div>
-    <br>
-    <div class="form-group">
-        <label for="image-deck">Produktbild - Frontbild</label>
-        <input type="file" name="image-deck" id="image-deck" class="form-control" placeholder="Bild(er) einfügen" accept="image/*">
-    </div>
-    <br>
-    <div class="form-group">
-        <label for="image">Produktbilder</label>
-        <input type="file" name="image" id="image" class="form-control" placeholder="Bild(er) einfügen" accept="image/*" multiple>
-    </div>
-    <br>
-    <div class="form-group">
-        <label for="stock">Productanzahl</label>
-        <input type="number" class="form-control" id="stock" name="stock"  placeholder="Productanzahl Eingeben" value="{{product.stock}}">
-    </div>
-    <br>
-    <div class="form-group">
-        <label for="stripe_price_id">Stripe Price ID</label>
-        <input type="text" class="form-control" id="stripe_price_id" name="stripe_price_id" placeholder="Stripe Price Id" value="{{product.stripe_price_id}}">
-    </div>
-    <br>
-    <div class="form-group">
-        <label for="description">Beschreibung</label>
-        <textarea name="description" id="description" class="form-control">
-            {{product.description}}
-        </textarea>
-    </div>
-    <br>
-    <button type="submit" class="btn btn-primary">Bestätigen</button>
-    <a class="btn btn-danger" href="{{url_for('admin.delete_product',id = product.id)}}">Delete</a>
-</form>
-</div>
 {% endblock %}

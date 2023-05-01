@@ -2,44 +2,41 @@
 
 {% block content %} 
 <div class="container">
-    <form method = "POST" enctype="multipart/form-data"> <!--enctype required because of image which is uploaded-->
+    <form action="{{url_for('admin.add_product')}}" method = "POST" enctype="multipart/form-data"> <!--enctype required because of image which is uploaded-->
         <h3 class="text-center">Produkt Hinzufügen</h3>
-        <div class="form-group">
-            <label for="product-name">Produktname</label>
-            <input type="text" class="form-control" id="product-name" name="product-name" placeholder="Produktname Eingeben">
+        <div class="mb-3 mt-3 row g-3">
+            <div class="form-floating col-md-6">
+                <input type="text" class="form-control" id="product-name" name="product-name" placeholder="Produktname Eingeben">
+                <label for="product-name">Produktname Eingeben</label>
+            </div>
+            <div class="form-floating col-md-6">
+                <input type="number" class="form-control" id="price" name="price" placeholder="Produktpreis Eingeben">
+                <label for="price">Produktpreis Eingeben</label>
+            </div>
+            <div class="form-group col-12">
+                <label for="image-deck">Produktbild - Frontbild</label>
+                <input type="file" class="form-control" id="image-deck" name="image-deck" placeholder="Produktbild - Frontbild" accept="image/*">
+            </div>
+            <div class="form-group col-12">
+                <label for="image">Produktbilder Einfügen</label>
+                <input type="file" class="form-control" id="image" name="image" placeholder="Produktbilder Einfügen" accept="image/*" multiple>
+            </div>
+            <div class="form-floating col-md-6">
+                <input type="number" class="form-control" id="stock" name="stock" placeholder="Lageranzahl Eingeben">
+                <label for="stock">Lageranzahl Eingeben</label>
+            </div>
+            <div class="form-floating col-md-6">
+                <input type="text" class="form-control" id="stripe_price_id" name="stripe_price_id" placeholder="Stripe Price Id">
+                <label for="stripe_price_id">Stripe Price Id</label>
+            </div>
+            <div class="form-floating col-12">
+                <textarea name="description" id="description" class="form-control"></textarea>
+                <label for="description">Beschreibung</label>
+            </div>
+            <div class="col-12">
+                <button type="submit" aria-label="Produkt Hinzufügen" class="btn btn-primary">Produkt Hinzufügen</button>
+            </div>
         </div>
-        <br>
-        <div class="form-group">
-            <label for="price">Produktpreis</label>
-            <input type="number" class="form-control" id="price" name="price" placeholder="Preis Eingeben">
-        </div>
-        <br>
-        <div class="form-group">
-            <label for="image-deck">Produktbild - Frontbild</label>
-            <input type="file" name="image-deck" id="image-deck" class="form-control" placeholder="Bild(er) einfügen" accept="image/*">
-        </div>
-        <br>
-        <div class="form-group">
-            <label for="image">Produktbilder</label>
-            <input type="file" name="image" id="image" class="form-control" placeholder="Bild(er) einfügen" accept="image/*" multiple>
-        </div>
-        <br>
-        <div class="form-group">
-            <label for="stock">Lageranzahl</label>
-            <input type="number" class="form-control" id="stock" name="stock" placeholder="Lageranzahl Eingeben">
-        </div>
-        <br>
-        <div class="form-group">
-            <label for="stripe_price_id">Stripe Price ID</label>
-            <input type="text" class="form-control" id="stripe_price_id" name="stripe_price_id" placeholder="Stripe Price Id">
-        </div>
-        <br>
-        <div class="form-group">
-            <label for="description">Beschreibung</label>
-            <textarea name="description" id="description" class="form-control"></textarea>
-        </div>
-        <br>
-        <button type="submit" class="btn btn-primary">Product Hinzufügen</button>
     </form>
     </div>
 {% endblock %}
