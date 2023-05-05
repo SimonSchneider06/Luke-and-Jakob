@@ -6,10 +6,7 @@ from .decorators import admin_required
 import os
 from werkzeug.utils import secure_filename
 from flask import current_app as app
-import shutil
-
-#import imghdr to validate image file and size
-import imghdr
+from .helper_functions import get_file_by_product_name,check_save_img, save_uploaded_img, del_dir_from_guitar_name
 
 admin = Blueprint("admin",__name__)
 
@@ -95,13 +92,20 @@ def change_product(id):
         description = request.form.get("description")
         stripe_price_id = request.form.get("stripe_price_id")
 
-        front_img = request.files.getlist("image-deck")
-        uploaded_images = request.files.getlist("image")
+        #check if new images recieved
+        img_0 = request.files.get("img-0")
+        img_1 = request.files.get("img-1")
+        img_2 = request.files.get("img-2")
+        img_3 = request.files.get("img-3")
+        img_4 = request.files.get("img-4")
+
+        # front_img = request.files.getlist("image-deck")
+        # uploaded_images = request.files.getlist("image")
 
         # adds the other images after the front_img so 
         # they are all in one list with the front img first
 
-        front_img.extend(uploaded_images)
+        # front_img.extend(uploaded_images)
 
 
         #search for guitars with same name
@@ -117,32 +121,38 @@ def change_product(id):
 
         else:
             if product:
+                        
+                check_save_img(img_0,product.name,0)
+                check_save_img(img_1,product.name,1)
+                check_save_img(img_2,product.name,2)
+                check_save_img(img_3,product.name,3)
+                check_save_img(img_4,product.name,4)
                 
                 #checks the images
-                folder_path = save_uploaded_img(front_img,product_name)
-                if folder_path == None:
-                    flash("Images were not valid please try again", category="error")
+                # folder_path = save_uploaded_img(front_img,product_name)
+                # if folder_path == None:
+                #     flash("Images were not valid please try again", category="error")
 
-                else:
+                
 
-                    try:
+                try:
 
-                        product.name = product_name
-                        product.price = price
-                        product.stock = stock
-                        product.description = description
-                        product.stripe_price_id = stripe_price_id
-                        db.session.commit()
-                        flash("Product Daten erfolgreich verändert",category = "success")
-                        return redirect(url_for("admin.admin_page"))
-                        
-                    except:
-                        flash("Es ist ein Fehler unterlaufen bitte versuchen sie es erneut", category = "error")
-                        # return render_template("change_product.html",product = product)
-                        return redirect(url_for("admin.change_product",id = product.id ))
+                    product.name = product_name
+                    product.price = price
+                    product.stock = stock
+                    product.description = description
+                    product.stripe_price_id = stripe_price_id
+                    db.session.commit()
+                    flash("Product Daten erfolgreich verändert",category = "success")
+                    return redirect(url_for("admin.admin_page"))
+                    
+                except:
+                    flash("Es ist ein Fehler unterlaufen bitte versuchen sie es erneut", category = "error")
+                    # return render_template("change_product.html",product = product)
+                    return redirect(url_for("admin.change_product",id = product.id ))
         
 
-    return render_template("admin/change_product.html",product = product)
+    return render_template("admin/change_product.html",product = product,os = os)
 
 #---------------------delete product-------------------------------------
 
@@ -213,57 +223,23 @@ def delete_user(id):
         flash("Es ist ein Fehler aufgetreten", category = "error")
         return redirect(url_for("admin.admin_page"))
 
-# ------------------------------validate image function----------------------
 
-def validate_image(stream):
-    header = stream.read(512)
-    stream.seek(0)
-    format = imghdr.what(None,header)
-    if not format:
-        return None
-    return "." + (format if format != "jpeg" else "JPG")
+#----------delete single img from product
+@admin.route("/delete_product_img/<product_name>/<int:number>", methods = ["GET"])
+@login_required
+@admin_required()
+def delete_product_img(product_name, number):
 
-#saves , and checks images from array---------------------------------------------------------
+    file_path = get_file_by_product_name(product_name,number)
+    product = Guitar.query.filter_by(name = product_name).first()
+    #flash(file_path)
+    full_path = f"./website/static/{file_path}"
 
-def save_uploaded_img(img_list,guitar_name):
-    #create count number
-    i = 0
+    if os.path.exists(full_path):
+        os.remove(full_path)
+        flash(f"Bild {number} erfolgreich gelöscht", category = "success")
+    else:
+        flash("Bild existiert nicht", category = "error")
+        return redirect(url_for("admin.change_product", id = product.id))    
 
-    #loops through the uploaded_images array
-    for uploaded_img in img_list:
-        #makes the filename secure
-
-        filename = secure_filename(uploaded_img.filename)
-        #filename = uploaded_img.filename
-
-        #if filename is empty -> no file received so if not empty -> file received
-        if filename != "":
-            
-            #splits the extension of the filename to look if its valid or not 
-            file_ext = os.path.splitext(filename)[1]
-            # print(file_ext)
-
-            # if not valid abort  -- "\" makes the if go over the next line
-            if file_ext not in app.config["UPLOAD_EXTENSIONS"] or file_ext != validate_image(uploaded_img.stream):
-                abort(400)
-
-            new_folder_path = app.config["UPLOAD_PATH"] + f"/{guitar_name}"
-            if not os.path.exists(new_folder_path):
-                os.mkdir(new_folder_path)
-
-            #save img in ./website/static/Bilder/Productbilder/name of the guitar so there cant be duplicates
-            path = os.path.join(new_folder_path,str(i) + file_ext )
-            uploaded_img.save(path)
-            #adding one to image count
-            i += 1 
-
-    return new_folder_path if i >= 1 else None
-
-
-#----------delete directory of image by guitar---------
-
-def del_dir_from_guitar_name(guitar_name):
-    #gets path
-    img_path = app.config["UPLOAD_PATH"] + f"/{guitar_name}"
-    #Deletes directory with imgs
-    shutil.rmtree(img_path)
+    return redirect(url_for("admin.change_product", id = product.id))
