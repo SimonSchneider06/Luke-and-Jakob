@@ -5,9 +5,9 @@
 {% endblock %}
 
 {% block content %} 
-    <h1 align="center">Ihr Einkaufswagen</h1>
+    <h1 class="text-center">Ihr Einkaufswagen</h1>
     {% if session["cart"] %}
-        <form action="" method="POST"> 
+        <form action="{{url_for('views.checkout')}}" method="POST"> 
             <div id="head-container" class="container-xxl row between big m-auto mt-3">
                 <div class="column width-80">
 
