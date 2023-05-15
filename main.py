@@ -5,4 +5,4 @@ app = create_app(os.getenv("FLASK_CONFIG") or "default")
 
 
 if __name__ == '__main__':
-    app.run(port = 5000,debug = True)
+    app.run(port = 5000,debug = True,ssl_context = "adhoc")

@@ -25,6 +25,8 @@ class User(db.Model,UserMixin):
     rememberMe = db.Column(db.Boolean)
     #date added
     date_added = db.Column(db.DateTime(timezone = True),default = func.now())
+    #3rd party
+    thirdParty = db.Column(db.Boolean)  #used to check if google or other login is needed
 
     #relationships
     role_id = db.Column(db.Integer,db.ForeignKey("role.id"))

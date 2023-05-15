@@ -1,9 +1,12 @@
-from flask import Blueprint,render_template,request,flash,redirect,url_for
+from flask import Blueprint,render_template,request,flash,redirect,url_for,abort
 from .models import User,Role
 from werkzeug.security import generate_password_hash,check_password_hash
 from . import db
 from flask_login import login_user,logout_user,current_user,login_required
 from .helper_functions import send_password_reset_email
+from .oauth import OAuthSignIn
+import requests
+import json
 
 auth = Blueprint("auth",__name__)
 
@@ -55,6 +58,7 @@ def sign_up():
                 country = country,
                 rememberMe = rememberMe,
                 passwort = generate_password_hash(passwort1,method = "sha256"),
+                thirdParty = False,
                 role = role)
             
             db.session.add(new_user)
@@ -66,6 +70,7 @@ def sign_up():
 
     return render_template("auth/sign_up.html")
 
+#login page; POST method gets normal login
 @auth.route('/login',methods = ['GET',"POST"])
 def login():
     if request.method == "POST":
@@ -74,7 +79,7 @@ def login():
 
         user = User.query.filter_by(email = email).first()
 
-        if user:
+        if user and user.thirdParty != True: # user should exist and not be a registered through 3rd party, like google
             if check_password_hash(user.passwort,passwort):
                 flash("Erfogreich Angemeldet",category = "success")
                 login_user(user,remember = user.rememberMe)
@@ -84,9 +89,68 @@ def login():
                 flash("Passwort ist Falsch",category="error")
 
         else:
-            flash("Email existiert nicht")
+            flash("Email existiert nicht", category = "error")
 
     return render_template("auth/login.html")
+
+#oauth login
+@auth.route("/login/<provider_name>", methods = ["POST"])
+def oauth_login(provider_name):
+    
+    #get URL for google login
+    provider = OAuthSignIn(provider_name)
+    #get request_uri to ask for data
+    request_uri = provider.get_request_uri(request)
+
+    return redirect(request_uri)
+
+#get information from provider
+@auth.route("/login/<provider_name>/callback/")
+def callback(provider_name):
+    # get authorization code
+    code = request.args.get("code")
+    
+    #get provider
+    provider = OAuthSignIn(provider_name)
+    
+    #get userinfo
+    userinfo_response = provider.token_request(request,code)
+
+    #check email verification
+    if userinfo_response.json().get("email_verified"):
+        print(userinfo_response)
+        unique_id = userinfo_response.json()["sub"]
+        users_email = userinfo_response.json()["email"]
+        first_name = userinfo_response.json()["given_name"]
+        last_name = userinfo_response.json()["family_name"]
+
+        user = User.query.filter_by(email = users_email).first()
+        #wenn user bereits existiert einloggen
+        if user:
+            login_user(user)
+            flash("Sie haben sich erfolgreich eingeloggt", category="success")
+            return redirect(url_for("views.home"))
+
+        else:
+            new_user = User(
+                email = users_email,
+                firstName = first_name,
+                lastName = last_name,
+                thirdParty = True,
+                role_id = 2 #Customer Role
+            )
+
+            db.session.add(new_user)
+            db.session.commit()
+
+            flash("Sie haben sich erfolgreich registriert", category="success")
+            return redirect(url_for("views.home"))
+
+    else:
+        flash(f"User email not available or not verified by {provider}", category="error")
+        abort(400)
+
+
 
 @auth.route("/logout")
 @login_required

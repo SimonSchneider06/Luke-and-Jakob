@@ -22,6 +22,13 @@ class Config:
     STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY")
     STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY")
     FLASK_APP = os.environ.get("FLASK_APP")
+    OAUTH_CREDENTIALS = {
+        "google": {
+            "id": os.environ.get("GOOGLE_CLIENT_ID"),
+            "secret": os.environ.get("GOOGLE_CLIENT_SECRET"),
+            "url":"https://accounts.google.com/.well-known/openid-configuration"
+        }
+    }
 
     @staticmethod
     def init_app(app):
