@@ -14,7 +14,7 @@
                     {% for product_list in session["cart"] %}
                     {% set product = get_product_by_id(product_list[0]) %} 
                          
-                        <div class="row border p-2 m-2 product-container">
+                        <div class="row border p-4 m-2 product-container">
                             <a class="max-300p min-80p" href="{{url_for('views.product_site',product_name = product.name)}}">
                                 <img class="center-block width-80 max-300p min-80p product-img" src="{{url_for('static',filename=get_file_by_product_name(product.name,0) )}}" alt="Guitar Image from model called {{product.name}}">
                             </a>
