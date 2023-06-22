@@ -1,9 +1,13 @@
 window.onresize = () => {
     screenwidth = window.innerWidth
+    const burgermenuIconOpen1 = document.getElementById("navbar-burgermenu-icon-open-id")
+    const burgermenuIconClose1 = document.getElementById("navbar-burgermenu-icon-close-id")
     //on window resize check if class needs to be changed
     if(screenwidth <= 805){
         // align headcontainer items in column
-        headContainerEl.className = "container-xxl column m-auto mt-3";
+        if(headContainerEl){
+            headContainerEl.className = "container-xxl column m-auto mt-3";
+        }
 
         // align all product-containers column
         for(let i = 0; i < productContainerRowELs.length; i++){
@@ -12,7 +16,9 @@ window.onresize = () => {
     }
     else{
         // align headcontainer items next to each other
-        headContainerEl.className = "container-xxl row between big m-auto mt-3";
+        if(headContainerEl){
+            headContainerEl.className = "container-xxl row between big m-auto mt-3";
+        }
 
         // align all product-containers row
         for(let i = 0; i < productContainerRowELs.length; i++){
@@ -20,8 +26,7 @@ window.onresize = () => {
         } 
     }
     
-    const burgermenuIconOpen1 = document.getElementById("navbar-burgermenu-icon-open-id")
-    const burgermenuIconClose1 = document.getElementById("navbar-burgermenu-icon-close-id")
+    
     if (screenwidth > 1000) {
         burgermenuContentId1.style.transition = "none";
         burgermenuContentId2.style.transition = "none";
@@ -48,17 +53,6 @@ window.onresize = () => {
         burgermenuopen = false;
     }
 }
-
-//shopping cart price box ---------------------
-
-// headcontainer
-const headContainerEl = document.getElementById("head-container");
-
-// product rows 
-const productContainerRowELs = document.getElementsByClassName("product-container");
-
-// 
-// const productImgEls = document.getElementsByClassName("product-img");
 
 // for searchbar --------------------
 // for searchbar and navbar 
@@ -131,6 +125,17 @@ function burgermenu() {
     }
 }
 
+
+//shopping cart price box ---------------------
+
+// headcontainer
+const headContainerEl = document.getElementById("head-container");
+
+// product rows 
+const productContainerRowELs = document.getElementsByClassName("product-container");
+
+// 
+// const productImgEls = document.getElementsByClassName("product-img");
 
 //making the product-imgs bigger on click-----------------------
 
