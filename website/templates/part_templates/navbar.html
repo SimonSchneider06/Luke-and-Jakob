@@ -4,7 +4,7 @@
   <a class = "logo" href="/"><img src="{{url_for('static',filename = 'Bilder/logo.png')}}" alt="" height="20" ></a>
 <ul>
   <li><a class="text" href="/shop">Shop</a></li>
-  <li><a class="text" href="#">Über uns</a></li>
+  <li><a class="text" href="{{url_for('views.about_us')}}">Über uns</a></li>
   {% if current_user.is_authenticated %}
   <li><a class="text" href="/logout">Logout</a></li>
   <li><a class="text" href="/change_user">Account Ändern</a></li>
