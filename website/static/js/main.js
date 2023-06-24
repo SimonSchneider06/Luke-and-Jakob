@@ -1,10 +1,11 @@
-//import {ResponsiveDesign} from "./ResponsiveDesign";
+import { ResponsiveElementStyle } from "./ResponsiveDesign.js";
 
 window.onresize = () => {
-    //productContainerRow.changeClassName();
+
     screenwidth = window.innerWidth
     const burgermenuIconOpen1 = document.getElementById("navbar-burgermenu-icon-open-id")
     const burgermenuIconClose1 = document.getElementById("navbar-burgermenu-icon-close-id")
+    shoppingCartProductContainer.changeStyle();
     //on window resize check if class needs to be changed
     if(screenwidth <= 805){
         // align headcontainer items in column
@@ -127,7 +128,18 @@ function burgermenu() {
         burgermenuopen = false;
     }
 }
+//burgermenu bugfix------------------------
+const burgerMenuBtn = document.getElementById("burgermenu-btn");
+burgerMenuBtn.addEventListener("click",burgermenu);
 
+const navbarSearchBtn = document.getElementById("navbar-search-btn");
+navbarSearchBtn.addEventListener("click",openSearch);
+
+const overlayNavbarSearchBtn = document.getElementById("overlay-nav-search-btn");
+overlayNavbarSearchBtn.addEventListener("click",openSearch);
+
+const overlayNavbarCloseBtn = document.getElementById("overlay-nav-close-btn");
+overlayNavbarCloseBtn.addEventListener("click",closeSearch);
 
 //shopping cart price box ---------------------
 
@@ -137,7 +149,7 @@ const headContainerEl = document.getElementById("head-container");
 // product rows 
 //const productContainerRowELs = document.getElementsByClassName("product-container");
 
-//productContainerRow = ResponsiveDesign("column border p-2 m-2 product-container","row border p-2 m-2 product-container",805);
+let shoppingCartProductContainer = new ResponsiveElementStyle("product-container","flex-direction","row","column",1000);
 
 // 
 // const productImgEls = document.getElementsByClassName("product-img");

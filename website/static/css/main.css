@@ -60,6 +60,7 @@ body {
     margin: 8px;
     padding: 12px;
     border-radius: 8px;
+    cursor: pointer;
 }
 .navbar-nav-searchcart-i{
     font-size :17px;
@@ -117,6 +118,7 @@ body {
     background-color: black;
     display: flex;
     padding: 4px;
+    cursor:pointer;
 }
 .navbar-overlay-search-a:hover {
         opacity: .9;
