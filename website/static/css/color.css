@@ -29,3 +29,10 @@
 .blur-grey-l{
     box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.16), 0px 2px 10px 0px rgba(0, 0, 0, 0.12);
 }
+
+/* ----------------- hover----------------------- */
+
+.b-white:hover{
+    color:white;
+    background-color:rgb(33, 37, 41);
+}
