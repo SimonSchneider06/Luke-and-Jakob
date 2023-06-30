@@ -1,7 +1,7 @@
 .text-decoration-none{
     text-decoration: none;
 }
-.ul-dots-invisible{
+.li-dots-invisible{
     list-style-type: none;
 }
 /* ---------------------background colors-------------------*/
@@ -21,7 +21,7 @@
 .b-white{
     background-color:white;
 }
-.dark-grey{
+.c-grey-d{
     color:rgb(33, 37, 41);
 }
 .color-inverse{
