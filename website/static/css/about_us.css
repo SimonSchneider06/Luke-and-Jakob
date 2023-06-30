@@ -1,29 +1,9 @@
-.big-text{
-    font-size:xx-large;
+body{
+    background-color: #f0f0f0;
 }
-.block-center{
-    margin: 0 auto;
-    display: block;
+.rounded-big{
+    border-radius: 3em;
 }
-@media (max-width:1000px){
-    .big-text{
-        font-size:x-large;
-    }
-}
-.b-color-grey{
-    background-color:#f0f0f0;
-}
-.inverse2{
-    background-color:#023047;
-    color:#f2f2f2;
-}
-.inverse{
-    color:#f2f2f2;
-    background-color:#212529;
-}
-.horizontal-box{
-    box-shadow: #212529 0em 0em 0.1em; 
-}
-.b-color-white{
-    background-color: white;
+.rounded-m{
+    border-radius:1em;
 }
