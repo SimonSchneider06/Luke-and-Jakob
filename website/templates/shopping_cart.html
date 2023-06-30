@@ -8,23 +8,23 @@
     <h1 class="text-center">Ihr Einkaufswagen</h1>
     {% if session["cart"] %}
         <form action="{{url_for('views.checkout')}}" method="POST"> 
-            <div id="head-container" class="container-xxl row between big m-auto mt-3">
-                <div class="column width-80">
+            <div id="head-container" class="container-xxl row justify-content-between align-items-start m-auto mt-3">
+                <div class="column w-80">
 
                     {% for product_list in session["cart"] %}
                     {% set product = get_product_by_id(product_list[0]) %} 
                          
-                        <div class="row d-flex border p-4 m-2 product-container">
+                        <div class="row d-flex b-solid-grey p-4 m-2 product-container">
                             <a class="max-300p min-80p" href="{{url_for('views.product_site',product_name = product.name)}}">
-                                <img class="center-block width-80 max-300p min-80p product-img" src="{{url_for('static',filename=get_file_by_product_name(product.name,0) )}}" alt="Guitar Image from model called {{product.name}}">
+                                <img class="center-block w-80 max-300p min-80p product-img" src="{{url_for('static',filename=get_file_by_product_name(product.name,0) )}}" alt="Guitar Image from model called {{product.name}}">
                             </a>
 
                             <div class="w-fit-content">
-                                <h3 class="center">{{product.name}}</h3>
-                                <h3 class="center" id="product-price">{{product.price}}€</h3>
+                                <h3 class="text-center">{{product.name}}</h3>
+                                <h3 class="text-center" id="product-price">{{product.price}}€</h3>
                             </div> 
 
-                            <div class="dropdown w-120p m-2">
+                            <div class="dropdown w-7_5e m-2">
                                 <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Menge: {{ product_list[1] }}
                                 </button>
@@ -35,14 +35,14 @@
                                 </ul>
                             </div> 
 
-                            <a href="{{url_for('views.delete_cart_item',product_id = product.id)}}" class="width-16p">
+                            <a href="{{url_for('views.delete_cart_item',product_id = product.id)}}" class="w-1e">
                                 <i class="bi bi-trash"></i>
                             </a>
                         </div>
                     {% endfor %} 
                     
                 </div>
-                <div class="column width-20">
+                <div class="column w-20">
                     <h2>Gesamtpreis</h2>
                     <h4>{{get_total_price()}}€</h4>
                     <button class="btn btn-warning">Zur Kasse</button>
