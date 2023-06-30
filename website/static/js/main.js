@@ -1,17 +1,15 @@
-import { ResponsiveElementStyle } from "./ResponsiveDesign.js";
-
 window.onresize = () => {
 
     screenwidth = window.innerWidth
     const burgermenuIconOpen1 = document.getElementById("navbar-burgermenu-icon-open-id")
     const burgermenuIconClose1 = document.getElementById("navbar-burgermenu-icon-close-id")
-    shoppingCartProductContainer.changeStyle();
     //on window resize check if class needs to be changed
     if(screenwidth <= 805){
         // align headcontainer items in column
         if(headContainerEl){
             headContainerEl.className = "container-xxl column m-auto mt-3";
         }
+        
 
         // align all product-containers column
         // for(let i = 0; i < productContainerRowELs.length; i++){
@@ -148,8 +146,6 @@ const headContainerEl = document.getElementById("head-container");
 
 // product rows 
 //const productContainerRowELs = document.getElementsByClassName("product-container");
-
-let shoppingCartProductContainer = new ResponsiveElementStyle("product-container","flex-direction","row","column",1000);
 
 // 
 // const productImgEls = document.getElementsByClassName("product-img");

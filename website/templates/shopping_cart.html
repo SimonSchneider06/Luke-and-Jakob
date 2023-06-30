@@ -14,12 +14,12 @@
                     {% for product_list in session["cart"] %}
                     {% set product = get_product_by_id(product_list[0]) %} 
                          
-                        <div class="row border p-4 m-2 product-container">
+                        <div class="row d-flex border p-4 m-2 product-container">
                             <a class="max-300p min-80p" href="{{url_for('views.product_site',product_name = product.name)}}">
                                 <img class="center-block width-80 max-300p min-80p product-img" src="{{url_for('static',filename=get_file_by_product_name(product.name,0) )}}" alt="Guitar Image from model called {{product.name}}">
                             </a>
 
-                            <div class="width-20">
+                            <div class="w-fit-content">
                                 <h3 class="center">{{product.name}}</h3>
                                 <h3 class="center" id="product-price">{{product.price}}€</h3>
                             </div> 
@@ -36,10 +36,7 @@
                             </div> 
 
                             <a href="{{url_for('views.delete_cart_item',product_id = product.id)}}" class="width-16p">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                                </svg>
+                                <i class="bi bi-trash"></i>
                             </a>
                         </div>
                     {% endfor %} 
