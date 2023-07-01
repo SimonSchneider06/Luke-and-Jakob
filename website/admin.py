@@ -1,12 +1,11 @@
-from flask import Blueprint, render_template,url_for,request,flash, redirect, abort
+from flask import Blueprint, render_template,url_for,request,flash, redirect
 from flask_login import login_required, current_user
 from .models import User, Guitar, Role
 from . import db
 from .decorators import admin_required
 import os
-from werkzeug.utils import secure_filename
 from flask import current_app as app
-from .helper_functions import get_file_by_product_name,check_save_img, save_uploaded_img, del_dir_from_guitar_name
+from .file_management import get_file_path_by_product_name,check_save_img, save_uploaded_img, del_dir_from_guitar_name
 
 admin = Blueprint("admin",__name__)
 
@@ -230,7 +229,7 @@ def delete_user(id):
 @admin_required()
 def delete_product_img(product_name, number):
 
-    file_path = get_file_by_product_name(product_name,number)
+    file_path = get_file_path_by_product_name(product_name,number)
     product = Guitar.query.filter_by(name = product_name).first()
     #flash(file_path)
     full_path = f"./website/static/{file_path}"

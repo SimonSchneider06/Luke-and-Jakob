@@ -4,6 +4,7 @@ from sqlalchemy.sql import func
 import jwt
 from time import time
 from flask import current_app as app
+from werkzeug.security import generate_password_hash, check_password_hash
 
 #------------user and roles--------------------------
 
@@ -20,7 +21,7 @@ class User(db.Model,UserMixin):
     city = db.Column(db.String(50))
     country = db.Column(db.String(50))
     #password
-    passwort = db.Column(db.String(50))
+    passwort_hash = db.Column(db.String(50))
     #remember user after login
     rememberMe = db.Column(db.Boolean)
     #date added
@@ -46,6 +47,17 @@ class User(db.Model,UserMixin):
         except:
             return
         return User.query.get(id)
+    
+    @property
+    def password(self):
+        raise AttributeError("Password is not a readable Attribute")
+    
+    @password.setter
+    def password(self,password):
+        self.passwort_hash = generate_password_hash(password,"sha256")
+
+    def verifyPassword(self,password) -> bool:
+        return check_password_hash(self.passwort_hash,password)
 
 
 class Role(db.Model):

@@ -1,5 +1,5 @@
 from flask import Blueprint,render_template,request,session,redirect,url_for,flash
-from flask_login import current_user,login_required
+from flask_login import login_required
 from .models import Guitar
 import stripe
 

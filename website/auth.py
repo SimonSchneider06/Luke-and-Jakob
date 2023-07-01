@@ -1,12 +1,9 @@
 from flask import Blueprint,render_template,request,flash,redirect,url_for,abort
 from .models import User,Role
-from werkzeug.security import generate_password_hash,check_password_hash
 from . import db
 from flask_login import login_user,logout_user,current_user,login_required
-from .helper_functions import send_password_reset_email
+from .email import send_password_reset_email
 from .oauth import OAuthSignIn
-import requests
-import json
 
 auth = Blueprint("auth",__name__)
 
@@ -15,6 +12,9 @@ auth = Blueprint("auth",__name__)
 @auth.route("/signUp",methods=['GET',"POST"])
 def sign_up():
     if request.method == "POST":
+
+        # get data from html
+
         email = request.form.get("email")
         #name
         firstName = request.form.get("firstName")
@@ -57,7 +57,7 @@ def sign_up():
                 city = city,
                 country = country,
                 rememberMe = rememberMe,
-                passwort = generate_password_hash(passwort1,method = "sha256"),
+                passwort = passwort1,
                 thirdParty = False,
                 role = role)
             
@@ -80,7 +80,7 @@ def login():
         user = User.query.filter_by(email = email).first()
 
         if user and user.thirdParty != True: # user should exist and not be a registered through 3rd party, like google
-            if check_password_hash(user.passwort,passwort):
+            if user.verify_password(passwort):
                 flash("Erfogreich Angemeldet",category = "success")
                 login_user(user,remember = user.rememberMe)
                 return redirect(url_for("views.logged_in"))
@@ -108,13 +108,13 @@ def oauth_login(provider_name):
 @auth.route("/login/<provider_name>/callback/")
 def callback(provider_name):
     # get authorization code
-    code = request.args.get("code")
+    auth_code = request.args.get("code")
     
     #get provider
     provider = OAuthSignIn(provider_name)
     
     #get userinfo
-    userinfo_response = provider.token_request(request,code)
+    userinfo_response = provider.token_request(request,auth_code)
 
     #check email verification
     if userinfo_response.json().get("email_verified"):
@@ -245,7 +245,7 @@ def new_password(token):
         password2 = request.form.get("password2")
 
         if password1 == password2:
-            user.password = generate_password_hash(password1,method = "sha256")
+            user.password = password1
             db.session.commit()
             flash("Ihr Passwort wurde erfolgreich zurückgesetzt",category = "success")
             return redirect(url_for('views.home'))

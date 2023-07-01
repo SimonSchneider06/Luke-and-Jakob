@@ -1,9 +1,7 @@
-from flask import Flask,render_template
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from os import walk
-from flask_login import LoginManager,current_user
+from flask_login import LoginManager
 from flask_migrate import Migrate
-from flask import current_app as app
 from config import config
 from flask_mail import Mail
 import stripe
@@ -58,11 +56,12 @@ def create_app(config_name):
         return User.query.get(int(id))
     
     #import methods to be used in jinja 
-    from .helper_functions import get_file_by_product_name,get_product_by_id,get_total_price
+    from .jinja_functions import get_product_by_id,calculate_total_shopping_price
+    from .file_management import get_file_path_by_product_name
 
     #integrates function to jinja2 
-    app.jinja_env.globals.update(get_file_by_product_name = get_file_by_product_name)
+    app.jinja_env.globals.update(get_file_path_by_product_name = get_file_path_by_product_name)
     app.jinja_env.globals.update(get_product_by_id = get_product_by_id)
-    app.jinja_env.globals.update(get_total_price = get_total_price)
+    app.jinja_env.globals.update(calculate_total_shopping_price = calculate_total_shopping_price)
 
     return app

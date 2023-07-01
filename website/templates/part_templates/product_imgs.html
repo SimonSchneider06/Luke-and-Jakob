@@ -1,6 +1,6 @@
 
-{% if get_file_by_product_name(product.name,img_number) != None %}
-    <img class="form-control" id="img-{{img_number}}" src="{{url_for('static', filename=(get_file_by_product_name(product.name,img_number) ) )}}" alt="">
+{% if get_file_path_by_product_name(product.name,img_number) != None %}
+    <img class="form-control" id="img-{{img_number}}" src="{{url_for('static', filename=(get_file_path_by_product_name(product.name,img_number) ) )}}" alt="">
     <label class="mt-3" for="img-{{img_number}}">Produktbild {{img_number}} 
         <a href="{{url_for('admin.delete_product_img', product_name = product.name, number = img_number)}}" class="btn btn-danger">
             Delete 

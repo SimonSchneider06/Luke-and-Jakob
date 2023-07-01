@@ -12,7 +12,7 @@
             <div class="col">
             <a class="text-decoration-none c-grey-d" href="{{url_for('views.product_site',product_name = product.name)}}">
             <div class="card b-white w-18e margin-bottom">
-                <img class="card-img-top" src="{{url_for('static', filename = get_file_by_product_name(product.name,0) )}}" alt="Product Image of Guitar named {{product.name}}">
+                <img class="card-img-top" src="{{url_for('static', filename = get_file_path_by_product_name(product.name,0) )}}" alt="Product Image of Guitar named {{product.name}}">
                 <div class="card-body">
                     <h3 class="card-title">{{product.name}}</h3>
                     <h4>{{product.price}}€</h4>

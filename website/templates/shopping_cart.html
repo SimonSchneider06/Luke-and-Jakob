@@ -16,7 +16,7 @@
                          
                         <div class="row d-flex border-solid-grey p-4 m-2 product-container rounded">
                             <a class="max-300p min-80p" href="{{url_for('views.product_site',product_name = product.name)}}">
-                                <img class="center-block w-80 max-300p min-80p product-img" src="{{url_for('static',filename=get_file_by_product_name(product.name,0) )}}" alt="Guitar Image from model called {{product.name}}">
+                                <img class="center-block w-80 max-300p min-80p product-img" src="{{url_for('static',filename=get_file_path_by_product_name(product.name,0) )}}" alt="Guitar Image from model called {{product.name}}">
                             </a>
 
                             <div class="w-fit-content">
@@ -44,7 +44,7 @@
                 </div>
                 <div class="column w-20">
                     <h2>Gesamtpreis</h2>
-                    <h4>{{get_total_price()}}€</h4>
+                    <h4>{{calculate_total_shopping_price()}}€</h4>
                     <button class="btn btn-warning">Zur Kasse</button>
                 </div>    
             </div>
