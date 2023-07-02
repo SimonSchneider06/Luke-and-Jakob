@@ -1,10 +1,9 @@
 from flask import Blueprint, render_template,url_for,request,flash, redirect
-from flask_login import login_required, current_user
+from flask_login import login_required
 from .models import User, Guitar, Role
 from . import db
 from .decorators import admin_required
 import os
-from flask import current_app as app
 from .file_management import get_file_path_by_product_name,check_save_img, save_uploaded_img, del_dir_from_guitar_name
 
 admin = Blueprint("admin",__name__)
