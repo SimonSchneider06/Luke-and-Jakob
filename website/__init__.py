@@ -57,10 +57,10 @@ def create_app(config_name):
     
     #import methods to be used in jinja 
     from .jinja_functions import get_product_by_id,calculate_total_shopping_price
-    from .file_management import get_file_path_by_product_name
+    from .ImageManager import ImageManager
 
     #integrates function to jinja2 
-    app.jinja_env.globals.update(get_file_path_by_product_name = get_file_path_by_product_name)
+    app.jinja_env.globals.update(ImageManager = ImageManager)
     app.jinja_env.globals.update(get_product_by_id = get_product_by_id)
     app.jinja_env.globals.update(calculate_total_shopping_price = calculate_total_shopping_price)
 

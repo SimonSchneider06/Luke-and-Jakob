@@ -4,9 +4,11 @@ from .models import User, Guitar, Role
 from . import db
 from .decorators import admin_required
 import os
-from .file_management import get_file_path_by_product_name,check_save_img, save_uploaded_img, del_dir_from_guitar_name
+from .ImageManager import ImageManager
 
 admin = Blueprint("admin",__name__)
+
+imageManager = ImageManager()
 
 #--------------admin page mit überblick--------------------------------
 
@@ -53,24 +55,31 @@ def add_product():
             return redirect(url_for("admin.add_product"))
 
         else:
-            folder_path = save_uploaded_img(front_img,name)
-            if folder_path == None:
-                flash("Images were not valid please try again", category="error")
-            else:
-                #flash("Image saved successfully", category = "success")
+            
+            for index,image in enumerate(front_img):
 
-                #after looping through the images store the guitar model
-
-                new_guitar = Guitar(name = name,
-                price = price,
-                stock = stock,
-                description = description,
-                stripe_price_id = stripe_price_id)
+                #check each image
+                if not imageManager.verify_image(image):
+                    flash("Bilder waren nicht gültig, bitte versuchen Sie es erneut", category="error")
+                    return redirect(url_for('admin.add_product'))
                 
-                db.session.add(new_guitar)
-                db.session.commit()
-                flash("Erfolgreich neues Modell hinzugefügt")
-                return redirect(url_for("admin.admin_page"))
+                #save if not not redirected
+                imageManager.save_image_by_product_name_and_number(image,index,guitar_name)
+            
+            #flash("Image saved successfully", category = "success")
+
+            #after looping through the images store the guitar model
+
+            new_guitar = Guitar(name = name,
+            price = price,
+            stock = stock,
+            description = description,
+            stripe_price_id = stripe_price_id)
+            
+            db.session.add(new_guitar)
+            db.session.commit()
+            flash("Erfolgreich neues Modell hinzugefügt")
+            return redirect(url_for("admin.admin_page"))
 
     return render_template("admin/add_product.html")
 
@@ -120,12 +129,13 @@ def change_product(id):
         else:
             if product:
                         
-                check_save_img(img_0,product.name,0)
-                check_save_img(img_1,product.name,1)
-                check_save_img(img_2,product.name,2)
-                check_save_img(img_3,product.name,3)
-                check_save_img(img_4,product.name,4)
-                
+                imageManager.save_image_by_product_name_and_number(img_0,0,product.name)
+                imageManager.save_image_by_product_name_and_number(img_1,1,product.name)
+                imageManager.save_image_by_product_name_and_number(img_2,2,product.name)
+                imageManager.save_image_by_product_name_and_number(img_3,3,product.name)
+                imageManager.save_image_by_product_name_and_number(img_4,4,product.name)
+
+
                 #checks the images
                 # folder_path = save_uploaded_img(front_img,product_name)
                 # if folder_path == None:
@@ -160,7 +170,7 @@ def change_product(id):
 def delete_product(id):
     product_to_delete = Guitar.query.filter_by(id = id).first_or_404()
     try:
-        del_dir_from_guitar_name(product_to_delete.name)
+        imageManager.delete_directory_by_product_name(product_to_delete.name)
 
         db.session.delete(product_to_delete)
         db.session.commit()
@@ -228,8 +238,8 @@ def delete_user(id):
 @admin_required()
 def delete_product_img(product_name, number):
 
-    file_path = get_file_path_by_product_name(product_name,number)
-    product = Guitar.query.filter_by(name = product_name).first()
+    product = Guitar.query.filter_by(name = product_name).first_or_404()
+    file_path = imageManager.get_image_path_by_product_name_and_number(product_name,number)
     #flash(file_path)
     full_path = f"./website/static/{file_path}"
 

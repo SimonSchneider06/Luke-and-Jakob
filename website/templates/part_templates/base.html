@@ -38,6 +38,8 @@
     {% endif %}
     {% endwith %}
 
+    {% set imageManager = ImageManager() %}
+
       {% block content %}{% endblock %}
 
     {% include "/part_templates/footer.html" %}
