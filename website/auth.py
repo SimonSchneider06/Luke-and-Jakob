@@ -80,7 +80,7 @@ def login():
         user = User.query.filter_by(email = email).first()
 
         if user and user.thirdParty != True: # user should exist and not be a registered through 3rd party, like google
-            if user.verify_password(passwort):
+            if user.verifyPassword(passwort):
                 flash("Erfogreich Angemeldet",category = "success")
                 login_user(user,remember = user.rememberMe)
                 return redirect(url_for("views.logged_in"))
