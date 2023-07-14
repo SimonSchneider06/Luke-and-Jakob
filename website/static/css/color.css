@@ -46,3 +46,30 @@ a .b-white:hover{
     color:white;
     background-color:rgb(33, 37, 41);
 }
+.c-black{
+    color:#010105;
+}
+.b-black{
+    background-color:#010105;
+}
+.c-white{
+    color:white;
+}
+.b-white{
+    background-color: white;
+}
+.c-orange{
+    color:#e59d23;
+}
+.b-orange{
+    background-color:#e59d23;
+}
+.c-blue2{
+    color:#160f29;
+}
+.b-blue2{
+    background-color:#160f29;
+}
+.b-blue{
+    background-color: #577590;
+}

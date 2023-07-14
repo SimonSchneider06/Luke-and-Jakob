@@ -25,12 +25,12 @@ body {
 .navbar-logo-a {
     font-family: Logo;
     text-decoration: none;
-    color: white;
+    color: #f0f0f0;
     font-size :40px;
     margin-left: 20px;
 }
 .navbar-logo-a:hover{
-    color:white ;
+    color:#f0f0f0 ;
 }
 
 .navbar-logo-img {

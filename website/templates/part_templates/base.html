@@ -19,9 +19,10 @@
   
   {% include "/part_templates/navbar.html" %}
 
-  <br>
+  
     {% with messages = get_flashed_messages(with_categories = true)%}
     {% if messages %}
+    <br>
       {% for category, message in messages %}
         {% if category == "error" %}
         <div class="alert alert-danger alert-dismissible fade show" role = alert>

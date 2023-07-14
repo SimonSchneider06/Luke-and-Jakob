@@ -1,5 +1,21 @@
 {% extends "/part_templates/base.html" %} {% block title %}Luke & Jakob{% endblock %}
 
+{% block head %} 
+<link rel="stylesheet" href="{{url_for('static', filename = 'css/home.css')}}">
+{% endblock %}
+
 {% block content %}
-<a href="/design-your-dream">Filler Link</a>
+
+    <div>
+        <div class="vh-66 hero d-flex flex-column align-items-start justify-content-center ps-5">
+            <h1>Überschrift-Fett-Füller</h1>
+            <div class="w-50">
+                Einfacher Text, soll hier nur als Füller dienen. Noch mehr Text, soll hier nur als Füller dienen.
+                Einfacher Text, soll hier nur als Füller dienen.
+            </div>
+            <button class="mt-2 btn btn-warning">Kaufen</button>
+        </div>
+        <div></div>
+    </div>
+
 {% endblock %}
