@@ -8,21 +8,23 @@
             <div class=" navbar-nav-text-div"><a class="navbar-nav-text-a" href="/shop">Shop</a></div>
             <div class=" navbar-nav-text-div"><a class="navbar-nav-text-a" href="{{url_for('views.about_us')}}">About us</a></div>
             {% if current_user.is_authenticated %}
-            <div class=" navbar-nav-text-div"><a class="navbar-nav-text-a" href="/account">Account</a></div>
+            
             {% if current_user.role_id == 1 %}
             <div class=" navbar-nav-text-div"><a class="navbar-nav-text-a" href="/admin">Admin</a></div>
             {% endif %}
-            {% else %}
-            <div class=" navbar-nav-text-div"><a class="navbar-nav-text-a" href="/signUp">Login</a></div>
+            
             {% endif %}
             <div class=" navbar-nav-searchcart-div"><a class=" navbar-nav-searchcart-a" id="navbar-search-btn"><i class="bi bi-search navbar-nav-searchcart-i"></i></a></div>
             <div class=" navbar-nav-searchcart-div"><a class=" navbar-nav-searchcart-a" href="/cart"><i class="bi bi-cart navbar-nav-searchcart-i"></i></a></div>
         </div>
 
         <div class="navbar-social-div navbar-burgermenu-content" id="navbar-burgermenu-content-id2">
-            <div class="navbar-social-icon-div"><a class="navbar-social-icon-a" href="#"><i class="bi bi-person-circle"></i></a></div>
-            <div class="navbar-social-icon-div"><a class="navbar-social-icon-a" href="#"><i class="fa-brands fa-youtube navbar-social-icon-i"></i></a></div>
-            <div class="navbar-social-icon-div"><a class="navbar-social-icon-a" href="#"><i class="fa-brands fa-tiktok navbar-social-icon-i"></i></a></div>
+            {% if current_user.is_authenticated %} 
+            <div  class="navbar-social-icon-div"><a class="navbar-nav-text-a login" href="/account">Account <i class="bi bi-person-circle"></i></a></div>
+            {% else %}
+            <div><a class="navbar-nav-text-a login" href="{{url_for('auth.sign_up')}}">Login <i class="bi bi-person-circle"></i></a></div>
+
+            {% endif %}
         </div>
     </nav>
 

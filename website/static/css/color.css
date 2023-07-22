@@ -59,17 +59,14 @@ a .b-white:hover{
     background-color: white;
 }
 .c-orange{
-    color:#e59d23;
+    color:#FF4500;
 }
 .b-orange{
-    background-color:#e59d23;
+    background-color:#FF4500;
 }
 .c-blue2{
     color:#160f29;
 }
 .b-blue2{
     background-color:#160f29;
-}
-.b-blue{
-    background-color: #577590;
 }

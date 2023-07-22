@@ -5,7 +5,9 @@
 {% endblock %}
 
 {% block content %} 
+<div class="container-fluid">
     <h1 class="text-center">Ihr Einkaufswagen</h1>
+
     {% if session["cart"] %}
         <form action="{{url_for('views.checkout')}}" method="POST"> 
             <div id="head-container" class="container-xxl row justify-content-between align-items-start m-auto mt-3">
@@ -55,5 +57,5 @@
         </div>
 
     {% endif %} 
-
+</div>
 {% endblock %} 

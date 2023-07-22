@@ -71,22 +71,20 @@ body {
     align-items: center;
     transform: translate(0px, 0px);
 }
-
-
-.navbar-social-icon-a {
-    color: white;
-    margin: 16.5px;
-    padding: 12px;
-    border-radius: 8px;
+.login{
+    background-color: #160f29;
+    color:#FF4500;
 }
-.navbar-social-icon-i{
-    font-size :17px;
+.login:hover{
+    background-color: #FF4500;
+    color:#160f29;
+    transition:background-color ease-in-out .1s, color ease-in-out .1s;
 }
 
-.navbar-nav-text-div :hover, .navbar-nav-searchcart-div :hover, .navbar-social-icon-div :hover {
-    background-color: white;
-    color: black;
-    transition: background-color ease-in-out .1s, color ease-in-out .1s;
+.navbar-nav-text-div :hover, .navbar-nav-searchcart-div :hover {
+    color:#160f29;
+    background-color:white;
+    transition:background-color ease-in-out .1s, color ease-in-out .1s;
 }
 
 .search-overlay {
@@ -97,7 +95,7 @@ body {
     align-items: center;
     justify-content: center;
     z-index: 1;
-    background-color: black;
+    background-color: #160f29;
     padding-bottom: 20px;
     transition: all ease-in-out .2s;
 }
@@ -109,13 +107,13 @@ body {
     border: none;
     outline: none;
     font-size: 1.5rem;
-    background-color:black;
+    background-color:#160f29;
     color:white ;
 }
 .navbar-overlay-search-a {
     margin: 0px;
     color: white;
-    background-color: black;
+    background-color: #160f29;
     display: flex;
     padding: 4px;
     cursor:pointer;
@@ -192,7 +190,7 @@ body {
         display: flex;
         flex-direction: column;
         width: 100%;
-        background-color: black;
+        background-color: #160f29;
         transform: translate(-100%, 0px);
         margin: 0;
         overflow-y: auto;
@@ -212,6 +210,9 @@ body {
 
     .navbar-nav-text-a, .navbar-nav-search-a, .navbar-nav-cart-a, .navbar-social-icon-a {
         color: white;
+    }
+    .login{
+        color:#FF4500;
     }
 }
 
