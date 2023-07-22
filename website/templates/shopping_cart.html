@@ -6,7 +6,7 @@
 
 {% block content %} 
 <div class="container-fluid">
-    <h1 class="text-center">Ihr Einkaufswagen</h1>
+    <h1 class="text-center m-5">Ihr Einkaufswagen</h1>
 
     {% if session["cart"] %}
         <form action="{{url_for('views.checkout')}}" method="POST"> 
