@@ -1,8 +1,8 @@
 {% extends "./part_templates/base.html" %}{% block title %}Registrieren{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h3 class="text-center" >Registrieren</h3>
+<div class="container mt-5 mb-5">
+    <h1 class="text-center" >Registrieren</h1>
     <h6 class="text-center" >Bereits Registriert? <a href="{{url_for('auth.login')}}">Anmelden</a></h6>
     <h6 class="text-center" ><a href="{{url_for('auth.password_reset')}}">Passwort vergessen?</a></h6>
     <form class="row g-3 mt-3 mb-3" action="{{url_for('auth.sign_up')}}", method="POST">
@@ -48,7 +48,7 @@
             <input type="password" class="form-control" id="password2" name="password2" placeholder="Passwort Bestätigen">
             <label for="password2">Passwort Bestätigen</label>
         </div>
-        <div class="col-auto">
+        <div class="col-12">
             <div class="form-check">
               <input class="form-check-input" type="checkbox" id="rememberMe" name="rememberMe">
               <label class="form-check-label" for="rememberMe">

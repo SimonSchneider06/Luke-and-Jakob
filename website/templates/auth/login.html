@@ -1,14 +1,14 @@
 {% extends "./part_templates/base.html" %}{% block title %}Login{% endblock %}
 
     {% block content %}
-    <div class="container">
-        <div class="mb-3 mt-3">
-            <h3 class="text-center" >Anmelden</h3>
+    <div class="container mt-5 mb-5">
+        <div class="mb-3">
+            <h1 class="text-center" >Anmelden</h1>
             <h6 class="text-center" >Noch nicht Registriert? <a href="{{url_for('auth.sign_up')}}">Registrieren</a></h6>
             <h6 class="text-center" ><a href="{{url_for('auth.password_reset')}}">Passwort vergessen?</a></h6>
         </div>
         <div class="mb-3 mt-3">
-            <form class="row g-3" action="{{url_for('auth.login')}}" method = "POST">
+            <form class="row g-3 mb-3" action="{{url_for('auth.login')}}" method = "POST">
                 <div class="form-floating col-12">
                     <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
                     <label for="email">Email addresse</label>
