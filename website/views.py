@@ -1,9 +1,10 @@
 from flask import Blueprint,render_template,request,session,redirect,url_for,flash
-from flask_login import login_required
+from flask_login import login_required,current_user
 from .models import Guitar
 import stripe
 
 from .helper_functions import add_cart_item
+from .email import send_customer_order_email
 
 views = Blueprint('views',__name__)
 
@@ -72,6 +73,10 @@ def checkout():
 
         return redirect(checkout_session.url,code = 303)
 
+@views.route("/webhook",methods = ["POST"])
+def stripe_webhook():
+    pass
+
 @views.route("/shop")
 def shop():
     products = Guitar.query.order_by(Guitar.id)
@@ -88,6 +93,7 @@ def product_site(product_name):
         #if cart already exists adds product id of product to it
         if "cart" in session and session["cart"] != None:
             session["cart"] = add_cart_item(session["cart"],product.id)
+            send_customer_order_email(current_user)
 
         #else set it equal
         else:

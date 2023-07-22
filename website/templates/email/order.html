@@ -1,0 +1,53 @@
+<h1>Eine neue Bestellung ist eingetroffen</h1> <br>
+
+<p>Kundeninfos</p> <br>
+
+<table>
+    <tr>
+        <td>Vorname</td>
+        <td>Nachname</td>
+        <td>Email</td>
+    </tr>
+    <tr>
+        <td>{{user.firstName}}</td>
+        <td>{{user.lastName}}</td>
+        <td>{{user.email}}</td>
+    </tr>
+    <br>
+    <td>Addresse---------------------------------</td>
+    <br>
+    <tr>
+        <td>Land</td>
+        <td>PLZ</td>
+        <td>Stadt</td>
+        <td>Straße</td>
+        <td>Hausnummer</td>
+    </tr>
+    <tr>
+        <td>{{user.country}}</td>
+        <td>{{user.plz}}</td>
+        <td>{{user.city}}</td>
+        <td>{{user.street}}</td>
+        <td>{{user.houseNumber}}</td>
+    </tr>
+    <td><b>Produktdaten------------------------------------------</b></td>
+    <tr>
+        <td>ProduktId</td>
+        <td>ProduktName</td>
+        <td>ProduktPreis</td>
+        <td>Produktanzahl</td>
+    </tr>
+    {% for product_list in order %}
+    {% set product = get_product_by_id(product_list[0]) %} 
+    <tr>
+        <td>{{product.id}}</td>
+        <td>{{product.name}}</td>
+        <td>{{product.price}}</td>
+        <td>{{product_list[1]}}</td>
+    </tr>
+    {% endfor %}
+
+</table>
+<br>
+
+<p>Kaufdatum(UTC): {{buying_date}}</p>

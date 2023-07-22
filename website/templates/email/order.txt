@@ -1,0 +1,24 @@
+Eine Neue Bestellung ist eingetroffen.
+
+Der Kunde {{user.firstName}} {{user.lastName}} hat ein Produkt bestellt.
+
+Kundendaten:
+Name: {{user.firstName}}, {{user.lastName}} 
+Email: {{user.email}}
+Addresse:
+    Land:                   {{user.country}} 
+    plz und Stadt:          {{user.plz}} {{user.city}} 
+    Straße und Hausnummer:  {{user.street}} {{user.houseNumber}} 
+
+{% for product_list in order %} 
+{% set product = get_product_by_id(product_list[0]) %} 
+
+Produktdaten:
+ID:     {{product.id}} 
+Name:   {{product.name}} 
+Preis:  {{product.price}} 
+Anzahl: {{product_list[1]}} 
+
+{% endfor %}
+
+Kaufdatum(UTC): {{buying_date}}
