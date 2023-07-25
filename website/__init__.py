@@ -30,11 +30,13 @@ def create_app(config_name):
     from .views import views
     from .auth import auth
     from .admin import admin
+    from .shopping import shopping
 
     #adding the blueprints to the app
     app.register_blueprint(views,url_prefix = "/")
     app.register_blueprint(auth,url_prefix = "/")
     app.register_blueprint(admin,url_prefix = "/")
+    app.register_blueprint(shopping,url_prefix = "/")
 
     #adding the errorpages to the app
     from .errorhandling import errors
@@ -56,12 +58,13 @@ def create_app(config_name):
         return User.query.get(int(id))
     
     #import methods to be used in jinja 
-    from .jinja_functions import get_product_by_id,calculate_total_shopping_price
+    from .jinja_functions import get_product_by_id
     from .ImageManager import ImageManager
+    from .cartManager import CartManager
 
     #integrates function to jinja2 
     app.jinja_env.globals.update(ImageManager = ImageManager)
+    app.jinja_env.globals.update(CartManager = CartManager)
     app.jinja_env.globals.update(get_product_by_id = get_product_by_id)
-    app.jinja_env.globals.update(calculate_total_shopping_price = calculate_total_shopping_price)
 
     return app

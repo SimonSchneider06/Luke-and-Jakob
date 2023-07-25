@@ -12,9 +12,10 @@
         <form action="{{url_for('views.checkout')}}" method="POST"> 
             <div id="head-container" class="container-xxl row justify-content-between align-items-start m-auto mt-3">
                 <div class="column w-80">
+                    {% set cartManager = CartManager() %}
 
-                    {% for product_list in session["cart"] %}
-                    {% set product = get_product_by_id(product_list[0]) %} 
+                    {% for product_dict in session["cart"] %}
+                    {% set product = get_product_by_id(product_dict.id) %} 
                          
                         <div class="row d-flex border-solid-grey p-4 m-2 product-container rounded">
                             <a class="max-300p min-80p" href="{{url_for('views.product_site',product_name = product.name)}}">
@@ -28,16 +29,16 @@
 
                             <div class="dropdown w-7_5e m-2">
                                 <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Menge: {{ product_list[1] }}
+                                    Menge: {{ product_dict.quantity }}
                                 </button>
                                 <ul class="dropdown-menu min-80p">
-                                  <li><a class="dropdown-item" href="{{url_for('views.cart_quantity',product_id = product.id,quantity = 1)}}">1</a></li>
-                                  <li><a class="dropdown-item" href="{{url_for('views.cart_quantity',product_id = product.id,quantity = 2)}}">2</a></li>
-                                  <li><a class="dropdown-item" href="{{url_for('views.cart_quantity',product_id = product.id,quantity = 3)}}">3</a></li>
+                                  <li><a class="dropdown-item" href="{{url_for('shopping.set_product_quantity',product_id = product.id,quantity = 1)}}">1</a></li>
+                                  <li><a class="dropdown-item" href="{{url_for('shopping.set_product_quantity',product_id = product.id,quantity = 2)}}">2</a></li>
+                                  <li><a class="dropdown-item" href="{{url_for('shopping.set_product_quantity',product_id = product.id,quantity = 3)}}">3</a></li>
                                 </ul>
                             </div> 
 
-                            <a href="{{url_for('views.delete_cart_item',product_id = product.id)}}" class="w-1e">
+                            <a href="{{url_for('shopping.delete_from_cart',product_id = product.id)}}" class="w-1e">
                                 <i class="bi bi-trash c-grey-d"></i>
                             </a>
                         </div>
@@ -46,7 +47,7 @@
                 </div>
                 <div class="column w-20">
                     <h2>Gesamtpreis</h2>
-                    <h4>{{calculate_total_shopping_price()}}€</h4>
+                    <h4>{{ cartManager.calculate_total_cart_price(session["cart"]) }}€</h4>
                     <button class="btn btn-warning">Zur Kasse</button>
                 </div>    
             </div>

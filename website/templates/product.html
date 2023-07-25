@@ -5,7 +5,7 @@
 {% endblock head %}
 
 {% block content %}
-    <form action="" method="post">
+    <form action="{{url_for('shopping.add_to_cart',product_id = product.id)}}" method="post">
 
         <div class="container-fluid">
             <img class="img-full-screen" src="{{url_for('static', filename = imageManager.get_image_path_by_product_name_and_number(product.name,0) )}}" alt="Guitar image of model {{product.name}}">

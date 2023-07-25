@@ -8,6 +8,9 @@ from werkzeug.utils import secure_filename
 from werkzeug.datastructures import FileStorage 
 
 class ImageManager:
+    '''
+        Manages the Images
+    '''
 
     def get_image_path_by_product_name_and_number(self,product_name:str,img_number:int) -> (str | None):
         '''
