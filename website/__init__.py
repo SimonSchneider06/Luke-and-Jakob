@@ -31,12 +31,14 @@ def create_app(config_name):
     from .auth import auth
     from .admin import admin
     from .shopping import shopping
+    from .stripeRoutes import stripeBlueprint
 
     #adding the blueprints to the app
     app.register_blueprint(views,url_prefix = "/")
     app.register_blueprint(auth,url_prefix = "/")
     app.register_blueprint(admin,url_prefix = "/")
     app.register_blueprint(shopping,url_prefix = "/")
+    app.register_blueprint(stripeBlueprint,url_prefix = "/")
 
     #adding the errorpages to the app
     from .errorhandling import errors

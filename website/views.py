@@ -1,10 +1,7 @@
-from flask import Blueprint,render_template,request,session,redirect,url_for,flash
-from flask_login import login_required,current_user
+from flask import Blueprint,render_template
+from flask_login import login_required
 from .models import Guitar
-import stripe
 
-from .helper_functions import add_cart_item
-from .email import send_customer_order_email
 
 views = Blueprint('views',__name__)
 
@@ -32,50 +29,6 @@ def design_your_dream():
 def shopping_cart():
     return render_template("shopping_cart.html")
 
-#zur kasse btn pressed 
-@views.route("/checkout", methods = ["POST"])
-def checkout():
-    #checks if shopping cart exists
-    if session["cart"]:
-
-        line_items_new = []
-
-        #loop through the product lists
-        for product_list in session["cart"]:
-
-            #get guitar by id
-            product = Guitar.query.filter_by(id = product_list[0]).first()
-
-            #get stripe price id and quantity
-            price_id = product.stripe_price_id
-            quantity = product_list[1]
-
-            #format it, for stripe checkout session
-            item = {
-                "price": price_id,
-                "quantity":quantity,
-            }
-
-            line_items_new.append(item)
-
-
-        #create stripe checkout session
-        try:
-            checkout_session = stripe.checkout.Session.create(
-                line_items = line_items_new,
-                mode = "payment",
-                success_url = url_for("views.home", _external = True),
-                cancel_url = url_for("views.shopping_cart", _external = True)
-            )
-
-        except Exception as e:
-            str(e)
-
-        return redirect(checkout_session.url,code = 303)
-
-@views.route("/webhook",methods = ["POST"])
-def stripe_webhook():
-    pass
 
 @views.route("/shop")
 def shop():

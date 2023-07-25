@@ -9,7 +9,7 @@
     <h1 class="text-center m-5">Ihr Einkaufswagen</h1>
 
     {% if session["cart"] %}
-        <form action="{{url_for('views.checkout')}}" method="POST"> 
+        <form action="{{url_for('stripeBlueprint.stripe_checkout')}}" method="POST"> 
             <div id="head-container" class="container-xxl row justify-content-between align-items-start m-auto mt-3">
                 <div class="column w-80">
                     {% set cartManager = CartManager() %}

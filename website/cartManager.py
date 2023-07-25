@@ -30,7 +30,7 @@ class CartManager:
             return shopping_cart
 
         else:   #product is already in cart, increase quantity
-            return self.increase_quantity(product_id)
+            return self.increase_quantity(product_id,shopping_cart)
 
 
     def check_product_in_order(self,product_id:int,shopping_cart:list) -> bool:
@@ -151,3 +151,47 @@ class CartManager:
                 total_price += product.price * product_dict["quantity"]
 
         return total_price
+    
+
+    def get_stripe_dict(self,product_id:int,quantity:int) -> (dict | None):
+        '''
+            Returns a dictionary, if product exists, for stripe checkout session
+            Example Structure: `product = {"price": <stripe_price_id>,"quantity": <quantity>}`
+            :param: `product_id` is the id of the product
+            :param: `quantity` is the product quantity in the shopping cart
+        '''
+        product = Guitar.query.filter_by(id = product_id).first()
+
+        if product:
+
+            stripe_product_dict = {
+                "price": product.stripe_price_id,
+                "quantity":quantity
+            }
+
+            return stripe_product_dict
+
+
+    def get_cart_with_stripe_dictionaries(self,shopping_cart:list) -> (list | None):
+        '''
+            Returns a list, if cart not empty, made up of dictionaries, for stripe checkout.
+            New Example Structure of one dictionary: 
+            `product = {"price": <stripe_price_id>,"quantity": <quantity>}`
+            :param: `shopping_cart` is a list of dictionaries, which have the following structure:
+            `product = {"id": <product_id> , "quantity": <quantity>}
+        '''
+
+        #check if not empty and not none
+        if shopping_cart != [] or shopping_cart != None:
+
+            new_list = []
+
+            # loop throught the individual product dicts
+            for product_dict in shopping_cart:
+
+                new_dict = self.get_stripe_dict(product_dict["id"],product_dict["quantity"])
+
+                new_list.append(new_dict)
+
+            return new_list
+        
