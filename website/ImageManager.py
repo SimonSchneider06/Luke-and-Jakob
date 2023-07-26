@@ -1,5 +1,4 @@
 from flask import current_app as app
-from flask import abort
 import os
 #import imghdr to validate image file and size
 import imghdr
