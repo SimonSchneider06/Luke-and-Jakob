@@ -1,4 +1,5 @@
 from .models import Guitar
+from abc import ABC, abstractmethod
 
 class CartManager:
 
@@ -153,7 +154,39 @@ class CartManager:
         return total_price
     
 
-    def get_stripe_dict(self,product_id:int,quantity:int) -> (dict | None):
+
+class CartConverter(ABC):
+    '''
+        Converts the format of the shopping cart
+        Is a abstract overclass
+    '''
+
+    @abstractmethod
+    def convert_dict(self,product_id:int,quantity:int) -> (dict | None):
+        '''
+            Returns a dictionary, if product exists, in a different format
+            :param: `product_id` is the id of the product
+            :param: `quantity` is the product quantity in the shopping cart
+        '''
+        pass
+
+    @abstractmethod
+    def convert_all_dicts(self,shopping_cart:list) -> (list | None):
+        '''
+            Returns a list, if cart not empty, made up of dictionaries
+            :param: `shopping_cart` is a list of dictionaries, which have the following structure:
+            `product = {"id": <product_id> , "quantity": <quantity>}
+        '''
+        pass
+
+
+class StripeCartConverter(CartConverter):
+
+    '''
+        Class for converting cart dictionaries to stripe format
+    '''
+
+    def convert_dict(self,product_id:int,quantity:int) -> (dict | None):
         '''
             Returns a dictionary, if product exists, for stripe checkout session
             Example Structure: `product = {"price": <stripe_price_id>,"quantity": <quantity>}`
@@ -170,9 +203,9 @@ class CartManager:
             }
 
             return stripe_product_dict
-
-
-    def get_cart_with_stripe_dictionaries(self,shopping_cart:list) -> (list | None):
+        
+    
+    def convert_all_dicts(self,shopping_cart: list) -> list | None:
         '''
             Returns a list, if cart not empty, made up of dictionaries, for stripe checkout.
             New Example Structure of one dictionary: 
@@ -194,4 +227,3 @@ class CartManager:
                 new_list.append(new_dict)
 
             return new_list
-        

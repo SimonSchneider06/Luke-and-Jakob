@@ -1,8 +1,8 @@
 from flask import Blueprint,flash,redirect,url_for,session 
-from .cartManager import CartManager 
+from .cartManager import StripeCartConverter 
 import stripe
 
-cartManager = CartManager()
+stripeCartConverter = StripeCartConverter()
 
 stripeBlueprint = Blueprint("stripeBlueprint",__name__) 
 
@@ -12,7 +12,7 @@ def stripe_checkout():
     #get list formated for stripe
 
     if "cart" in session and session["cart"] != None:
-        stripe_list = cartManager.get_cart_with_stripe_dictionaries(session["cart"])
+        stripe_list = stripeCartConverter.convert_all_dicts(session["cart"])
 
         #create stripe checkout session
         try: 
