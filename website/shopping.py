@@ -1,5 +1,5 @@
 from flask import Blueprint,session,flash,redirect,url_for
-from .cartManager import CartManager
+from .shoppingCart import CartManager
 from .models import Guitar 
 
 cartManager = CartManager()

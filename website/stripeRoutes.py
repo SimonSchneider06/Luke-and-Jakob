@@ -1,5 +1,5 @@
 from flask import Blueprint,flash,redirect,url_for,session 
-from .cartManager import StripeCartConverter 
+from .shoppingCart import StripeCartConverter 
 import stripe
 
 stripeCartConverter = StripeCartConverter()

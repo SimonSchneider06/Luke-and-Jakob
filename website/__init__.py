@@ -62,7 +62,7 @@ def create_app(config_name):
     #import methods to be used in jinja 
     from .jinja_functions import get_product_by_id
     from .ImageManager import ImageManager
-    from .cartManager import CartManager
+    from .shoppingCart import CartManager
 
     #integrates function to jinja2 
     app.jinja_env.globals.update(ImageManager = ImageManager)
