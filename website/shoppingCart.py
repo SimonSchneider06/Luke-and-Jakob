@@ -222,7 +222,7 @@ class StripeCartConverter(CartConverter):
             # loop throught the individual product dicts
             for product_dict in shopping_cart:
 
-                new_dict = self.get_stripe_dict(product_dict["id"],product_dict["quantity"])
+                new_dict = self.convert_dict(product_dict["id"],product_dict["quantity"])
 
                 new_list.append(new_dict)
 

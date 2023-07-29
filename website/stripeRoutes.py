@@ -1,11 +1,18 @@
-from flask import Blueprint,flash,redirect,url_for,session 
+from flask import Blueprint,flash,redirect,url_for,session,request 
 from .shoppingCart import StripeCartConverter 
 import stripe
+from flask import current_app as app
+from .email import send_customer_order_email
+from flask_login import current_user,login_required
+import json
+from .models import User
+from . import db
 
 stripeCartConverter = StripeCartConverter()
 
 stripeBlueprint = Blueprint("stripeBlueprint",__name__) 
 
+@login_required
 @stripeBlueprint.route("/checkout-stripe",methods = ["POST"])
 def stripe_checkout():
 
@@ -13,10 +20,16 @@ def stripe_checkout():
 
     if "cart" in session and session["cart"] != None:
         stripe_list = stripeCartConverter.convert_all_dicts(session["cart"])
+        #current_user.set_cart(session["cart"])
+        user = User.query.filter_by(id = current_user.id).first()
+        user.set_order(session["cart"])
+        db.session.add(user)
+        db.session.commit()
 
         #create stripe checkout session
         try: 
             checkout_session = stripe.checkout.Session.create(
+                    client_reference_id = current_user.id, 
                     line_items = stripe_list,
                     mode = "payment",
                     success_url = url_for("views.home", _external = True),
@@ -32,4 +45,29 @@ def stripe_checkout():
 
 @stripeBlueprint.route("/webhook", methods = ["POST"])
 def stripe_webhook():
-    pass
+    
+    payload = request.get_data(as_text=True)
+    sig_header = request.headers.get("Stripe-Signature")
+    
+    try:
+        event = stripe.Webhook.construct_event(
+            payload,sig_header,app.config["STRIPE_ENDPOINT_KEY"]
+        )
+        
+    except Exception as e:
+        return "Invalid Response", 400 
+
+    if event["type"] == "checkout.session.completed":
+
+        #client_reference_id = payload["data"]["object"]["client_reference_id"]
+        # payload is a string -> needs to be converted to json to get user id
+        # client_reference_id
+        payload_json = json.loads(payload)
+        client_reference_id = payload_json["data"]["object"]["client_reference_id"]
+
+        #get User
+        user = User.query.filter_by(id = client_reference_id).first()
+        send_customer_order_email(user)
+        
+
+    return "Success",200

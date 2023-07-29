@@ -6,6 +6,7 @@ import jwt
 from time import time
 from flask import current_app as app
 from werkzeug.security import generate_password_hash, check_password_hash
+import pickle
 
 #------------user and roles--------------------------
 
@@ -37,8 +38,28 @@ class User(db.Model,UserMixin):
     #3rd party
     thirdParty = db.Column(db.Boolean)  #used to check if google or other login is needed
 
+    order = db.Column(db.PickleType)    # for the shopping-cart/order of the customer
+
     #relationships
     role_id = db.Column(db.Integer,db.ForeignKey("role.id"))
+
+
+
+    def set_order(self,cart:list) -> None:
+        '''
+            Takes the cart and sets the order column in the database
+            :param: `cart` is a list of dictionaries
+        '''
+        #store it as pickle object
+        self.order = pickle.dumps(cart)
+
+
+    def get_order(self) -> list:
+        '''
+            Returns the order as list of dictionaries
+        '''
+        #restore the pickle object to its original list
+        return pickle.loads(self.order)
 
 
     def generate_password_reset_token(self,expiration = 600) -> str:
@@ -70,10 +91,10 @@ class User(db.Model,UserMixin):
         raise AttributeError("Password is not a readable Attribute")
     
     @password.setter
-    def password(self,password):
+    def password(self,password:str):
         self.passwort_hash = generate_password_hash(password,"sha256")
 
-    def verifyPassword(self,password) -> bool:
+    def verifyPassword(self,password:str) -> bool:
         return check_password_hash(self.passwort_hash,password)
 
 

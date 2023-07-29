@@ -1,6 +1,6 @@
 from flask_mail import Message
 from flask import current_app as app
-from flask import render_template,session
+from flask import render_template
 from website import mail
 from .models import User
 import datetime
@@ -33,10 +33,10 @@ def send_customer_order_email(user:User) -> None:
         Sends an email,from a customer order, to the production sector, to build the guitar.
         :param: `user` is the User, who bought something
     '''
-    #get the order from session_cookies
-    order = session["cart"]
-
     # get time of buying
     buying_date = datetime.datetime.utcnow()
+
+    #get cart of user
+    order = user.get_order()
 
     send_email("schneider_berghausen@web.de","Neue Bestellung","order",user = user, order = order,buying_date = buying_date)

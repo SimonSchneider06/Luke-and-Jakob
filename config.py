@@ -21,6 +21,7 @@ class Config:
     UPLOAD_PATH = "./website/static/Bilder/Produktbilder"
     STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY")
     STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY")
+    STRIPE_ENDPOINT_KEY = os.environ.get("STRIPE_ENDPOINT_KEY")
     FLASK_APP = os.environ.get("FLASK_APP")
     OAUTH_CREDENTIALS = {
         "google": {

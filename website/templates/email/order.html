@@ -37,13 +37,13 @@
         <td>ProduktPreis</td>
         <td>Produktanzahl</td>
     </tr>
-    {% for product_list in order %}
-    {% set product = get_product_by_id(product_list[0]) %} 
+    {% for product_dict in order %}
+    {% set product = get_product_by_id(product_dict["id"]) %} 
     <tr>
         <td>{{product.id}}</td>
         <td>{{product.name}}</td>
         <td>{{product.price}}</td>
-        <td>{{product_list[1]}}</td>
+        <td>{{product_dict["quantity"]}}</td>
     </tr>
     {% endfor %}
 

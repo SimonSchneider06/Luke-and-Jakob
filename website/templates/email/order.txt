@@ -10,14 +10,14 @@ Addresse:
     plz und Stadt:          {{user.plz}} {{user.city}} 
     Straße und Hausnummer:  {{user.street}} {{user.houseNumber}} 
 
-{% for product_list in order %} 
-{% set product = get_product_by_id(product_list[0]) %} 
+{% for product_dict in order %} 
+{% set product = get_product_by_id(product_dict["id"]) %} 
 
 Produktdaten:
 ID:     {{product.id}} 
-Name:   {{product.name}} 
+Name:   {{product.name}}
 Preis:  {{product.price}} 
-Anzahl: {{product_list[1]}} 
+Anzahl: {{product_dict["quantity"]}} 
 
 {% endfor %}
 
