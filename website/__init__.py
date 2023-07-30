@@ -24,7 +24,7 @@ def create_app(config_name):
     mail.init_app(app)
 
     #configuring the stripe account
-    stripe.api_key = app.config["STRIPE_SECRET_KEY"]
+    stripe.api_key = app.config["PAYMENT_SERVICES"]["stripe"]["secret_key"]
 
     #importing the blueprints
     from .views import views

@@ -7,6 +7,8 @@ load_dotenv(dotenv_path)
 
 class Config:
     SECRET_KEY = os.environ.get("SECRET_KEY") or "7lK83(?ki2.Pieqr_!Mn]iZ"
+
+    #Mail
     MAIL_SERVER = os.environ.get("MAIL_SERVER","smpt.1und1.de")
     MAIL_PORT = os.environ.get("MAIL_PORT","587")
     MAIL_USE_TLS = os.environ.get("MAIL_USE_TLS","true").lower() in ["true","on","1"]
@@ -19,9 +21,14 @@ class Config:
     MAX_CONTENT_LENGTH = 1024 * 1024 * 15
     UPLOAD_EXTENSIONS = [".JPG", ".png"]
     UPLOAD_PATH = "./website/static/Bilder/Produktbilder"
-    STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY")
-    STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY")
-    STRIPE_ENDPOINT_KEY = os.environ.get("STRIPE_ENDPOINT_KEY")
+    PAYMENT_SERVICES = {
+        "stripe":{
+            "public_key": os.environ.get("STRIPE_PUBLIC_KEY"),
+            "secret_key": os.environ.get("STRIPE_SECRET_KEY"),
+            "endpoint_key": os.environ.get("STRIPE_ENDPOINT_KEY")
+        }
+    }
+    
     FLASK_APP = os.environ.get("FLASK_APP")
     OAUTH_CREDENTIALS = {
         "google": {

@@ -20,8 +20,8 @@ def stripe_checkout():
 
     if "cart" in session and session["cart"] != None:
         stripe_list = stripeCartConverter.convert_all_dicts(session["cart"])
-        #current_user.set_cart(session["cart"])
-        user = User.query.filter_by(id = current_user.id).first()
+
+        user = current_user
         user.set_order(session["cart"])
         db.session.add(user)
         db.session.commit()
@@ -51,7 +51,7 @@ def stripe_webhook():
     
     try:
         event = stripe.Webhook.construct_event(
-            payload,sig_header,app.config["STRIPE_ENDPOINT_KEY"]
+            payload,sig_header,app.config["PAYMENT_SERVICES"]["stripe"]["endpoint_key"]
         )
         
     except Exception as e:
