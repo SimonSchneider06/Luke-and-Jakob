@@ -92,7 +92,7 @@ class User(db.Model,UserMixin):
     
     @password.setter
     def password(self,password:str):
-        self.passwort_hash = generate_password_hash(password,"sha256")
+        self.passwort_hash = generate_password_hash(password,method = "scrypt")
 
     def verifyPassword(self,password:str) -> bool:
         return check_password_hash(self.passwort_hash,password)
