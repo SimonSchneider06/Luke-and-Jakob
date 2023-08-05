@@ -7,7 +7,18 @@ class CartManager:
         Manages the Products in the shopping_cart
     '''
 
-    def add_product(self,product_id:int,shopping_cart:list) -> list:
+    def create_product_dict(self,product_id:int,quantity:int) -> dict: 
+        '''
+            Creates and returns the dictionary of a product, how one gets saved.
+            Example: `{'id':<product_id>,'quantity':<quantity>}`
+            :param: `product_id` is the id of a product
+            :param: `quantity` is the quantity of the product
+        '''
+
+        return {"id":product_id,"quantity":quantity}
+        
+
+    def add_product(self,product_id:int,shopping_cart:list[dict]) -> list[dict]:
         '''
             Adds a product, by its id to the shopping cart
             Returns the new cart, as a list of dictionaries
@@ -21,10 +32,7 @@ class CartManager:
         #if product not in cart, add it
         if not self.check_product_in_order(product_id,shopping_cart) or shopping_cart == []:
 
-            new_product = {
-                "id": product_id,
-                "quantity":1,
-            }
+            new_product = self.create_product_dict(product_id,1)
             
             shopping_cart.append(new_product)
 
@@ -34,7 +42,7 @@ class CartManager:
             return self.increase_quantity(product_id,shopping_cart)
 
 
-    def check_product_in_order(self,product_id:int,shopping_cart:list) -> bool:
+    def check_product_in_order(self,product_id:int,shopping_cart:list[dict]) -> bool:
         '''
             Checks if the product, with the given Id is already in the order
             Returns a boolean
@@ -51,7 +59,7 @@ class CartManager:
         return False
 
 
-    def increase_quantity(self,product_id:int,shopping_cart:list) -> list:
+    def increase_quantity(self,product_id:int,shopping_cart:list[dict]) -> list[dict]:
         '''
             increases the quantity of the product with the given id
             Returns the new cart
@@ -59,17 +67,21 @@ class CartManager:
             :param: `shopping_cart` is a list of dictionaries
         '''
 
-        #get each dict which is in the list
-        for product in shopping_cart:
-            #check the id
-            if product["id"] == product_id:
-                #increase the quantity
-                product["quantity"] += 1 
+        if self.check_product_in_order(product_id,shopping_cart):
+            #get each dict which is in the list
+            for product in shopping_cart:
+                #check the id
+                if product["id"] == product_id:
+                    #increase the quantity
+                    product["quantity"] += 1 
+
+        else:
+            raise ValueError(f"Can't increase quantity of product with id {product_id}, which is not in shopping cart")
 
         return shopping_cart 
     
 
-    def set_quantity(self,product_id:int,shopping_cart:list,new_quantity:int) -> list:
+    def set_quantity(self,product_id:int,shopping_cart:list[dict],new_quantity:int) -> list[dict]:
         '''
             Sets the quantity of a product in the shopping_cart
             Returns the new list.
@@ -79,6 +91,7 @@ class CartManager:
             :param: `new_quantity` is the new quantity of the product
         '''
 
+        # check if product in cart
         if self.check_product_in_order(product_id,shopping_cart):
 
             # get each dict which is in the list
@@ -93,10 +106,15 @@ class CartManager:
                     else:
                         product["quantity"] = new_quantity
 
+        else:
+            # if not in cart add it
+            new_product = self.create_product_dict(product_id,new_quantity)
+            shopping_cart.append(new_product)
+
         return shopping_cart
 
 
-    def delete_product(self,product_id:int,shopping_cart:list) -> list:
+    def delete_product(self,product_id:int,shopping_cart:list[dict]) -> list[dict]:
         '''
             Deletes a product from the shopping cart, based on its id
             Returns the new shopping cart as list
@@ -117,10 +135,7 @@ class CartManager:
                 # -> creates a new list without the deleted one  -> deletes the product with given id
                 if product["id"] != product_id:
 
-                    new_product = {
-                        "id": product["id"],
-                        "quantity": product["quantity"]
-                    }
+                    new_product = self.create_product_dict(product["id"],product["quantity"])
 
                     new_cart.append(new_product)
 
@@ -130,17 +145,17 @@ class CartManager:
         return shopping_cart
 
 
-    def calculate_total_cart_price(self,shopping_cart:list) -> int:
+    def calculate_total_cart_price(self,shopping_cart:list[dict]) -> int:
         '''
             Calculates the total price of the products in the shopping cart;
             Returns an int
             :param: `shopping_cart` is a list of dictionaries
         '''
 
+        total_price = 0
+
         #check if shopping cart not empty
         if shopping_cart != None and shopping_cart != []:
-
-            total_price = 0
 
             #get each product
             for product_dict in shopping_cart:
@@ -168,16 +183,16 @@ class CartConverter(ABC):
             :param: `product_id` is the id of the product
             :param: `quantity` is the product quantity in the shopping cart
         '''
-        pass
+        
 
     @abstractmethod
-    def convert_all_dicts(self,shopping_cart:list) -> (list | None):
+    def convert_all_dicts(self,shopping_cart:list[dict]) -> (list[dict] | None):
         '''
             Returns a list, if cart not empty, made up of dictionaries
             :param: `shopping_cart` is a list of dictionaries, which have the following structure:
             `product = {"id": <product_id> , "quantity": <quantity>}
         '''
-        pass
+        
 
 
 class StripeCartConverter(CartConverter):
@@ -205,7 +220,7 @@ class StripeCartConverter(CartConverter):
             return stripe_product_dict
         
     
-    def convert_all_dicts(self,shopping_cart: list) -> list | None:
+    def convert_all_dicts(self,shopping_cart: list[dict]) -> list[dict] | None:
         '''
             Returns a list, if cart not empty, made up of dictionaries, for stripe checkout.
             New Example Structure of one dictionary: 
@@ -215,7 +230,7 @@ class StripeCartConverter(CartConverter):
         '''
 
         #check if not empty and not none
-        if shopping_cart != [] or shopping_cart != None:
+        if shopping_cart != [] and shopping_cart != None:
 
             new_list = []
 

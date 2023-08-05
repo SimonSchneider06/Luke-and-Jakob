@@ -4,3 +4,4 @@ website/__pycache__
 .vs
 __pycache__
 .env
+.coverage
