@@ -1,6 +1,20 @@
 import pytest
+from flask import Flask
 
 from website.models import User,Role,Guitar 
+from website import create_app
+from website import db
+    
+
+
+@pytest.fixture(scope = "module")
+def admin_role() -> Role:
+    '''
+        Returns the admin role
+    '''
+    role = Role(name = "Admin")
+    return role
+
 
 @pytest.fixture(scope = "module")
 def customer_role() -> Role:
@@ -33,13 +47,13 @@ def new_user(customer_role:callable) -> User:
         
     return user
 
-@pytest.fixture(scope = "module")
-def shopping_order() -> list:
+@pytest.fixture(scope = "function")
+def shopping_order() -> list[dict]:
     '''
         Create a shopping order
     '''
 
-    order = [{"id":1,"quantity":1},{"id":2,"quantity":1}]
+    order = [{"id":1,"quantity":1}]
 
     return order
 
@@ -57,3 +71,19 @@ def new_guitar() -> Guitar:
     )
 
     return guitar
+
+# needed to setup database
+# @pytest.fixture(scope="module")
+# def insert_data_to_database(new_guitar,new_user,customer_role,admin_role):
+#     '''
+#         Inserts the data into the database
+#     '''
+
+#     test_app = create_app("testing")
+#     with test_app.app_context():
+
+#         db.session.add(new_guitar)
+#         db.session.add(new_user)
+#         db.session.add(admin_role)
+#         db.session.add(customer_role)
+#         db.session.commit()
