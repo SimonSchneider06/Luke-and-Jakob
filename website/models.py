@@ -7,6 +7,7 @@ from time import time
 from flask import current_app as app
 from werkzeug.security import generate_password_hash, check_password_hash
 import pickle
+from sqlalchemy import select
 
 #------------user and roles--------------------------
 
@@ -68,6 +69,9 @@ class User(db.Model,UserMixin):
             Returns a string
             :param: `expiration` is the time after which the token expires, in seconds
         '''
+        if expiration <= 0:
+            raise ValueError("Token Expiration Time can't be <= 0")
+
         return jwt.encode(
             {"reset_password":self.id,"exp":time() + expiration},app.config["SECRET_KEY"],algorithm="HS256"
         )
@@ -84,7 +88,10 @@ class User(db.Model,UserMixin):
             id = jwt.decode(token,app.config["SECRET_KEY"],algorithms="HS256")["reset_password"]
         except:
             return
-        return User.query.get(id)
+        stmt =  select(User).where(User.id == id)
+        return db.session.scalar(stmt)
+            
+    
     
     @property
     def password(self):
