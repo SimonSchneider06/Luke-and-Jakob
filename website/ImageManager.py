@@ -1,10 +1,12 @@
 from flask import current_app as app
 import os
-#import imghdr to validate image file and size
-import imghdr
 import shutil
 from werkzeug.utils import secure_filename
 from werkzeug.datastructures import FileStorage 
+from sqlalchemy import select
+from . import db 
+from .models import Guitar
+import magic   # for image stream validation
 
 class ImageManager:
     '''
@@ -13,7 +15,8 @@ class ImageManager:
 
     def get_image_path_by_product_name_and_number(self,product_name:str,img_number:int) -> (str | None):
         '''
-            Returns the file path of a product-image by a given number
+            Returns the file path of a product-image by a given number.
+            Returns None if product_name doesn't exist or file by number doens't exist
             :param: `product_name` the name of the product
             :param: `img_number` the number of the searched image
         '''
@@ -40,17 +43,20 @@ class ImageManager:
             Return the extension of a given filepath
             :param: `file_path` is a string
         '''
-
-        if file_path == None or type(file_path) != str:
-            raise TypeError("file_path should be of type String")
-
-        if file_path == "":
-            raise ValueError("file_path shouldn't be an empty String")
-
-        file_path_secure = secure_filename(file_path)
-        # return the last part of the splitted text
         
-        return os.path.splitext(file_path_secure)[1]
+        #checks input string to type/value errors
+        if self.check_str_input_correct(file_path,"file_path","self.get_file_path_ext"):
+
+            file_path_secure = secure_filename(file_path)
+            # return the last part of the splitted text
+            
+            ext = os.path.splitext(file_path_secure)[1]
+
+            if ext != "":
+                return ext
+            
+            else:
+                raise ValueError("file_path should have an extension. Don't pass a path without one as argument")     
 
 
     def get_folder_path_by_product_name(self,product_name:str) -> str:
@@ -61,14 +67,16 @@ class ImageManager:
             :param: `product_name` name of the product
         '''
 
-        if product_name == "":
-            raise ValueError("product_name shouldn't be an empty String")
+        if self.check_str_input_correct(product_name,"product_name","get_folder_path_by_product_name"):
         
-        if product_name == None or type(product_name) != str:
-            raise TypeError("product_name should be of type String")
+            # check if product exists
+            if not self.verify_product_exists_by_name(product_name):
 
-        return f'{app.config["UPLOAD_PATH"]}/{product_name}'
-
+                raise ValueError(f"Product with name {product_name} does not exist")
+            
+            else:
+                return f'{app.config["UPLOAD_PATH"]}/{product_name}'
+            
 
     def check_img_ext(self,img_path:str) -> bool:
 
@@ -78,19 +86,15 @@ class ImageManager:
         '''
 
         #check if valid input
-        if img_path == None or type(img_path) != str:
-            raise TypeError("Img_path should be of type String")
+        if self.check_str_input_correct(img_path,"img_path","check_img_ext"):
         
-        if img_path == "":
-            raise ValueError("img_path shouldn't be an empty String")
-        
-        #get the extension
-        path_ext = self.get_file_path_ext(img_path)
+            #get the extension
+            path_ext = self.get_file_path_ext(img_path)
 
-        if path_ext not in app.config["UPLOAD_EXTENSIONS"]:
-            return False
-        
-        return True
+            if path_ext not in app.config["UPLOAD_EXTENSIONS"]:
+                return False
+            
+            return True
     
 
     def check_image_stream(self,image: FileStorage) -> bool:
@@ -105,13 +109,27 @@ class ImageManager:
         stream = image.stream
         header = stream.read(512)
         stream.seek(0)
-        format = imghdr.what(None,header)
+        format = magic.from_buffer(header)
+
         if not format:
             return False
-        stream_ext =  "." + (format if format != "jpeg" else "JPG")
+        
+        else:
 
-        if stream_ext == self.get_file_path_ext(image.filename):
-            return True
+            stream_ext = ""
+        
+            if "PNG image data" in format:# or "JPEG image data":
+                stream_ext = ".png"
+
+            if "JPEG image data" in format:
+                stream_ext = ".JPG"
+
+            if stream_ext != "":
+
+                if stream_ext == self.get_file_path_ext(image.filename):
+                    return True
+            else:
+                return False
 
 
     def verify_image(self,image:FileStorage) -> bool:
@@ -137,15 +155,11 @@ class ImageManager:
             :param: `path` is the folder_path which gets created
         '''
 
-        if path == "":
-            raise ValueError("Path shouldn't be an empty string")
-        
-        if path == None or type(path) != str:
-            raise TypeError("Path should be of type String")
+        if self.check_str_input_correct(path,"path","create_folder_structure"):
 
-        #checks if path exists already
-        if not os.path.exists(path):
-            os.mkdir(path)
+            #checks if path exists already
+            if not os.path.exists(path):
+                os.mkdir(path)
 
 
     def save_image_by_product_name_and_number(self,image:FileStorage,number:int,product_name:str) -> None:
@@ -164,7 +178,7 @@ class ImageManager:
 
             self.create_folder_structure(folder_path)
 
-            path_to_save = f'{folder_path}/{number}.{img_ext}'
+            path_to_save = f'{folder_path}/{number}{img_ext}'
 
             # checks if the path exists
 
@@ -177,5 +191,51 @@ class ImageManager:
             :param: `product_name` name of the product
         '''
 
-        folder_path = self.get_folder_path_by_product_name(product_name)
-        shutil.rmtree(folder_path)
+        if self.check_str_input_correct(product_name,"product_name","delete_directory_by_product_name"):
+
+            folder_path = self.get_folder_path_by_product_name(product_name)
+            shutil.rmtree(folder_path)
+
+
+    def verify_product_exists_by_name(self,product_name:str) -> bool:
+        '''
+            Returns true if product exists, and false if not
+            :param: `product_name` is the name of the product
+        '''
+
+        if product_name != "" and product_name != None:
+            
+            query = select(Guitar).where(Guitar.name == product_name)
+            guitar = db.session.scalar(query)
+            if guitar:
+                return True
+            
+        return False
+    
+
+    def check_str_input_correct(self,string:str,argument_name:str,function_name:str) -> bool:
+        '''
+            Checks whether the string input is correct or not.
+            Returns true or raises errors
+            :param: `string` is the string to be checked
+            :param: `argument_name` is how the argument is called, in the top level function
+            :param: `function_name` is the name of the function, in which it gets called -> for debugging
+        '''
+
+        if argument_name == "" or function_name == "":
+            raise ValueError(f"{argument_name} argument_name and {function_name} function name shouldn't be empty")
+        
+        if argument_name == None or type(argument_name) != str:
+            raise TypeError(f'{argument_name} argument name should be of type string')
+        
+        if function_name == None or type(function_name) != str:
+            raise TypeError(f'{function_name} function name should be of type string')
+
+        if string == "":
+            raise ValueError(f" '{argument_name}' in function 'ImageManager().{function_name}' shouldn't be an emtpy string")
+        
+        if string == None or type(string) != str:
+            raise TypeError(f" '{argument_name}' in function 'ImageManager().{function_name}' should be of type string")
+        
+        else:
+            return True
