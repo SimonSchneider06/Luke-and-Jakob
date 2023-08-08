@@ -96,3 +96,95 @@ def test_user_generate_and_verify_invalid_token():
     test_app = create_app("testing")
     with test_app.app_context():
          assert User.verify_password_reset_token("i0vjejßvojfwej") == None
+
+
+def test_check_user_exists():
+    '''
+        `GIVEN` a User method
+        `WHEN` a existing user gets passed as argument
+        `THEN` check if true gets returned
+    '''
+
+    test_app = create_app("testing")
+    with test_app.app_context():
+
+        # get user from database
+        search_query = select(User).where(User.id == 1)
+        user = db.session.scalar(search_query)
+
+        assert User.check_user_exists(user) == True
+
+
+def test_check_user_exists_user_id_none(customer_role):
+    '''
+        `GIVEN` a User method
+        `WHEN` a not existing user gets passed as argument, id = None
+        `THEN` check if false gets returned
+    '''
+
+    test_app = create_app("testing")
+    with test_app.app_context():
+
+        # get user 
+        user = User(
+            email = "test@web.de",
+            firstName = "Test",
+            lastName = "Test",
+            street = "Test-Street",
+            houseNumber = "1",
+            plz = "23533",
+            city = "Altmannstein",
+            country = "Deutschland",
+            password = "Save_Password",
+            rememberMe = True,
+            thirdParty = False,
+            role = customer_role
+        )
+
+        assert User.check_user_exists(user) == False
+
+
+def test_check_user_exists_user_invalid(customer_role):
+    '''
+        `GIVEN` a User method
+        `WHEN` a not existing user, with id gets passed as argument 
+        `THEN` check if false gets returned
+    '''
+
+    test_app = create_app("testing")
+    with test_app.app_context():
+
+        # get user 
+        user = User(
+            id = 6,
+            email = "test@web.de",
+            firstName = "Test",
+            lastName = "Test",
+            street = "Test-Street",
+            houseNumber = "1",
+            plz = "23533",
+            city = "Altmannstein",
+            country = "Deutschland",
+            password = "Save_Password",
+            rememberMe = True,
+            thirdParty = False,
+            role = customer_role
+        )
+
+        assert User.check_user_exists(user) == False
+
+
+def test_check_user_exists_invalid_type():
+    '''
+        `GIVEN` a User method
+        `WHEN` a existing user gets passed as argument
+        `THEN` check if TypeError gets raised
+    '''
+
+    test_app = create_app("testing")
+    with test_app.app_context():
+
+        # get user from database
+        user = "User"
+        with pytest.raises(TypeError):
+            User.check_user_exists(user)

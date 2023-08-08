@@ -91,6 +91,26 @@ class User(db.Model,UserMixin):
         stmt =  select(User).where(User.id == id)
         return db.session.scalar(stmt)
             
+
+    @staticmethod
+    def check_user_exists(user:User) -> bool:
+        '''
+            Checks whether the User exists in the Database or not
+        '''
+
+        if type(user) != User:
+            raise TypeError("user should be of Type User")
+        
+        if user.id == None:
+            return False
+
+        search_query = select(User).where(User.id == user.id)
+        result = db.session.scalar(search_query)
+
+        if result:
+            return True
+        else:
+            return False
     
     
     @property
