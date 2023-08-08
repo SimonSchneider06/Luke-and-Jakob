@@ -71,7 +71,7 @@ class ImageManager:
         if check_str_input_correct(product_name,"product_name","get_folder_path_by_product_name"):
         
             # check if product exists
-            if not self.verify_product_exists_by_name(product_name):
+            if not Guitar().check_guitar_exists_by_name(product_name):
 
                 raise ValueError(f"Product with name {product_name} does not exist")
             
@@ -196,20 +196,4 @@ class ImageManager:
 
             folder_path = self.get_folder_path_by_product_name(product_name)
             shutil.rmtree(folder_path)
-
-
-    def verify_product_exists_by_name(self,product_name:str) -> bool:
-        '''
-            Returns true if product exists, and false if not
-            :param: `product_name` is the name of the product
-        '''
-
-        if product_name != "" and product_name != None:
-            
-            query = select(Guitar).where(Guitar.name == product_name)
-            guitar = db.session.scalar(query)
-            if guitar:
-                return True
-            
-        return False
     
