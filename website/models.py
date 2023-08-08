@@ -53,6 +53,12 @@ class User(db.Model,UserMixin):
             :param: `cart` is a list of dictionaries
         '''
         #store it as pickle object
+        if type(cart) != list:
+            raise TypeError("cart should be of Type list")
+        
+        if cart == []:
+            raise ValueError("cart shouldn't be an empty list")
+
         self.order = pickle.dumps(cart)
 
 
@@ -60,7 +66,9 @@ class User(db.Model,UserMixin):
         '''
             Returns the order as list of dictionaries
         '''
-        #restore the pickle object to its original list
+        #restore the pickle object to its original list  
+        if self.order == None:
+            raise ValueError("self.order shouldn't be empty")  
         return pickle.loads(self.order)
 
 

@@ -26,10 +26,47 @@ def test_new_user_data_correct(new_user,customer_role):
     assert new_user.role_id == customer_role.id
 
 
+def test_get_order_is_None(new_user:User):
+    '''
+        `GIVEN` a User Model
+        `WHEN` a the order gets requested, but is None
+        `THEN` check if ValueError gets raised
+    '''
+
+    with pytest.raises(ValueError):
+        new_user.get_order()
+
+
+def test_set_order_wrong_type(new_user:User):
+    '''
+        `GIVEN` a User method
+        `WHEN` a argument of wrong type gets passed
+        `THEN` check if TypeError gets raised
+    '''
+
+    wrong_type = "List"
+
+    with pytest.raises(TypeError):
+        new_user.set_order(wrong_type)
+
+
+def test_set_order(new_user:User):
+    '''
+        `GIVEN` a User method
+        `WHEN` an empty list gets passed as argument
+        `THEN` check if ValueError gets raised
+    '''
+
+    empty_list = []
+
+    with pytest.raises(ValueError):
+        new_user.set_order(empty_list)
+
+
 def test_user_store_order(new_user,shopping_order):
     '''
         `GIVEN` a User Model
-        `WHEN` a User buys something the order is stored in the database
+        `WHEN` a valid order gets passed as argument
         `THEN` check if stored correctly
     '''
 
