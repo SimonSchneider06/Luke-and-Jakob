@@ -7,6 +7,7 @@ from sqlalchemy import select
 from . import db 
 from .models import Guitar
 import magic   # for image stream validation
+from .debug import check_str_input_correct
 
 class ImageManager:
     '''
@@ -45,7 +46,7 @@ class ImageManager:
         '''
         
         #checks input string to type/value errors
-        if self.check_str_input_correct(file_path,"file_path","self.get_file_path_ext"):
+        if check_str_input_correct(file_path,"file_path","self.get_file_path_ext"):
 
             file_path_secure = secure_filename(file_path)
             # return the last part of the splitted text
@@ -67,7 +68,7 @@ class ImageManager:
             :param: `product_name` name of the product
         '''
 
-        if self.check_str_input_correct(product_name,"product_name","get_folder_path_by_product_name"):
+        if check_str_input_correct(product_name,"product_name","get_folder_path_by_product_name"):
         
             # check if product exists
             if not self.verify_product_exists_by_name(product_name):
@@ -86,7 +87,7 @@ class ImageManager:
         '''
 
         #check if valid input
-        if self.check_str_input_correct(img_path,"img_path","check_img_ext"):
+        if check_str_input_correct(img_path,"img_path","check_img_ext"):
         
             #get the extension
             path_ext = self.get_file_path_ext(img_path)
@@ -155,7 +156,7 @@ class ImageManager:
             :param: `path` is the folder_path which gets created
         '''
 
-        if self.check_str_input_correct(path,"path","create_folder_structure"):
+        if check_str_input_correct(path,"path","create_folder_structure"):
 
             #checks if path exists already
             if not os.path.exists(path):
@@ -191,7 +192,7 @@ class ImageManager:
             :param: `product_name` name of the product
         '''
 
-        if self.check_str_input_correct(product_name,"product_name","delete_directory_by_product_name"):
+        if check_str_input_correct(product_name,"product_name","delete_directory_by_product_name"):
 
             folder_path = self.get_folder_path_by_product_name(product_name)
             shutil.rmtree(folder_path)
@@ -212,30 +213,3 @@ class ImageManager:
             
         return False
     
-
-    def check_str_input_correct(self,string:str,argument_name:str,function_name:str) -> bool:
-        '''
-            Checks whether the string input is correct or not.
-            Returns true or raises errors
-            :param: `string` is the string to be checked
-            :param: `argument_name` is how the argument is called, in the top level function
-            :param: `function_name` is the name of the function, in which it gets called -> for debugging
-        '''
-
-        if argument_name == "" or function_name == "":
-            raise ValueError(f"{argument_name} argument_name and {function_name} function name shouldn't be empty")
-        
-        if argument_name == None or type(argument_name) != str:
-            raise TypeError(f'{argument_name} argument name should be of type string')
-        
-        if function_name == None or type(function_name) != str:
-            raise TypeError(f'{function_name} function name should be of type string')
-
-        if string == "":
-            raise ValueError(f" '{argument_name}' in function 'ImageManager().{function_name}' shouldn't be an emtpy string")
-        
-        if string == None or type(string) != str:
-            raise TypeError(f" '{argument_name}' in function 'ImageManager().{function_name}' should be of type string")
-        
-        else:
-            return True
