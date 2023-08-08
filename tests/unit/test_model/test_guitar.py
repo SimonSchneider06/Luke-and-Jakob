@@ -81,3 +81,29 @@ def test_check_guitar_exists_not_existing():
         )
 
         assert Guitar.check_guitar_exists(guitar) == False
+
+
+def test_check_guitar_exists_by_name():
+    '''
+        `GIVEN` a guitar method
+        `WHEN` a guitarname of an existing guitar, gets passed
+        `THEN` check if True gets returned
+    '''
+
+    test_app = create_app("testing")
+    with test_app.app_context():
+
+        assert Guitar.check_guitar_exists_by_name("Test") == True
+
+
+def test_check_guitar_exists_by_name_not_existing():
+    '''
+        `GIVEN` a guitar method
+        `WHEN` a guitarname of a not existing guitar, gets passed
+        `THEN` check if False gets returned
+    '''
+
+    test_app = create_app("testing")
+    with test_app.app_context():
+
+        assert Guitar.check_guitar_exists_by_name("Not_Existing") == False

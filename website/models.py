@@ -7,7 +7,8 @@ from time import time
 from flask import current_app as app
 from werkzeug.security import generate_password_hash, check_password_hash
 import pickle
-#from sqlalchemy import select
+from sqlalchemy import select
+from .debug import check_str_input_correct
 
 #------------user and roles--------------------------
 
@@ -175,3 +176,22 @@ class Guitar(db.Model):
             return True
         else:
             return False
+        
+
+    @staticmethod
+    def check_guitar_exists_by_name(guitar_name:str) -> bool:
+        '''
+            Checks whether the guitar exists in the database or not
+            Returns a true or false
+            :param: `guitar_name` is the name of the guitar
+        '''
+
+        if check_str_input_correct(guitar_name,"guitar_name","check_guitar_exists_by_name"):
+
+            search_query = select(Guitar).where(Guitar.name == guitar_name)
+            result = db.session.scalar(search_query)
+
+            if result:
+                return True
+            else:
+                return False
