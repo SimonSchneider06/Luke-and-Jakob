@@ -7,7 +7,7 @@ from time import time
 from flask import current_app as app
 from werkzeug.security import generate_password_hash, check_password_hash
 import pickle
-from sqlalchemy import select
+#from sqlalchemy import select
 
 #------------user and roles--------------------------
 
@@ -82,41 +82,46 @@ class User(db.Model,UserMixin):
                                                     # this User needs the import 'from __future__ import annotations', so that a type of object User can be
                                                     # returned in the class User.
         '''
-            verify a password reset token, if token valid return user with given id ,else return none 
+            verify a password reset token, if token valid return user with given id ,else return none
         '''
         try:
             id = jwt.decode(token,app.config["SECRET_KEY"],algorithms="HS256")["reset_password"]
         except:
             return
-        stmt =  select(User).where(User.id == id)
-        return db.session.scalar(stmt)
-            
+        # stmt =  select(User).where(User.id == id)
+        # return db.session.scalar(stmt)
+        return db.session.get(User,id)
+
 
     @staticmethod
     def check_user_exists(user:User) -> bool:
         '''
             Checks whether the User exists in the Database or not
+            Returns true or false
+            :param: `user` is of type User
         '''
 
         if type(user) != User:
             raise TypeError("user should be of Type User")
-        
+
         if user.id == None:
             return False
 
-        search_query = select(User).where(User.id == user.id)
-        result = db.session.scalar(search_query)
+        # search_query = select(User).where(User.id == user.id)
+        # result = db.session.scalar(search_query)
+
+        result = db.session.get(User,user.id)
 
         if result:
             return True
         else:
             return False
-    
-    
+
+
     @property
     def password(self):
         raise AttributeError("Password is not a readable Attribute")
-    
+
     @password.setter
     def password(self,password:str):
         self.passwort_hash = generate_password_hash(password,method = "scrypt")
@@ -135,8 +140,8 @@ class Role(db.Model):
     #id = db.Column(db.Integer, primary_key = True)
 
 #what information to store:
-    #Product----- Name , Price, 3d Model, Image, 
-    #- Color, Size, Shape, Wood, 
+    #Product----- Name , Price, 3d Model, Image,
+    #- Color, Size, Shape, Wood,
 
 class Guitar(db.Model):
     id = db.Column(db.Integer,primary_key = True)
@@ -145,3 +150,28 @@ class Guitar(db.Model):
     stock = db.Column(db.Integer)
     stripe_price_id = db.Column(db.String(100))
     description = db.Column(db.Text)
+
+
+    @staticmethod
+    def check_guitar_exists(guitar:Guitar) -> bool:
+        '''
+            Checks whether the guitar exists in the database or not
+            Returns a true or false
+            :param: `guitar` is of type Guitar
+        '''
+
+        if type(guitar) != Guitar:
+            raise TypeError("guitar should be of Type Guitar")
+
+        if guitar.id == None:
+            return False
+
+        # search_query = select(Guitar).where(Guitar.id == guitar.id)
+        # result = db.session.scalar(search_query)
+
+        result = db.session.get(Guitar,guitar.id)
+
+        if result:
+            return True
+        else:
+            return False

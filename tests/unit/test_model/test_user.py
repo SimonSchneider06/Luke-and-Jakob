@@ -59,8 +59,9 @@ def test_user_generate_and_verify_token():
     with test_app.app_context():
 
         # get test User from database
-        test_user_stmt = select(User).filter_by(id = 1)
-        test_user = db.session.scalar(test_user_stmt)
+        # test_user_stmt = select(User).filter_by(id = 1)
+        # test_user = db.session.scalar(test_user_stmt)
+        test_user = db.session.get(User,1)
 
         # generate token
         token = test_user.generate_password_reset_token()
@@ -78,8 +79,9 @@ def test_user_generate_password_reset_token_invalid_expiration():
     test_app = create_app("testing")
     with test_app.app_context():
 
-        test_user_stmt = select(User).filter_by(id = 1)
-        test_user = db.session.scalar(test_user_stmt)
+        # test_user_stmt = select(User).filter_by(id = 1)
+        # test_user = db.session.scalar(test_user_stmt)
+        test_user = db.session.get(User,1)
 
         with pytest.raises(ValueError):
             exp = -3
@@ -109,8 +111,9 @@ def test_check_user_exists():
     with test_app.app_context():
 
         # get user from database
-        search_query = select(User).where(User.id == 1)
-        user = db.session.scalar(search_query)
+        # search_query = select(User).where(User.id == 1)
+        # user = db.session.scalar(search_query)
+        user = db.session.get(User,1)
 
         assert User.check_user_exists(user) == True
 
