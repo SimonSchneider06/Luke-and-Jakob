@@ -5,7 +5,7 @@ from .models import Guitar
 
 views = Blueprint('views',__name__)
 
-@views.route('/',methods = ['GET','POST'])
+@views.route('/',methods = ['GET'])
 def home():
     return render_template('home.html')
 
@@ -13,14 +13,19 @@ def home():
 def about_us():
     return render_template("about_us.html")
 
-@views.route('/logged_in',methods = ['POST','GET'])
-@login_required
-def logged_in():
-    return render_template("logged_in.html")
+# expired
+# @views.route('/logged_in',methods = ['POST','GET'])
+# @login_required
+# def logged_in():
+#     return render_template("logged_in.html")
 
-@views.route("/design-your-dream",methods = ["GET","POST"])
-def design_your_dream():
-    return render_template("design_your_dream.html")
+@views.route("/services", methods = ["GET"])
+def services():
+    return render_template("services.html")
+
+# @views.route("/design-your-dream",methods = ["GET","POST"])
+# def design_your_dream():
+#     return render_template("design_your_dream.html")
 
 # strg + k + c to comment multiple things at once (strg + k + u = uncomment)
 

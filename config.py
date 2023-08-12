@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-dotenv_path = os.path.join(basedir + ".env")
+dotenv_path = os.path.join(basedir + "/.env")
 load_dotenv(dotenv_path)
 
 class Config:
@@ -51,6 +51,11 @@ class TestingConfig(Config):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = os.environ.get("TEST_DATABASE_URL") or "sqlite:///testdatabase.db"
 
+class MailTestingConfig(Config):
+    TESTING = False # so that emails get send
+    SQLALCHEMY_DATABASE_URI = os.environ.get("TEST_DATABASE_URL") or "sqlite:///testdatabase.db"
+
+
 class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL") or "sqlite:///productionDatabase.db"
 
@@ -58,6 +63,7 @@ config = {
     "development":DevelopmentConfig,
     "testing":TestingConfig,
     "production":ProductionConfig,
+    "mail-testing":MailTestingConfig,
 
     "default":DevelopmentConfig
 }
