@@ -66,7 +66,7 @@ def sign_up():
             login_user(new_user,remember = new_user.rememberMe)
             flash("Erfolgreich Registriert",category = "success")
             
-            return redirect(url_for("views.logged_in"))
+            return redirect(url_for("views.home"))
 
     return render_template("auth/sign_up.html")
 
@@ -83,7 +83,7 @@ def login():
             if user.verifyPassword(passwort):
                 flash("Erfogreich Angemeldet",category = "success")
                 login_user(user,remember = user.rememberMe)
-                return redirect(url_for("views.logged_in"))
+                return redirect(url_for("views.home"))
 
             else:
                 flash("Passwort ist Falsch",category="error")
@@ -198,7 +198,7 @@ def change_user_data():
             db.session.commit()
             flash("Erfolgreich Daten geändert",category = "success")
         
-            return redirect(url_for("views.logged_in"))
+            return redirect(url_for("views.home"))
         
         except:
             flash("Es ist ein Fehler unterlaufen bitte versuchen sie es nochmal")
