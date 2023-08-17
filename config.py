@@ -52,7 +52,14 @@ class TestingConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get("TEST_DATABASE_URL") or "sqlite:///testdatabase.db"
 
 class MailTestingConfig(Config):
-    TESTING = False # so that emails get send
+    SEND_MAIL_DURING_TESTS = os.environ.get("SEND_MAIL_DURING_TESTS")
+    
+    # TESTING = False # so that emails get send
+    if SEND_MAIL_DURING_TESTS == "True":
+        TESTING = False
+    else:
+        TESTING = True
+
     SQLALCHEMY_DATABASE_URI = os.environ.get("TEST_DATABASE_URL") or "sqlite:///testdatabase.db"
 
 

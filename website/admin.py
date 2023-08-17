@@ -10,6 +10,11 @@ admin = Blueprint("admin",__name__)
 
 imageManager = ImageManager()
 
+@admin.before_request
+@admin_required()   # if now not logged in get 500 error
+def before_request():
+    pass
+
 #--------------admin page mit überblick--------------------------------
 
 @admin.route("/admin",methods = ["POST", "GET"])
