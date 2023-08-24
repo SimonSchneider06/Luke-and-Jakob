@@ -8,14 +8,15 @@ from flask import current_app as app
 from werkzeug.security import generate_password_hash, check_password_hash
 import pickle
 from sqlalchemy import select
-from .debug import check_str_input_correct
+from .debug import check_str_input_correct, check_str_correct
+import string
 
 #------------user and roles--------------------------
 
 class User(db.Model,UserMixin):
     '''
         Manages the User, defines how the database table looks
-        has methods for working with it easier
+        has methods to make working with it easier
     '''
 
     # How the Database table is defined
@@ -135,9 +136,122 @@ class User(db.Model,UserMixin):
     def password(self,password:str):
         self.passwort_hash = generate_password_hash(password,method = "scrypt")
 
+
     def verifyPassword(self,password:str) -> bool:
         return check_password_hash(self.passwort_hash,password)
 
+
+    @staticmethod
+    def check_email_exists(email:str) -> bool:
+        '''
+            Returns True if User with this email address already exists
+            :param: `email` is the Email to be checked
+        '''
+
+        if check_str_input_correct(email,"email","User.check_email_exists"):
+            # what to query
+            query = select(User).where(User.email == email)
+            # get result
+            result = db.session.scalar(query)
+
+            if result:
+                return True
+            else:
+                return False
+
+
+    @staticmethod
+    def _check_password_secure(password:str) -> bool:
+        '''
+            Takes a Password and checks if it is secure
+            Returns True if secure.
+            :param: `password` is the password
+        '''
+
+        #should have more than 8 Characters
+        if len(password) > 8:
+
+            lowercase = False
+            uppercase = False
+            number = False
+            punctuations = False 
+            
+            for element in password:
+                if element in string.ascii_lowercase:
+                    lowercase = True
+                elif element in string.ascii_uppercase:
+                    uppercase = True
+                elif element in string.digits:
+                    number = True
+                elif element in string.punctuation:
+                    punctuations = True
+
+            if lowercase == False or uppercase == False or number == False or punctuations == False:
+                return False
+            else:
+                return True
+            
+        else:
+            return False
+
+
+    @staticmethod
+    def convert_rememberMe(rememberMe:str) -> bool:
+        '''
+            Converts the rememberMe value from a string to a boolean.
+            Returns `true` or `false`.
+            :param: `rememberMe` is either `on` or `off` 
+        '''
+
+        if check_str_correct(rememberMe):
+
+            if rememberMe == "on":
+                return True
+            else:
+                return False
+
+
+    @staticmethod
+    def check_all_user_data_correct(email:str,firstName:str,lastName:str,houseNumber:str,street:str,plz:str,city:str,country:str,password1:str,password2:str,rememberMe:str) -> str | bool:
+        '''
+            When data from HTML-Forms gets requested, check if everything is correct
+            Returns string with output message to be flashed, e.g. if email exists returns `Emails exists already` and so on
+            if the data is correct, return `Data Correct`
+            :param: `email` is the email of the User, check if it already exists
+            :param: `firstName` is the firstName of the User
+            :param: `lastName` is the lastName of the User
+            :param: `houseNumber` is the houseNumber of the User
+            :param: `street` is the street the User lives in
+            :param: `plz` is the current Postleitzahl of the User
+            :param: `city` is the city of the User
+            :param: `country` is the country in which the User lives
+            :param: `password1` is the password of the User
+            :param: `password2` is the control password, to check if the User typed it correctly
+            :param: `rememberMe` is either `on` or `off`. See if User wants to stay logged in
+        '''
+        
+        # check if everything is a nonempty string
+        if check_str_correct(firstName) and check_str_correct(lastName) and check_str_correct(houseNumber) and \
+            check_str_correct(street) and check_str_correct(plz) and check_str_correct(country) and \
+                check_str_correct(country) and check_str_correct(password1) and check_str_correct(password2) and \
+                    check_str_correct(rememberMe) and check_str_correct(email):
+
+                        # check that email doesn't exist jet
+                        if User.check_email_exists(email):
+                            return "Email exists already"
+                        
+                        # check that passwords are equal
+                        elif password2 != password1:
+                            return "Passwords don't match"
+                        
+                        elif User._check_password_secure(password1) != True:
+                            return "Password not secure enough, please choose a more secure one"
+
+                        else: 
+                            return True
+        else:
+            return "Input values are not correct"
+                            
 
 class Role(db.Model):
     id = db.Column(db.Integer,primary_key = True)

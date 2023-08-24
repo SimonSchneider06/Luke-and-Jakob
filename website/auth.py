@@ -31,23 +31,25 @@ def sign_up():
         rememberMe = request.form.get("rememberMe") #can be on or off
         role = Role.query.filter_by(name = "Customer").first()
 
-        user = User.query.filter_by(email = email).first()
+        #checking the user_data
+        user_check = User.check_all_user_data_correct(email = email,
+                                            firstName= firstName,
+                                            lastName= lastName,
+                                            houseNumber= houseNumber,
+                                            street = street,
+                                            plz = plz,
+                                            city = city,
+                                            country = country,
+                                            password1 = passwort1,
+                                            password2 = passwort2,
+                                            rememberMe = rememberMe)
+        
+        if user_check == True:
+            # if successful create new user
 
-        #convert rememberMe in boolean value
-        if rememberMe == "on":
-            rememberMe = True
-        else:
-            rememberMe = False
+            # convert rememberMe
+            rememberMe_converted = User.convert_rememberMe(rememberMe)
 
-        if user:
-            flash("Email existiert bereits ",category="error")
-        if len(email) < 4:
-            flash("Email muss länger als 4 Zeichen sein",category = "error")
-        elif passwort1 != passwort2:
-            flash("Die Passwörter stimmen nicht überein",category = "error")
-        elif len(passwort1) < 7:
-            flash("Das Passwort muss mindestens 7 Zeichen lang sein",category = "error")
-        else:
             new_user = User(email = email,
                 firstName = firstName,
                 lastName = lastName,
@@ -56,17 +58,27 @@ def sign_up():
                 plz = plz,
                 city = city,
                 country = country,
-                rememberMe = rememberMe,
+                rememberMe = rememberMe_converted,
                 passwort = passwort1,
                 thirdParty = False,
                 role = role)
             
+            # add to db
             db.session.add(new_user)
             db.session.commit()
+
+            #login
             login_user(new_user,remember = new_user.rememberMe)
+
+            #flash message
             flash("Erfolgreich Registriert",category = "success")
             
+            #redirect to homepage
             return redirect(url_for("views.home"))
+        
+        else:
+            flash(user_check, category="error")
+            return redirect(url_for('auth.sign_up'))
 
     return render_template("auth/sign_up.html")
 

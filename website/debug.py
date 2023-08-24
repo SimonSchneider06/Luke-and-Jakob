@@ -26,3 +26,18 @@ def check_str_input_correct(string:str,argument_name:str,function_name:str) -> b
     
     else:
         return True
+    
+
+def check_str_correct(string:str) -> bool:
+    '''
+        Returns True if the input value is a nonempty string, else returns 
+        False
+    '''
+    if type(string) != str or string == None:
+        return False
+    
+    elif string == "":
+        return False
+    
+    else:
+        return True
