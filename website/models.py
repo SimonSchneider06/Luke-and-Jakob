@@ -259,6 +259,25 @@ class Role(db.Model):
     users = db.relationship("User", backref = "role")
 
 
+    def check_role_exists_by_name(self,role_name:str) -> bool:
+        '''
+            Checks wether the Role with the given name exists or not
+            Returns `true` or `false` 
+            :param: `role_name` is the name of the role
+        '''
+
+        # check if role_name is not empty str
+        if check_str_input_correct(role_name,"role_name","Role.check_role_exists_by_name"):
+
+            search_query = select(Role).where(Role.name == role_name)
+            result = db.session.scalar(search_query)
+
+            if result:
+                return True
+            else:
+                return False
+
+
 #class Guitar(db.Model):
     #id = db.Column(db.Integer, primary_key = True)
 

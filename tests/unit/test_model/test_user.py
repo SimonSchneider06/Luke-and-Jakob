@@ -360,7 +360,7 @@ def test_check_all_user_data_correct():
         ) == True
 
 
-def test_check_all_user_data_correct_email_exists_already(new_user):
+def test_check_all_user_data_correct_email_exists_already(test_app,new_user):
     '''
         `GIVEN` a User method
         `WHEN` every input data is correct, but email exists already in database
@@ -376,7 +376,7 @@ def test_check_all_user_data_correct_email_exists_already(new_user):
         # have an uppercase letter
         # have a lowercase letter
 
-    test_app = create_app("testing")
+    # test_app = create_app("testing")
     with test_app.app_context():
 
         assert User.check_all_user_data_correct(

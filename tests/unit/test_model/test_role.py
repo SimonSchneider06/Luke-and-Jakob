@@ -1,3 +1,4 @@
+from website.models import Role
 
 def test_role_data_correct(customer_role):
     '''
@@ -7,3 +8,25 @@ def test_role_data_correct(customer_role):
     '''
 
     assert customer_role.name == "Customer"
+
+
+def test_check_role_exists_by_name(customer_role,test_app):
+    '''
+        :param:`GIVEN` a Role Method
+        :param:`WHEN` a role name of a in the database existing Role gets passed
+        :param:`THEN` check if true gets returned 
+    '''
+    #test_app = create_app("testing")
+    with test_app.app_context():
+        assert Role().check_role_exists_by_name(customer_role.name) == True
+
+
+def test_check_role_exists_by_name_not_existing(test_app):
+    '''
+        :param:`GIVEN` a Role Method
+        :param:`WHEN` a role name of a in the database not existing Role gets passed
+        :param:`THEN` check if true gets returned 
+    '''
+
+    with test_app.app_context():
+        assert Role().check_role_exists_by_name("not_existing") == False

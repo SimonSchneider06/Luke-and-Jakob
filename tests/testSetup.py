@@ -1,0 +1,128 @@
+from __future__ import annotations
+from flask import Flask
+from typing import Iterable
+
+from website import db,create_app
+
+from website.models import User,Guitar,Role
+
+class TestDatabaseSetup:
+
+    '''
+        Does the Database Setup
+    '''
+
+    @staticmethod
+    def database_setup(test_app:Flask,test_data:Iterable[Role|User|Guitar]) -> None:
+        '''
+            Inserts the data into the database
+            Database Setup
+            :param: `test_app` is the Flask app for testing
+            :param: `test_data` is the test_data, containing of Users, Roles and/or Guitars 
+
+        '''
+
+
+        with test_app.app_context():
+
+            db.create_all()
+
+            db.session.add_all(test_data)
+            
+            db.session.commit()
+
+
+    @staticmethod
+    def database_teardown(test_app:Flask) -> None:
+        '''
+            Teardown the old database
+            :param: `test_app` is a Flask test app
+        '''
+
+        with test_app.app_context():
+            db.session.remove()
+            db.drop_all()
+
+
+class TestDataSetup:
+
+    def create_user(self,customer_role:Role) -> User:
+            '''
+            Create and return a new, valid user with Role Customer
+            :param: `customer_role` is the Role of the User
+            '''
+            user = User(
+                email = "schneider_berghausen@web.de",
+                firstName = "Simon",
+                lastName = "Schneider",
+                street = "Zum Wacholdertal",
+                houseNumber = "1",
+                plz = "93336",
+                city = "Altmannstein",
+                country = "Deutschland",
+                password = "Save_Password",
+                rememberMe = True,
+                thirdParty = False,
+                role = customer_role
+            )
+                
+            return user
+
+
+    def create_admin_role(self) -> Role:
+        '''
+            Returns the admin role
+        '''
+        role = Role(name = "Admin")
+        return role
+
+
+    def create_customer_role(self) -> Role:
+        '''
+            Returns the customer role
+        '''
+        role = Role(name = "Customer")
+        return role
+
+
+    def create_guitar(self) -> Guitar:
+        '''
+            Create a new Guitar
+        '''
+        guitar = Guitar(
+            name = "Test",
+            price = 1500,
+            stock = 5,
+            stripe_price_id = "price_1N4QMpGKMAM99iKsPRgqFrgU",
+            description = "Die Perfekte Gitarre für Anfänger bis Profi"
+        )
+
+        return guitar
+    
+
+    def create_all_test_data(self) -> tuple[Role, Role, User, Guitar]:
+        '''
+            Runns all methods of this class and returns all TestData
+        '''
+
+        customer_role = self.create_customer_role()
+        admin_role = self.create_admin_role()
+        user = self.create_user(customer_role)
+        guitar = self.create_guitar()
+
+        return customer_role, admin_role, user, guitar
+        
+
+class TestAppSetup:
+    '''
+        Complete Setup for the testing Application
+    '''
+
+    @staticmethod
+    def create_test_app():
+        '''
+            Returns the test app
+        '''
+
+        test_app = create_app("testing")
+        return test_app

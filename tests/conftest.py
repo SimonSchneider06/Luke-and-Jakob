@@ -4,7 +4,38 @@ from flask import Flask
 from website.models import User,Role,Guitar 
 from website import create_app
 from website import db
-    
+from tests.testClient import CustomClient
+from tests.testSetup import TestDatabaseSetup,TestDataSetup,TestAppSetup
+
+
+def pytest_configure(config):
+    '''
+        Run before the tests to configure the testing environment
+    '''
+
+    testApp = TestAppSetup.create_test_app()
+    testData = TestDataSetup().create_all_test_data()
+
+    TestDatabaseSetup.database_setup(testApp,testData)
+
+    print("SETUP SUCCESSFUL")
+
+
+def pytest_sessionfinish(session,exitstatus):
+    '''
+        Called after all Tests
+        Teardown TestDatabase
+    '''
+    # https://docs.pytest.org/en/latest/reference/reference.html#pytest.hookspec.pytest_sessionfinish
+    # https://docs.pytest.org/en/latest/reference/reference.html#exitcode
+
+    testApp = TestAppSetup.create_test_app()
+
+    TestDatabaseSetup.database_teardown(testApp)
+
+    # first character doesn't get shown
+    print("TEARDOWN SUCCESSFUL")
+
 
 
 @pytest.fixture(scope = "module")
@@ -12,8 +43,29 @@ def admin_role() -> Role:
     '''
         Returns the admin role
     '''
-    role = Role(name = "Admin")
+    role = TestDataSetup().create_admin_role()
     return role
+
+
+@pytest.fixture()
+def test_app():
+    '''
+        Returns a testapp
+    '''
+    test_app = TestAppSetup.create_test_app()
+
+    yield test_app
+
+
+
+@pytest.fixture()
+def test_client(test_app:Flask,role:str = "Customer"):
+    '''
+        Returns a test_client with authorisation
+        :param: `authorisation` is a string with default value of `Customer`
+    '''
+    test_app.test_client_class = CustomClient
+    return test_app.test_client(role = role)
 
 
 @pytest.fixture(scope = "module")
@@ -21,7 +73,7 @@ def customer_role() -> Role:
     '''
         Returns the customer role
     '''
-    role = Role(name = "Customer")
+    role = TestDataSetup().create_customer_role()
     return role
 
 
@@ -30,20 +82,7 @@ def new_user(customer_role:callable) -> User:
     '''
         Create a new, valid user
     '''
-    user = User(
-        email = "schneider_berghausen@web.de",
-        firstName = "Simon",
-        lastName = "Schneider",
-        street = "Zum Wacholdertal",
-        houseNumber = "1",
-        plz = "93336",
-        city = "Altmannstein",
-        country = "Deutschland",
-        password = "Save_Password",
-        rememberMe = True,
-        thirdParty = False,
-        role = customer_role
-    )
+    user = TestDataSetup().create_user(customer_role)
         
     return user
 
@@ -62,28 +101,7 @@ def new_guitar() -> Guitar:
     '''
         Create a new Guitar
     '''
-    guitar = Guitar(
-        name = "Test",
-        price = 1500,
-        stock = 5,
-        stripe_price_id = "price_1N4QMpGKMAM99iKsPRgqFrgU",
-        description = "Die Perfekte Gitarre für Anfänger bis Profi"
-    )
+    guitar = TestDataSetup().create_guitar()
 
     return guitar
 
-# needed to setup database
-# @pytest.fixture(scope="module")
-# def insert_data_to_database(new_guitar,new_user,customer_role,admin_role):
-#     '''
-#         Inserts the data into the database
-#     '''
-
-#     test_app = create_app("testing")
-#     with test_app.app_context():
-
-#         db.session.add(new_guitar)
-#         db.session.add(new_user)
-#         db.session.add(admin_role)
-#         db.session.add(customer_role)
-#         db.session.commit()
