@@ -60,7 +60,7 @@ class TestDataSetup:
                 plz = "93336",
                 city = "Altmannstein",
                 country = "Deutschland",
-                password = "Save_Password",
+                password = "Save_Password4",
                 rememberMe = True,
                 thirdParty = False,
                 role = customer_role

@@ -2,8 +2,6 @@ import pytest
 from flask import Flask
 
 from website.models import User,Role,Guitar 
-from website import create_app
-from website import db
 from tests.testClient import CustomClient
 from tests.testSetup import TestDatabaseSetup,TestDataSetup,TestAppSetup
 

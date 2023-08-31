@@ -19,7 +19,7 @@ def test_new_user_data_correct(new_user,customer_role):
     assert new_user.plz == "93336"
     assert new_user.city == "Altmannstein"
     assert new_user.country == "Deutschland"
-    assert new_user.verifyPassword("Save_Password") == True
+    assert new_user.verifyPassword("Save_Password4") == True
     assert new_user.rememberMe == True
     assert new_user.thirdParty == False
     assert new_user.role_id == customer_role.id
