@@ -41,3 +41,20 @@ def check_str_correct(string:str) -> bool:
     
     else:
         return True
+    
+
+def check_list_of_str_correct(liste:list[str]) -> bool:
+    '''
+        Returns True if all strings in the list are valid, else
+        returns False
+        :param: `list` is a list of strings
+    '''
+
+    #loop through list
+    for string in liste:
+
+        # if item not valid returns false
+        if check_str_correct(string) == False:
+            return False
+    
+    return True
