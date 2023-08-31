@@ -57,7 +57,9 @@ def create_app(config_name):
 
     @login_manager.user_loader
     def load_user(id):
-        return User.query.get(int(id))
+        # old, depreceated
+        # return User.query.get(int(id))
+        return db.session.get(User,id)
     
     #import methods to be used in jinja 
     from .jinja_functions import get_product_by_id
