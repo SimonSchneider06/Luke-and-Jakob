@@ -167,6 +167,12 @@ class User(db.Model,UserMixin):
             Returns True if secure.
             :param: `password` is the password
         '''
+        # for a password to be considered secure it should have
+        # - more than 8 characters
+        # - at least one lowercase letter
+        # - at least one uppercase letter
+        # - at least one number
+        # - at least one punctuation
 
         #should have more than 8 Characters
         if len(password) > 8:
