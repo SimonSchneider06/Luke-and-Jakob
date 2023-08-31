@@ -1,6 +1,5 @@
 import pytest
-from website import db,create_app
-from sqlalchemy import select
+from website import db
 from website.models import Guitar
 
 
@@ -18,41 +17,38 @@ def test_guitar_data_correct(new_guitar):
     assert new_guitar.description == "Die Perfekte Gitarre für Anfänger bis Profi"
 
 
-def test_check_guitar_exists():
+def test_check_guitar_exists(test_app):
     '''
         `GIVEN` a guitar method
         `WHEN` a existing guitar gets passed
         `THEN` check if True gets returned
     '''
 
-    test_app = create_app("testing")
     with test_app.app_context():
 
         guitar = db.session.get(Guitar,1)
         assert Guitar.check_guitar_exists(guitar) == True
 
 
-def test_check_guitar_exists_id_None(new_guitar):
+def test_check_guitar_exists_id_None(new_guitar,test_app):
     '''
         `GIVEN` a guitar method
         `WHEN` a not existing guitar, id = None gets passed
         `THEN` check if False gets returned
     '''
 
-    test_app = create_app("testing")
     with test_app.app_context():
 
         assert Guitar.check_guitar_exists(new_guitar) == False
 
 
-def test_check_guitar_exists_invalid_type():
+def test_check_guitar_exists_invalid_type(test_app):
     '''
         `GIVEN` a guitar method
         `WHEN` an argument of invalid type (=string) gets passed
         `THEN` check if TypeError gets raised
     '''
 
-    test_app = create_app("testing")
     with test_app.app_context():
 
         guitar = "Guitar"
@@ -61,14 +57,13 @@ def test_check_guitar_exists_invalid_type():
             Guitar.check_guitar_exists(guitar)
 
 
-def test_check_guitar_exists_not_existing():
+def test_check_guitar_exists_not_existing(test_app):
     '''
         `GIVEN` a guitar method
         `WHEN` a not existing guitar, gets passed
         `THEN` check if False gets returned
     '''
 
-    test_app = create_app("testing")
     with test_app.app_context():
 
         guitar = Guitar(
@@ -83,27 +78,25 @@ def test_check_guitar_exists_not_existing():
         assert Guitar.check_guitar_exists(guitar) == False
 
 
-def test_check_guitar_exists_by_name():
+def test_check_guitar_exists_by_name(test_app):
     '''
         `GIVEN` a guitar method
         `WHEN` a guitarname of an existing guitar, gets passed
         `THEN` check if True gets returned
     '''
 
-    test_app = create_app("testing")
     with test_app.app_context():
 
         assert Guitar.check_guitar_exists_by_name("Test") == True
 
 
-def test_check_guitar_exists_by_name_not_existing():
+def test_check_guitar_exists_by_name_not_existing(test_app):
     '''
         `GIVEN` a guitar method
         `WHEN` a guitarname of a not existing guitar, gets passed
         `THEN` check if False gets returned
     '''
 
-    test_app = create_app("testing")
     with test_app.app_context():
 
         assert Guitar.check_guitar_exists_by_name("Not_Existing") == False

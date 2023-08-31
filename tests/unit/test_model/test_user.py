@@ -1,7 +1,6 @@
 import pytest
 from website.models import User
-from website import create_app,db
-from sqlalchemy import select
+from website import db
 
 def test_new_user_data_correct(new_user,customer_role):
     '''
@@ -85,14 +84,13 @@ def test_user_read_password(new_user):
         new_user.password
 
 
-def test_user_generate_and_verify_token():
+def test_user_generate_and_verify_token(test_app):
     '''
         `GIVEN` a User model
         `WHEN` a User generates a valid token
         `THEN` check that user gets returned
     '''
 
-    test_app = create_app("testing")
     with test_app.app_context():
 
         # get test User from database
@@ -107,13 +105,13 @@ def test_user_generate_and_verify_token():
         assert User.verify_password_reset_token(token) == test_user
 
 
-def test_user_generate_password_reset_token_invalid_expiration():
+def test_user_generate_password_reset_token_invalid_expiration(test_app):
     '''
         `GIVEN` a User model
         `WHEN` a User generates a token with invalid expiration time
         `THEN` check that Valueerror gets raised
     '''
-    test_app = create_app("testing")
+
     with test_app.app_context():
 
         # test_user_stmt = select(User).filter_by(id = 1)
@@ -125,26 +123,24 @@ def test_user_generate_password_reset_token_invalid_expiration():
             test_user.generate_password_reset_token(expiration=exp)
 
 
-def test_user_generate_and_verify_invalid_token():
+def test_user_generate_and_verify_invalid_token(test_app):
     '''
         `GIVEN` a User model
         `WHEN` a User generates a valid token
         `THEN` check that user gets returned
     '''
      
-    test_app = create_app("testing")
     with test_app.app_context():
          assert User.verify_password_reset_token("i0vjejßvojfwej") == None
 
 
-def test_check_user_exists():
+def test_check_user_exists(test_app):
     '''
         `GIVEN` a User method
         `WHEN` a existing user gets passed as argument
         `THEN` check if true gets returned
     '''
 
-    test_app = create_app("testing")
     with test_app.app_context():
 
         # get user from database
@@ -155,14 +151,13 @@ def test_check_user_exists():
         assert User.check_user_exists(user) == True
 
 
-def test_check_user_exists_user_id_none(customer_role):
+def test_check_user_exists_user_id_none(customer_role,test_app):
     '''
         `GIVEN` a User method
         `WHEN` a not existing user gets passed as argument, id = None
         `THEN` check if false gets returned
     '''
 
-    test_app = create_app("testing")
     with test_app.app_context():
 
         # get user 
@@ -184,14 +179,13 @@ def test_check_user_exists_user_id_none(customer_role):
         assert User.check_user_exists(user) == False
 
 
-def test_check_user_exists_user_invalid(customer_role):
+def test_check_user_exists_user_invalid(customer_role,test_app):
     '''
         `GIVEN` a User method
         `WHEN` a not existing user, with id gets passed as argument 
         `THEN` check if false gets returned
     '''
 
-    test_app = create_app("testing")
     with test_app.app_context():
 
         # get user 
@@ -214,14 +208,13 @@ def test_check_user_exists_user_invalid(customer_role):
         assert User.check_user_exists(user) == False
 
 
-def test_check_user_exists_invalid_type():
+def test_check_user_exists_invalid_type(test_app):
     '''
         `GIVEN` a User method
         `WHEN` a user string gets passed as argument
         `THEN` check if TypeError gets raised
     '''
 
-    test_app = create_app("testing")
     with test_app.app_context():
 
         # get user from database
@@ -230,7 +223,7 @@ def test_check_user_exists_invalid_type():
             User.check_user_exists(user)
 
 
-def test_check_email_exists(new_user):
+def test_check_email_exists(new_user,test_app):
     '''
         `GIVEN` a User method
         `WHEN` a email from an existing User gets passed
@@ -239,13 +232,12 @@ def test_check_email_exists(new_user):
 
     email = new_user.email
 
-    test_app = create_app("testing")
     with test_app.app_context():
 
         assert User.check_email_exists(email) == True
 
 
-def test_check_email_exists_not_existing(new_user):
+def test_check_email_exists_not_existing(test_app):
     '''
         `GIVEN` a User method
         `WHEN` a email from a not existing User gets passed
@@ -254,13 +246,12 @@ def test_check_email_exists_not_existing(new_user):
 
     email = "test@test.de"
 
-    test_app = create_app("testing")
     with test_app.app_context():
 
         assert User.check_email_exists(email) == False
 
 
-def test_password_secure():
+def test_password_secure(test_app):
     '''
         `GIVEN` a User method
         `WHEN` a secure password gets passed
@@ -276,13 +267,12 @@ def test_password_secure():
         # have an uppercase letter
         # have a lowercase letter
 
-    test_app = create_app("testing")
     with test_app.app_context():
 
         assert User._check_password_secure(password) == True
 
 
-def test_password_secure_not_secure():
+def test_password_secure_not_secure(test_app):
     '''
         `GIVEN` a User method
         `WHEN` a not secure password (no punctuations) gets passed
@@ -298,13 +288,12 @@ def test_password_secure_not_secure():
         # have an uppercase letter
         # have a lowercase letter
 
-    test_app = create_app("testing")
     with test_app.app_context():
 
         assert User._check_password_secure(password) == False
 
 
-def test_password_secure_to_short():
+def test_password_secure_to_short(test_app):
     '''
         `GIVEN` a User method
         `WHEN` a insecure password (to short) gets passed
@@ -320,13 +309,12 @@ def test_password_secure_to_short():
         # have an uppercase letter
         # have a lowercase letter
 
-    test_app = create_app("testing")
     with test_app.app_context():
 
         assert User._check_password_secure(password) == False
 
 
-def test_check_all_user_data_correct():
+def test_check_all_user_data_correct(test_app):
     '''
         `GIVEN` a User method
         `WHEN` every input data is correct and fresh
@@ -342,7 +330,6 @@ def test_check_all_user_data_correct():
         # have an uppercase letter
         # have a lowercase letter
 
-    test_app = create_app("testing")
     with test_app.app_context():
 
         assert User.check_all_user_data_correct(
@@ -394,7 +381,7 @@ def test_check_all_user_data_correct_email_exists_already(test_app,new_user):
         ) == "Email exists already"
 
 
-def test_check_all_user_data_correct_passwords_not_matching():
+def test_check_all_user_data_correct_passwords_not_matching(test_app):
     '''
         `GIVEN` a User method
         `WHEN` every input data is correct, except password 1 & 2 don't match
@@ -410,7 +397,6 @@ def test_check_all_user_data_correct_passwords_not_matching():
         # have an uppercase letter
         # have a lowercase letter
 
-    test_app = create_app("testing")
     with test_app.app_context():
 
         assert User.check_all_user_data_correct(
@@ -428,7 +414,7 @@ def test_check_all_user_data_correct_passwords_not_matching():
         ) == "Passwords don't match"
 
 
-def test_check_all_user_data_correct_password_not_secure():
+def test_check_all_user_data_correct_password_not_secure(test_app):
     '''
         `GIVEN` a User method
         `WHEN` every input data is correct, but password is not secure
@@ -444,7 +430,6 @@ def test_check_all_user_data_correct_password_not_secure():
         # have an uppercase letter
         # have a lowercase letter
 
-    test_app = create_app("testing")
     with test_app.app_context():
 
         assert User.check_all_user_data_correct(
@@ -462,7 +447,7 @@ def test_check_all_user_data_correct_password_not_secure():
         ) == "Password not secure enough, please choose a more secure one"
 
 
-def test_check_all_user_data_correct_input_not_str():
+def test_check_all_user_data_correct_input_not_str(test_app):
     '''
         `GIVEN` a User method
         `WHEN` every input data is correct, except one in not a string
@@ -478,7 +463,6 @@ def test_check_all_user_data_correct_input_not_str():
         # have an uppercase letter
         # have a lowercase letter
 
-    test_app = create_app("testing")
     with test_app.app_context():
 
         assert User.check_all_user_data_correct(

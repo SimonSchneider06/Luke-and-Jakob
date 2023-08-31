@@ -1,15 +1,11 @@
-import pytest 
-from website import create_app
-from tests.testClient import CustomClient
 
-def test_page_not_found_error():
+def test_page_not_found_error(test_app):
     '''
         `GIVEN` a errorhandling function
         `WHEN` the 404 error gets raised(url which doesn't exist gets called)
         `THEN` check that errorpage gets shown
     '''
 
-    test_app = create_app("testing")
     
     with test_app.test_client() as test_client:
         response = test_client.get("/test_404_error")
@@ -33,20 +29,16 @@ def test_internal_server_error():
     # kein 500 status code zustande kommt. 
     pass
 
-def test_page_forbidden_error():
+def test_page_forbidden_error(test_client):
     '''
         `GIVEN` a errorhandling function
         `WHEN` the 403 error gets raised, page forbidden for user
         `THEN` check that errorpage gets shown
     '''
+    
+    response = test_client.get("/admin")
 
-    test_app = create_app("testing")
+    assert response.status_code == 403
 
-    with test_app.app_context():
-        with test_app.test_client() as test_client:
-            response = test_client.get("/admin")
-
-            assert response.status_code == 403
-
-            assert b"Die gesuchte Seite ist nicht auffindbar." in response.data
-            assert b'Das ist alles was wir wissen.' in response.data
+    assert b"Die gesuchte Seite ist nicht auffindbar." in response.data
+    assert b'Das ist alles was wir wissen.' in response.data

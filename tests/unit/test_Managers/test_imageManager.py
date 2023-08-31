@@ -1,12 +1,11 @@
 import pytest
 from website.ImageManager import ImageManager
-from website import create_app
 from werkzeug.datastructures import FileStorage
 import os
 import shutil
 
 
-def test_get_image_path_by_product_name_and_number(new_guitar):
+def test_get_image_path_by_product_name_and_number(new_guitar,test_app):
     '''
         `GIVEN` a ImageManager method
         `WHEN` a image should be found by product name and image number
@@ -15,14 +14,12 @@ def test_get_image_path_by_product_name_and_number(new_guitar):
 
     product_name = new_guitar.name
 
-    test_app = create_app("testing")
-
     with test_app.app_context():
         assert ImageManager().get_image_path_by_product_name_and_number(product_name,0) == "Bilder/Produktbilder/Test/0.png"
         assert ImageManager().get_image_path_by_product_name_and_number(product_name,3) == "Bilder/Produktbilder/Test/3.png"
 
 
-def test_get_image_path_by_product_name_and_number_name_is_invalid():
+def test_get_image_path_by_product_name_and_number_name_is_invalid(test_app):
     '''
         `GIVEN` a ImageManager method
         `WHEN` a image should be found by product name, which doesn't exist and image number
@@ -31,15 +28,13 @@ def test_get_image_path_by_product_name_and_number_name_is_invalid():
 
     product_name = "notExisting"
 
-    test_app = create_app("testing")
-
     with test_app.app_context():
 
         with pytest.raises(ValueError):
             ImageManager().get_image_path_by_product_name_and_number(product_name,0)
 
 
-def test_get_image_path_by_product_name_and_number_invalid_number(new_guitar):
+def test_get_image_path_by_product_name_and_number_invalid_number(new_guitar,test_app):
     '''
         `GIVEN` a ImageManager method
         `WHEN` a image should be found by product name and (image number, which doesn't exist)
@@ -48,21 +43,17 @@ def test_get_image_path_by_product_name_and_number_invalid_number(new_guitar):
 
     product_name = new_guitar.name
 
-    test_app = create_app("testing")
-
     with test_app.app_context():
         assert ImageManager().get_image_path_by_product_name_and_number(product_name,7) == None
 
 
-def test_get_image_path_by_product_name_and_number_number_ofType_str(new_guitar):
+def test_get_image_path_by_product_name_and_number_number_ofType_str(new_guitar,test_app):
     '''
         `GIVEN` a ImageManager method
         `WHEN` a image should be found by product name and image number,one valid, one invalid, both with wrong type of string
         `THEN` check if path gets returned 
     '''
     product_name = new_guitar.name
-
-    test_app = create_app("testing")
 
     with test_app.app_context():
         assert ImageManager().get_image_path_by_product_name_and_number(product_name,"3") == "Bilder/Produktbilder/Test/3.png"
@@ -94,7 +85,7 @@ def test_get_file_path_ext_file_path_no_extension():
         ImageManager().get_file_path_ext("Bilder/Produktbilder/Test/3")
 
 
-def test_get_folder_path_by_product_name(new_guitar):
+def test_get_folder_path_by_product_name(new_guitar,test_app):
     '''
         `GIVEN` a ImageManager method
         `WHEN` the product name is an existing, valid name
@@ -103,47 +94,43 @@ def test_get_folder_path_by_product_name(new_guitar):
 
     product_name = new_guitar.name
 
-    test_app = create_app("testing")
     with test_app.app_context():
 
         assert ImageManager().get_folder_path_by_product_name(product_name) == f"./website/static/Bilder/Produktbilder/{product_name}"
 
 
-def test_get_folder_path_by_product_name_name_not_existing():
+def test_get_folder_path_by_product_name_name_not_existing(test_app):
     '''
         `GIVEN` a ImageManager method
         `WHEN` the product name is a not existing, invalid name
         `THEN` check if Value Error gets raised
     '''
 
-    test_app = create_app("testing")
     with test_app.app_context():
 
         with pytest.raises(ValueError):
             ImageManager().get_folder_path_by_product_name("NotExisting")
 
 
-def test_check_img_ext():
+def test_check_img_ext(test_app):
     '''
         `GIVEN` a ImageManager method
         `WHEN` a image_path with valid extension gets passed as argument
         `THEN` check if returned True
     '''
 
-    test_app = create_app("testing")
     with test_app.app_context():
 
         assert ImageManager().check_img_ext("Bilder/Produktbilder/Test/0.png") == True
 
 
-def test_check_img_ext_not_valid():
+def test_check_img_ext_not_valid(test_app):
     '''
         `GIVEN` a ImageManager method
         `WHEN` a image_path with invalid extension gets passed as argument
         `THEN` check if returned False
     '''
 
-    test_app = create_app("testing")
     with test_app.app_context():
 
         assert ImageManager().check_img_ext("Bilder/Produktbilder/Test/0.mp4") == False
@@ -196,7 +183,7 @@ def test_check_image_stream_invalid_input_type():
         ImageManager().check_image_stream("test_str")    
 
 
-def test_verify_image():
+def test_verify_image(test_app):
     '''
         `GIVEN` a ImageManager method
         `WHEN` a valid image gets passed as argument
@@ -205,7 +192,6 @@ def test_verify_image():
 
     file = None
 
-    test_app = create_app("testing")
     with test_app.app_context():
 
         with open("./website/static/Bilder/Produktbilder/Test/0.png","rb") as f:
@@ -214,7 +200,7 @@ def test_verify_image():
             assert ImageManager().verify_image(file) == True
 
 
-def test_verify_image_invalid_file():
+def test_verify_image_invalid_file(test_app):
     '''
         `GIVEN` a ImageManager method
         `WHEN` a file of wrong type, for example pdf gets passed
@@ -223,7 +209,6 @@ def test_verify_image_invalid_file():
 
     file = None
 
-    test_app = create_app("testing")
     with test_app.app_context():
 
         with open("./tests/test_files/test_pdf.pdf","rb") as f:
@@ -232,14 +217,13 @@ def test_verify_image_invalid_file():
             assert ImageManager().verify_image(file) == False
 
 
-def test_verify_image_invalid_input_type():
+def test_verify_image_invalid_input_type(test_app):
     '''
         `GIVEN` a ImageManager method
         `WHEN` a argument of invalid type, for example str gets passed
         `THEN` check if TypeError gets raised
     '''
 
-    test_app = create_app("testing")
     with test_app.app_context():
         with pytest.raises(TypeError):
             ImageManager().verify_image("test_string")
@@ -265,7 +249,7 @@ def test_create_folder_structure_and_destroy():
     assert os.path.exists("./tests/test_folder") == False
 
 
-def test_save_image_by_product_name_and_number():
+def test_save_image_by_product_name_and_number(test_app):
     '''
         `GIVEN` an ImageManager method
         `WHEN` the arguments get passed in correctly, so image, number, product_name
@@ -273,7 +257,6 @@ def test_save_image_by_product_name_and_number():
     '''
 
     file = None
-    test_app = create_app("testing")
 
     with test_app.app_context():
 
@@ -290,14 +273,12 @@ def test_save_image_by_product_name_and_number():
             assert os.path.exists("./website/static/Bilder/Produktbilder/Test/5.png") == False
 
 
-def test_delete_directory_by_product_name():
+def test_delete_directory_by_product_name(test_app):
     '''
         `GIVEN` an ImageManager method
         `WHEN` the folder path should be removed, because product gets deleted
         `THEN` check if removed correctly
     '''
-
-    test_app = create_app("testing")
 
     with test_app.app_context():
 

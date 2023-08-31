@@ -123,13 +123,13 @@ def test_CartManager_delete_product_by_product_not_in_order(shopping_order):
     assert CartManager().delete_product(2,shopping_order) == [{"id":1,"quantity":1}]
 
 
-def test_CartManager_calculate_total_cart_price(shopping_order):
+def test_CartManager_calculate_total_cart_price(shopping_order,test_app):
     '''
         `GIVEN` a CartManager model and a shopping order, with valid data
         `WHEN` a the total price of the shopping cart should be calculated
         `THEN` check if calculated correctly
     '''
-    test_app = create_app("testing")
+    
     with test_app.app_context():
         assert CartManager().calculate_total_cart_price(shopping_order) == 1500
 
