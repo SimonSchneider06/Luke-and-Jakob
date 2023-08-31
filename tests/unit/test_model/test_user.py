@@ -498,3 +498,83 @@ def test_convert_rememberMe_on():
     '''
 
     assert User.convert_rememberMe("on") == True
+
+
+def test_set_firstName_no_string(new_user:User):
+    '''
+        `GIVEN` a User method
+        `WHEN` a value, not being a string gets passed
+        `THEN` check if False gets returned
+    '''
+
+    assert new_user.set_firstName(3) == False
+
+
+def test_set_lastName_no_string(new_user:User):
+    '''
+        `GIVEN` a User method
+        `WHEN` a value, not being a string gets passed
+        `THEN` check if False gets returned
+    '''
+
+    assert new_user.set_lastName(3) == False
+
+
+def test_set_street_no_string(new_user:User):
+    '''
+        `GIVEN` a User method
+        `WHEN` a value, not being a string gets passed
+        `THEN` check if False gets returned
+    '''
+
+    assert new_user.set_street(3) == False
+
+
+def test_set_houseNumber_no_string(new_user:User):
+    '''
+        `GIVEN` a User method
+        `WHEN` a value, not being a string gets passed
+        `THEN` check if False gets returned
+    '''
+
+    assert new_user.set_houseNumber(3) == False
+
+
+def test_set_plz_no_string(new_user:User):
+    '''
+        `GIVEN` a User method
+        `WHEN` a value, not being a string gets passed
+        `THEN` check if False gets returned
+    '''
+
+    assert new_user.set_plz(3) == False
+
+
+def test_set_city_no_string(new_user:User):
+    '''
+        `GIVEN` a User method
+        `WHEN` a value, not being a string gets passed
+        `THEN` check if False gets returned
+    '''
+
+    assert new_user.set_city(3) == False
+
+
+def test_set_country_no_string(new_user:User):
+    '''
+        `GIVEN` a User method
+        `WHEN` a value, not being a string gets passed
+        `THEN` check if False gets returned
+    '''
+
+    assert new_user.set_country(3) == False
+
+
+def test_set_rememberMe_no_string(new_user:User):
+    '''
+        `GIVEN` a User method
+        `WHEN` a value, not being a string gets passed
+        `THEN` check if False gets returned
+    '''
+
+    assert new_user.set_rememberMe(3) == False

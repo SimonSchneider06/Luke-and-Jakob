@@ -8,7 +8,7 @@ from flask import current_app as app
 from werkzeug.security import generate_password_hash, check_password_hash
 import pickle
 from sqlalchemy import select
-from .debug import check_str_input_correct, check_str_correct
+from .debug import check_str_input_correct, check_str_correct, check_list_of_str_correct
 import string
 
 #------------user and roles--------------------------
@@ -73,6 +73,158 @@ class User(db.Model,UserMixin):
         return pickle.loads(self.order)
 
 
+    def set_firstName(self,firstName:str) -> bool:
+        '''
+            Sets the firstName of the user.
+            Returns True if successful else False
+            :param: `firstName` is the firstName of the user
+        '''
+
+        if check_str_correct(firstName):
+            self.firstName = firstName
+            db.session.commit()
+            return True
+        else:
+            return False
+
+
+    def set_lastName(self,lastName:str) -> bool:
+        '''
+            Sets the lastName of the user.
+            Returns True if successful else False
+            :param: `lastName` is the lastName of the user
+        '''
+
+        if check_str_correct(lastName):
+            self.lastName = lastName
+            db.session.commit()
+            return True
+        else:
+            return False
+
+
+    def set_street(self,street:str) -> bool:
+        '''
+            Sets the street of the user.
+            Returns True if successful else False
+            :param: `street` is the street of the user
+        '''
+
+        if check_str_correct(street):
+            self.street = street
+            db.session.commit()
+            return True
+        else:
+            return False
+
+
+    def set_houseNumber(self,houseNumber:str) -> bool:
+        '''
+            Sets the houseNumber of the user.
+            Returns True if successful else False
+            :param: `houseNumber` is the houseNumber of the user
+        '''
+
+        if check_str_correct(houseNumber):
+            self.houseNumber = houseNumber
+            db.session.commit()
+            return True
+        else:
+            return False
+
+
+    def set_plz(self,plz:str) -> bool:
+        '''
+            Sets the plz of the user.
+            Returns True if successful else False
+            :param: `plz` is the plz of the user
+        '''
+
+        if check_str_correct(plz):
+            self.plz = plz
+            db.session.commit()
+            return True
+        else:
+            return False
+
+
+    def set_city(self,city:str) -> bool:
+        '''
+            Sets the city of the user.
+            Returns True if successful else False
+            :param: `city` is the city of the user
+        '''
+
+        if check_str_correct(city):
+            self.city = city
+            db.session.commit()
+            return True
+        else:
+            return False
+
+
+    def set_country(self,country:str) -> bool:
+        '''
+            Sets the country of the user.
+            Returns True if successful else False
+            :param: `country` is the country of the user
+        '''
+
+        if check_str_correct(country):
+            self.country = country
+            db.session.commit()
+            return True
+        else:
+            return False
+
+
+    def set_rememberMe(self,rememberMe:str) -> bool:
+        '''
+            Sets the rememberMe of the user.
+            Returns True if successful else False
+            :param: `rememberMe` is the rememberMe of the user
+        '''
+
+        if check_str_correct(rememberMe):
+
+            # convert rememberMe
+            rememberMe_converted = User.convert_rememberMe(rememberMe)
+
+            self.rememberMe = rememberMe_converted
+            db.session.commit()
+            return True
+        else:
+            return False
+
+
+    def set_full_name(self,firstName:str,lastName:str) -> bool:
+        '''
+            Sets the full name, lastName and firstName
+            :param: `lastName` is the lastName of the User
+            :param: `firstName` is the firstName of the User
+        '''
+
+        self.set_firstName(firstName)
+        self.set_lastName(lastName)
+
+
+    def set_address(self,street:str,houseNumber:str,plz:str,city:str,country:str) -> bool:
+        '''
+            Sets the address including `street`, `houseNumber`, `plz`, `city`,`country`
+            :param: `street` is the street of the user
+            :param: `houseNumber` is the houseNumber of the user
+            :param: `plz` is the plz of the user
+            :param: `city` is the city of the user
+            :param: `country` is the country of the user
+        '''
+
+        self.set_street(street)
+        self.set_houseNumber(houseNumber)
+        self.set_plz(plz)
+        self.set_city(city)
+        self.set_country(country)
+
+
     def generate_password_reset_token(self,expiration = 600) -> str:
         '''
             generates a token to reset the passwort
@@ -131,6 +283,7 @@ class User(db.Model,UserMixin):
     @property
     def password(self):
         raise AttributeError("Password is not a readable Attribute")
+
 
     @password.setter
     def password(self,password:str):
@@ -258,32 +411,30 @@ class User(db.Model,UserMixin):
         '''
         
         # check if everything is a nonempty string
-        if check_str_correct(firstName) and check_str_correct(lastName) and check_str_correct(houseNumber) and \
-            check_str_correct(street) and check_str_correct(plz) and check_str_correct(country) and \
-                check_str_correct(country) and check_str_correct(password1) and check_str_correct(password2) and \
-                    check_str_correct(rememberMe) and check_str_correct(email):
+        if check_list_of_str_correct([email,firstName,lastName,street,houseNumber,plz,city,country,password1,password2,rememberMe]) == True:
 
-                        # check that email doesn't exist jet
-                        if User.check_email_exists(email):
-                            return "Email exists already"
-                        
-                        # check that passwords are equal
-                        elif password2 != password1:
-                            return "Passwords don't match"
-                        
-                        elif User._check_password_secure(password1) != True:
-                            return "Password not secure enough, please choose a more secure one"
+            # check that email doesn't exist jet
+            if User.check_email_exists(email):
+                return "Email exists already"
+            
+            # check that passwords are equal
+            elif password2 != password1:
+                return "Passwords don't match"
+            
+            elif User._check_password_secure(password1) != True:
+                return "Password not secure enough, please choose a more secure one"
 
-                        else: 
-                            return True
+            else: 
+                return True
+                        
         else:
             return "Input values are not correct"
-                            
+
 
     @staticmethod
     def get_from_email(email:str) -> User | None:
         '''
-            Returns User by given email.
+            Returns User by given email. (staticmethod)
             :param: `email` is the email of the User
         '''
 
