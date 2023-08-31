@@ -161,6 +161,27 @@ class User(db.Model,UserMixin):
 
 
     @staticmethod
+    def check_is_third_party(email:str) -> bool:
+        '''
+            Returns True if User with this email is third party registered.
+
+            Returns False if not.
+            :param: `email` is the Email of the User
+        '''
+
+        if check_str_correct(email):
+            
+            query = select(User).where(User.email == email)
+
+            result = db.session.scalar(query)
+
+            if result.thirdParty == True: # if third party return true
+                return True
+            else:   # if not third party, or if no User, return false
+                return False
+
+
+    @staticmethod
     def _check_password_secure(password:str) -> bool:
         '''
             Takes a Password and checks if it is secure
@@ -258,6 +279,20 @@ class User(db.Model,UserMixin):
         else:
             return "Input values are not correct"
                             
+
+    @staticmethod
+    def get_from_email(email:str) -> User | None:
+        '''
+            Returns User by given email.
+            :param: `email` is the email of the User
+        '''
+
+        if check_str_correct(email):
+            query = select(User).where(User.email == email)
+            result = db.session.scalar(query)
+
+            return result if result else None
+
 
 class Role(db.Model):
     id = db.Column(db.Integer,primary_key = True)

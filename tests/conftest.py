@@ -84,6 +84,17 @@ def new_user(customer_role:callable) -> User:
         
     return user
 
+
+@pytest.fixture(scope = "module")
+def third_party_user(customer_role:callable) -> User:
+    '''
+        Create a valid third party user
+    '''
+    user = TestDataSetup().create_third_party_user(customer_role)
+
+    return user
+
+
 @pytest.fixture(scope = "function")
 def shopping_order() -> list[dict]:
     '''

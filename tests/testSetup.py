@@ -100,17 +100,45 @@ class TestDataSetup:
         return guitar
     
 
-    def create_all_test_data(self) -> tuple[Role, Role, User, Guitar]:
+    def create_third_party_user(self,customer_role:Role) -> User:
+        '''
+            Create user who registered through 3rd party
+            :param: `customer_role` is the Role with name "Customer"
+        '''
+        user = User(
+                email = "thirdParty@gmail.com",
+                firstName = "TestThird",
+                lastName = "TestParty",
+                street = None,
+                houseNumber = None,
+                plz = None,
+                city = None,
+                country = None,
+                password = None,
+                rememberMe = None,
+                thirdParty = True,
+                role = customer_role
+            )
+                
+        return user
+
+
+    def create_all_test_data(self) -> list[Role | User | Guitar]:
         '''
             Runns all methods of this class and returns all TestData
         '''
 
+        data = []
+
         customer_role = self.create_customer_role()
         admin_role = self.create_admin_role()
         user = self.create_user(customer_role)
+        third_party_user = self.create_third_party_user(customer_role)
         guitar = self.create_guitar()
 
-        return customer_role, admin_role, user, guitar
+        data.append(customer_role,admin_role,user,third_party_user,guitar)
+
+        return data
         
 
 class TestAppSetup:
