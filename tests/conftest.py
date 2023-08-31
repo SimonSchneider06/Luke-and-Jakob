@@ -3,7 +3,7 @@ from flask import Flask
 
 from website.models import User,Role,Guitar 
 from tests.testClient import CustomClient
-from tests.testSetup import TestDatabaseSetup,TestDataSetup,TestAppSetup
+from tests.testSetup import TestDatabaseSetup,TestDataSetup,TestAppSetup, RouteSetup
 
 
 def pytest_configure(config):
@@ -35,7 +35,6 @@ def pytest_sessionfinish(session,exitstatus):
     print("TEARDOWN SUCCESSFUL")
 
 
-
 @pytest.fixture(scope = "module")
 def admin_role() -> Role:
     '''
@@ -53,7 +52,6 @@ def test_app():
     test_app = TestAppSetup.create_test_app()
 
     yield test_app
-
 
 
 @pytest.fixture()
@@ -76,7 +74,7 @@ def customer_role() -> Role:
 
 
 @pytest.fixture(scope = "module")
-def new_user(customer_role:callable) -> User:
+def new_user(customer_role:Role) -> User:
     '''
         Create a new, valid user
     '''
@@ -86,7 +84,7 @@ def new_user(customer_role:callable) -> User:
 
 
 @pytest.fixture(scope = "module")
-def third_party_user(customer_role:callable) -> User:
+def third_party_user(customer_role:Role) -> User:
     '''
         Create a valid third party user
     '''
@@ -105,6 +103,7 @@ def shopping_order() -> list[dict]:
 
     return order
 
+
 @pytest.fixture(scope = "module")
 def new_guitar() -> Guitar:
     '''
@@ -114,3 +113,112 @@ def new_guitar() -> Guitar:
 
     return guitar
 
+
+# routes----------
+
+# auth routes---------
+@pytest.fixture()
+def sign_up_route(test_app) -> str:
+    '''
+        Returns the sign_up route
+    '''
+    return RouteSetup.get_route_by_name(test_app,"auth.sign_up")
+
+
+@pytest.fixture()
+def login_route(test_app) -> str:
+    '''
+        Returns the login route
+    '''
+    return RouteSetup.get_route_by_name(test_app,"auth.login")
+
+
+@pytest.fixture()
+def logout_route(test_app) -> str:
+    '''
+        Returns the logout route
+    '''
+    return RouteSetup.get_route_by_name(test_app,"auth.logout")
+
+
+@pytest.fixture()
+def change_user_data_route(test_app) -> str:
+    '''
+        Returns the change_user_data route
+    '''
+    return RouteSetup.get_route_by_name(test_app,"auth.change_user_data")
+
+
+@pytest.fixture()
+def account_page_route(test_app) -> str:
+    '''
+        Returns the account_page route
+    '''
+    return RouteSetup.get_route_by_name(test_app,"auth.account_page")
+
+
+@pytest.fixture()
+def password_reset_route(test_app) -> str:
+    '''
+        Returns the password_reset route
+    '''
+    return RouteSetup.get_route_by_name(test_app,"auth.password_reset")
+
+
+@pytest.fixture()
+def new_password_route(test_app) -> str:
+    '''
+        Returns the new_password route
+    '''
+    return RouteSetup.get_route_by_name(test_app,"auth.new_password")
+
+# views routes--------
+@pytest.fixture()
+def home_route(test_app) -> str:
+    '''
+        Returns the home route
+    '''
+    return RouteSetup.get_route_by_name(test_app,"views.home")
+
+
+@pytest.fixture()
+def about_us_route(test_app) -> str:
+    '''
+        Returns the about_us route
+    '''
+    return RouteSetup.get_route_by_name(test_app,"views.about_us")
+
+
+@pytest.fixture()
+def services_route(test_app) -> str:
+    '''
+        Returns the services route
+    '''
+    return RouteSetup.get_route_by_name(test_app,"views.services")
+
+
+@pytest.fixture()
+def shopping_cart_route(test_app) -> str:
+    '''
+        Returns the shopping_cart route
+    '''
+    return RouteSetup.get_route_by_name(test_app,"views.shopping_cart")
+
+
+@pytest.fixture()
+def shop_route(test_app) -> str:
+    '''
+        Returns the shop route
+    '''
+    return RouteSetup.get_route_by_name(test_app,"views.shop")
+
+
+@pytest.fixture()
+def product_site_route(test_app,new_guitar) -> str:
+    '''
+        Returns the product_site route, for the test Product in the database
+    '''
+
+    product_name = new_guitar.name
+
+    return RouteSetup.get_route_by_name(test_app,"views.product_site",product_name = product_name)

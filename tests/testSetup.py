@@ -1,5 +1,5 @@
 from __future__ import annotations
-from flask import Flask
+from flask import Flask,url_for
 from typing import Iterable
 
 from website import db,create_app
@@ -105,17 +105,12 @@ class TestDataSetup:
             Create user who registered through 3rd party
             :param: `customer_role` is the Role with name "Customer"
         '''
+
+        # no other data, because 3rd party doesn't get more data from google
         user = User(
                 email = "thirdParty@gmail.com",
                 firstName = "TestThird",
                 lastName = "TestParty",
-                street = None,
-                houseNumber = None,
-                plz = None,
-                city = None,
-                country = None,
-                password = None,
-                rememberMe = None,
                 thirdParty = True,
                 role = customer_role
             )
@@ -128,15 +123,13 @@ class TestDataSetup:
             Runns all methods of this class and returns all TestData
         '''
 
-        data = []
-
         customer_role = self.create_customer_role()
         admin_role = self.create_admin_role()
         user = self.create_user(customer_role)
         third_party_user = self.create_third_party_user(customer_role)
         guitar = self.create_guitar()
 
-        data.append(customer_role,admin_role,user,third_party_user,guitar)
+        data = [customer_role,admin_role,user,third_party_user,guitar]
 
         return data
         
@@ -154,3 +147,25 @@ class TestAppSetup:
 
         test_app = create_app("testing")
         return test_app
+    
+
+class RouteSetup:
+    '''
+        Returns the routes of each page
+    '''
+
+    @staticmethod
+    def get_route_by_name(test_app:Flask,route_name:str,**kwargs):
+        '''
+            Returns the route by the given name
+            :param: `route_name` is the function name in the blueprint, e.g. auth.sign_up
+            :param: `test_app` is the flask app
+            :param: `**kwargs` is all the keyword arguments, which may be nessecary for the route, like a variable
+            like <product_name>
+        '''
+
+        with test_app.test_request_context():
+
+            route = url_for(route_name,**kwargs)
+
+        return route
