@@ -1,5 +1,5 @@
 import pytest
-from website.debug import check_str_input_correct
+from website.debug import check_str_input_correct,check_str_correct
 
 
 def test_check_str_input_correct():
@@ -44,7 +44,7 @@ def test_check_str_input_string_invalid():
 
 def test_check_str_input_argument_name_invalid():
     '''
-        `GIVEN` a ImageManager method
+        `GIVEN` a debug method
         `WHEN` a valid string, argument name invalid(not string and empty string) and function valid strings gets passed 
         `THEN` check if Errors raised
     '''
@@ -56,3 +56,13 @@ def test_check_str_input_argument_name_invalid():
     # empty string
     with pytest.raises(ValueError):
         check_str_input_correct("test_string","","test_function")
+
+
+def test_check_str_correct_empty_str():
+    '''
+        `GIVEN` a debug method
+        `WHEN` a empty string
+        `THEN` check if False gets returned
+    '''
+
+    assert check_str_correct("") == False
