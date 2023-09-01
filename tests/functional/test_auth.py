@@ -1,8 +1,10 @@
-from flask import Flask,url_for
 from flask.testing import FlaskClient
+from website.models import User
+from flask import Flask
+from website import db
 
 
-def test_sign_up(test_client:FlaskClient,sign_up_route,home_route):
+def test_sign_up(test_client:FlaskClient,sign_up_route: str,home_route: str):
     '''
         `GIVEN` a auth route
         `WHEN` a new user wants to sign up at /signUp
@@ -45,7 +47,7 @@ def test_sign_up(test_client:FlaskClient,sign_up_route,home_route):
     assert expected_flash_message in response.data
 
 
-def test_sign_up_wrong_data(test_client:FlaskClient,sign_up_route):
+def test_sign_up_wrong_data(test_client:FlaskClient,sign_up_route: str):
     '''
         `GIVEN` a auth route
         `WHEN` a new user wants to sign up at /signUp, but wrong data
@@ -81,7 +83,7 @@ def test_sign_up_wrong_data(test_client:FlaskClient,sign_up_route):
     assert response.request.path == sign_up_route
 
 
-def test_login(test_client:FlaskClient,new_user,login_route,home_route,logout_route):
+def test_login(test_client:FlaskClient,new_user: User,login_route: str,home_route: str,logout_route: str):
     '''
         `GIVEN` a auth route
         `WHEN` a user wants to login at /login
@@ -113,7 +115,7 @@ def test_login(test_client:FlaskClient,new_user,login_route,home_route,logout_ro
     test_client.get(logout_route)
         
 
-def test_login_user_not_existing(test_client:FlaskClient,login_route):
+def test_login_user_not_existing(test_client:FlaskClient,login_route: str):
     '''
         `GIVEN` a auth route
         `WHEN` a user wants to login at /login
@@ -137,7 +139,7 @@ def test_login_user_not_existing(test_client:FlaskClient,login_route):
     assert response.request.path == login_route
 
 
-def test_login_user_is_third_party(test_client:FlaskClient,third_party_user,login_route):
+def test_login_user_is_third_party(test_client:FlaskClient,third_party_user: User,login_route: str):
     '''
         `GIVEN` a auth route
         `WHEN` a user wants to login at /login, but he has registered using a 3rd party service
@@ -161,7 +163,7 @@ def test_login_user_is_third_party(test_client:FlaskClient,third_party_user,logi
     assert response.request.path == login_route
 
 
-def test_login_password_not_matching(test_client:FlaskClient,new_user,login_route):
+def test_login_password_not_matching(test_client:FlaskClient,new_user: User,login_route: str):
     '''
         `GIVEN` a auth route
         `WHEN` a user wants to login at /login, password not correct
@@ -185,7 +187,7 @@ def test_login_password_not_matching(test_client:FlaskClient,new_user,login_rout
     assert response.request.path == login_route
 
 
-def test_logout(test_client,new_user,login_route,logout_route):
+def test_logout(test_client: FlaskClient,new_user: User,login_route: str,logout_route: str):
     '''
         `GIVEN` a auth route
         `WHEN` a logged in user requests /logout
@@ -212,7 +214,7 @@ def test_logout(test_client,new_user,login_route,logout_route):
     assert b'Login' in response.data
 
 
-def test_account(test_client:FlaskClient,new_user,login_route,account_page_route):
+def test_account(test_client:FlaskClient,new_user: User,login_route: str,account_page_route: str):
     '''
         `GIVEN` a auth route (/account) and a logged in user
         
@@ -243,12 +245,14 @@ def test_account(test_client:FlaskClient,new_user,login_route,account_page_route
     assert bytes(new_user.country, encoding = "utf-8") in response.data
 
 
-def test_change_user_data(test_client:FlaskClient,new_user,login_route,change_user_data_route):
+def test_change_user_data(test_app: Flask,test_client:FlaskClient,new_user: User,login_route: str,change_user_data_route: str,logout_route: str):
     '''
         `GIVEN` a auth route (/change_user)
         `WHEN` a user posts their new data
         `THEN` check if changed correctly
     '''
+
+    expected_flashed_message = b"Erfolgreich Daten geaendert"
 
     # login user
     test_client.post(login_route, data = {
@@ -256,6 +260,156 @@ def test_change_user_data(test_client:FlaskClient,new_user,login_route,change_us
         "password": "Save_Password4"
     })
 
+    # check that rememberMe is true
+    assert new_user.rememberMe == True
+
     response = test_client.post(change_user_data_route,data = {
+        "firstName":new_user.firstName,
+        "lastName": new_user.lastName,
+        "street": new_user.street,
+        "houseNumber":new_user.houseNumber,
+        "PLZ":new_user.plz,
+        "city":new_user.city,
+        "selectCountry":new_user.country,
+        "rememberMe":"off",
+    }, follow_redirects = True)
+
+    #check that all ok
+    assert response.status_code == 200
+
+    #check flashed message
+    assert expected_flashed_message in response.data
+
+    # check that data changed
+    
+    # get user from db
+    with test_app.app_context():
+        user = User.get_from_email(new_user.email)
+    #check rememberMe got changed
+    assert user.rememberMe == False
+
+
+    # log user out
+    logout_response = test_client.get(logout_route,follow_redirects = True)
+    # check that logged out
+    assert b'Login' in logout_response.data
+
+
+def test_change_user_data_data_wrong(login_route: str,test_client:FlaskClient,new_user: User,change_user_data_route: str,log_user_out: None):
+    '''
+        `GIVEN` a auth route (/change_user)
+        `WHEN` a user posts their new data, which is incorrect
+        `THEN` check if flash message and redirect correct
+    '''
+
+    expected_flashed_message = b"Es ist ein Fehler unterlaufen"
+
+    # login user
+    test_client.post(login_route,data = {
+        "email":new_user.email,
+        "password":"Save_Password4"
+    },follow_redirects = True)
+
+    response = test_client.post(change_user_data_route,data = {
+        "firstName":new_user.firstName,
+        "lastName": new_user.lastName,
+        "street": new_user.street,
+        "houseNumber":new_user.houseNumber,
+        "PLZ":new_user.plz,
+        "city":new_user.city,
+        "selectCountry":"",
+        "rememberMe":"off",
+    }, follow_redirects = True)
+
+    #check that all ok
+    assert response.status_code == 200
+
+    # check that on same page
+    assert response.request.path == change_user_data_route
+
+    #check flashed message
+    assert expected_flashed_message in response.data
+
+    # log user out
+    log_user_out 
+
+
+def test_password_reset_user_logged_in(password_reset_route: str,test_client:FlaskClient,log_user_in: None,home_route: str):
+    '''
+        `GIVEN` an auth route
+        `WHEN` a currently logged in user requests it
+        `THEN` check if redirected to home page
+    '''  
+    # logging the user in
+    log_user_in
+
+    # requesting the password_reset_route
+    response = test_client.get(password_reset_route,follow_redirects = True)
+
+    assert response.status_code == 200
+
+    assert response.request.path == home_route
+
+    assert b"Ueberschrift-Fett-Fueller" in response.data
+
+
+def test_password_reset(test_client: FlaskClient,password_reset_route: str, new_user: User,login_route: str):
+    '''
+        :param:`GIVEN` an auth route
+        :param:`WHEN` a not logged in user makes post request
+        :param:`THEN` check if flash message and redirect are correct
+    ''' 
+
+    expected_flash_message = b"Ihnen wurde eine Email gesendet"
+
+    response = test_client.post(password_reset_route,data = {
+        "email":new_user.email
+    }, follow_redirects = True)
+
+    # check response code, flash message and redirect
+    assert response.status_code == 200
+    assert response.request.path == login_route
+    assert expected_flash_message in response.data
+
+
+def test_password_reset_get(test_client: FlaskClient,password_reset_route: str):
+    '''
+        :param:`GIVEN` an auth route
+        :param:`WHEN` a not logged in user requests it
+        :param:`THEN` check if flash message and redirect are correct
+    ''' 
+
+    response = test_client.get(password_reset_route)
+
+    assert response.status_code == 200
+    assert b'Bitte geben Sie hier Ihre Email Addresse ein' in response.data
+
+
+def test_new_password(test_client: FlaskClient,new_user: User,test_app: Flask,new_password_route: str):
+    '''
+        :param:`GIVEN` an auth route
+        :param:`WHEN` a not logged in user requests it, with a valid token
+        :param:`THEN` check if site successfully loaded
+    ''' 
+
+    # generate token
+    with test_app.app_context():
         
-    })
+        # this doesn't work because new_user doesn't have an ID
+        #token = new_user.generate_password_reset_token()
+
+        user = db.session.get(User,1)
+        token = user.generate_password_reset_token()
+
+    # get full route
+    
+    route = new_password_route(token)
+    print(f'Route: {route}')
+    response = test_client.get(route)
+        
+    #response = test_client.get(route)
+
+    #check if status code ok and still on this site
+    assert response.status_code == 200
+    assert b'Passwort Zur' in response.data
+    assert response.request.path == route

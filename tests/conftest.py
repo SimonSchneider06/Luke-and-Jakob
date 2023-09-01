@@ -1,5 +1,5 @@
 import pytest
-from flask import Flask
+from flask import Flask,url_for
 
 from website.models import User,Role,Guitar 
 from tests.testClient import CustomClient
@@ -114,6 +114,36 @@ def new_guitar() -> Guitar:
     return guitar
 
 
+@pytest.fixture()
+def log_user_in(new_user,test_client,login_route,home_route) -> None:
+    '''
+        Logs the new_user in 
+    '''
+
+    # make test response to home route
+    # test_response = test_client.get(home_route)
+    # check if login in navbar. if it is, client isn't logged in
+    # if b'Login' in test_response.data:
+
+    test_client.post(login_route,data = {
+        "email": new_user.email,
+        "password": "Save_Password4"
+    },follow_redirects = True)
+
+
+@pytest.fixture()
+def log_user_out(test_client,logout_route,home_route) -> None:
+    '''
+        Logs a currently logged in user out
+    '''
+
+    # check if currently logged in
+    test_response = test_client.get(home_route)
+    # check if login in navbar. If it is client isn't logged in
+    if b'Login' not in test_response.data:
+        test_client.get(logout_route,follow_redirects = True)
+
+
 # routes----------
 
 # auth routes---------
@@ -170,7 +200,15 @@ def new_password_route(test_app) -> str:
     '''
         Returns the new_password route
     '''
-    return RouteSetup.get_route_by_name(test_app,"auth.new_password")
+
+    def _get_route_by_token(token):
+        #print(token)
+        route =  RouteSetup.get_route_by_name(test_app,f"auth.new_password",token = token)
+        print(route)
+
+        return route
+
+    return _get_route_by_token
 
 # views routes--------
 @pytest.fixture()
