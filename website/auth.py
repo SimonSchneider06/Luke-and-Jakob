@@ -1,9 +1,9 @@
-from flask import Blueprint,render_template,request,flash,redirect,url_for,abort
+from flask import Blueprint,render_template,request,flash,redirect,url_for
 from .models import User,Role
 from . import db
 from flask_login import login_user,logout_user,current_user,login_required
 from .email import send_password_reset_email
-from .oauth import OAuthSignIn
+from .debug import check_list_of_str_correct
 
 auth = Blueprint("auth",__name__)
 
@@ -59,7 +59,7 @@ def sign_up():
                 city = city,
                 country = country,
                 rememberMe = rememberMe_converted,
-                passwort = passwort1,
+                password = passwort1,
                 thirdParty = False,
                 role = role)
             
@@ -82,6 +82,7 @@ def sign_up():
 
     return render_template("auth/sign_up.html")
 
+
 #login page; POST method gets normal login
 @auth.route('/login',methods = ['GET',"POST"])
 def login():
@@ -89,79 +90,33 @@ def login():
         email = request.form.get("email")
         passwort = request.form.get("password")
 
-        user = User.query.filter_by(email = email).first()
+        if User.check_email_exists(email) == True:
 
-        if user and user.thirdParty != True: # user should exist and not be a registered through 3rd party, like google
-            if user.verifyPassword(passwort):
-                flash("Erfogreich Angemeldet",category = "success")
-                login_user(user,remember = user.rememberMe)
-                return redirect(url_for("views.home"))
+            if User.check_is_third_party(email) == False:
+                # user should exist an not be registered through 3rd party
 
+                user = User.get_from_email(email)
+        
+                if user.verifyPassword(passwort):
+                    
+                    flash("Erfolgreich Angemeldet",category = "success")
+                    login_user(user,remember = user.rememberMe)
+                    
+                    return redirect(url_for("views.home"))
+
+                else:
+                    flash("Passwort ist Falsch",category="error")
+                    return redirect(url_for("auth.login"))
+                
             else:
-                flash("Passwort ist Falsch",category="error")
+                flash("Sie haben sich ueber einen Drittanbieter registriert", category = "error")
+                return redirect(url_for("auth.login"))
 
         else:
             flash("Email existiert nicht", category = "error")
+            return redirect(url_for('auth.login'))
 
     return render_template("auth/login.html")
-
-#oauth login
-@auth.route("/login/<provider_name>", methods = ["POST"])
-def oauth_login(provider_name):
-    
-    #get URL for google login
-    provider = OAuthSignIn(provider_name)
-    #get request_uri to ask for data
-    request_uri = provider.get_request_uri(request)
-
-    return redirect(request_uri)
-
-#get information from provider
-@auth.route("/login/<provider_name>/callback/")
-def callback(provider_name):
-    # get authorization code
-    auth_code = request.args.get("code")
-    
-    #get provider
-    provider = OAuthSignIn(provider_name)
-    
-    #get userinfo
-    userinfo_response = provider.token_request(request,auth_code)
-
-    #check email verification
-    if userinfo_response.json().get("email_verified"):
-        print(userinfo_response)
-        unique_id = userinfo_response.json()["sub"]
-        users_email = userinfo_response.json()["email"]
-        first_name = userinfo_response.json()["given_name"]
-        last_name = userinfo_response.json()["family_name"]
-
-        user = User.query.filter_by(email = users_email).first()
-        #wenn user bereits existiert einloggen
-        if user:
-            login_user(user)
-            flash("Sie haben sich erfolgreich eingeloggt", category="success")
-            return redirect(url_for("views.home"))
-
-        else:
-            new_user = User(
-                email = users_email,
-                firstName = first_name,
-                lastName = last_name,
-                thirdParty = True,
-                role_id = 2 #Customer Role
-            )
-
-            db.session.add(new_user)
-            db.session.commit()
-
-            flash("Sie haben sich erfolgreich registriert", category="success")
-            return redirect(url_for("views.home"))
-
-    else:
-        flash(f"User email not available or not verified by {provider}", category="error")
-        abort(400)
-
 
 
 @auth.route("/logout")
@@ -188,35 +143,26 @@ def change_user_data():
         country = request.form.get("selectCountry")
         #remember user
         rememberMe = request.form.get("rememberMe") #can be on or off
-        
-        #convert rememberMe to boolean value
-        if rememberMe == "on":
-            rememberMe = True
-        else:
-            rememberMe = False
 
-        user = current_user
+        user:User = current_user
 
-        try:
-            user.firstName = firstName
-            user.lastName = lastName
-            user.street = street
-            user.houseNumber = houseNumber
-            user.plz = plz
-            user.city = city
-            user.country = country
-            user.rememberMe = rememberMe
-            
-            db.session.commit()
-            flash("Erfolgreich Daten geändert",category = "success")
+        if check_list_of_str_correct([firstName,lastName,street,houseNumber,plz,city,country,rememberMe]):
+
+            user.set_full_name(firstName,lastName)
+            user.set_address(street,houseNumber,plz,city,country)
+            user.set_rememberMe(rememberMe)
+
+            flash("Erfolgreich Daten geaendert",category = "success")
         
             return redirect(url_for("views.home"))
-        
-        except:
-            flash("Es ist ein Fehler unterlaufen bitte versuchen sie es nochmal")
+
+        else:
+    
+            flash("Es ist ein Fehler unterlaufen bitte versuchen sie es nochmal", category = "error")
             return redirect(url_for("auth.change_user_data"))
 
     return render_template("auth/change_account_data.html")
+
 
 #Passwort vergessen--------------------------------
 
@@ -229,7 +175,7 @@ def password_reset():
         #gets email from submit field
         email = request.form.get("email")
         
-        user = User.query.filter_by(email = email).first()
+        user = User.get_from_email(email)
 
         #checks if user exists
         if user:
@@ -240,6 +186,7 @@ def password_reset():
 
 
     return render_template("/auth/forgot_password.html")
+
 
 #site for new password after password reset through email
 @auth.route("/reset_password/<token>",methods = ["GET","POST"])
@@ -266,7 +213,6 @@ def new_password(token):
 
 
 #account page
-
 @auth.route("/account")
 @login_required
 def account_page():
