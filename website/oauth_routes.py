@@ -6,10 +6,10 @@ from .oauth import OAuthSignIn
 from .models import User
 
 
-oauth_routes = Blueprint("oauth_routes",__name__)
+oauth_route = Blueprint("oauth_route",__name__)
 
 #oauth login
-@oauth_routes.route("/login/<provider_name>", methods = ["POST"])
+@oauth_route.route("/login/<provider_name>", methods = ["POST"])
 def oauth_login(provider_name):
     
     #get URL for google login
@@ -21,7 +21,7 @@ def oauth_login(provider_name):
 
 
 #get information from provider
-@oauth_routes.route("/login/<provider_name>/callback/")
+@oauth_route.route("/login/<provider_name>/callback/")
 def callback(provider_name):
     # get authorization code
     auth_code = request.args.get("code")
