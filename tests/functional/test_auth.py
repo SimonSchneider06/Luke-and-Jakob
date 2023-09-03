@@ -385,7 +385,7 @@ def test_password_reset_get(test_client: FlaskClient,password_reset_route: str):
     assert b'Bitte geben Sie hier Ihre Email Addresse ein' in response.data
 
 
-def test_new_password(test_client: FlaskClient,new_user: User,test_app: Flask,new_password_route: str):
+def test_new_password(test_client: FlaskClient,test_app: Flask,new_password_route: str):
     '''
         :param:`GIVEN` an auth route
         :param:`WHEN` a not logged in user requests it, with a valid token
@@ -404,7 +404,7 @@ def test_new_password(test_client: FlaskClient,new_user: User,test_app: Flask,ne
     # get full route
     
     route = new_password_route(token)
-    print(f'Route: {route}')
+    #print(f'Route: {route}')
     response = test_client.get(route)
         
     #response = test_client.get(route)
@@ -413,3 +413,80 @@ def test_new_password(test_client: FlaskClient,new_user: User,test_app: Flask,ne
     assert response.status_code == 200
     assert b'Passwort Zur' in response.data
     assert response.request.path == route
+
+
+def test_new_password_post(test_client: FlaskClient,test_app: Flask,new_password_route: str,home_route:str):
+    '''
+        :param:`GIVEN` an auth route
+        :param:`WHEN` a not logged in user posts a new password with a valid token
+        :param:`THEN` check if password changed, flash message right, redirect right
+    ''' 
+
+    expected_flash_message = b"Ihr Passwort wurde erfolgreich"
+
+    old_password = "Save_Password4"
+
+    new_test_password = "New_MoreSe+ure4"
+
+    # generate token
+    with test_app.app_context():
+
+        user = db.session.get(User,1)
+        token = user.generate_password_reset_token()
+
+    # check password of user is "Save_Password4"
+    assert user.verifyPassword(old_password) == True
+
+    route = new_password_route(token)
+
+    with test_app.app_context():
+
+        response = test_client.post(route,data = {
+            "password1":new_test_password,
+            "password2":new_test_password
+        },follow_redirects = True)
+
+    # check response status code, redirect, flash message
+    assert response.status_code == 200
+    assert response.request.path == home_route
+    assert expected_flash_message in response.data
+
+    #check new password
+    
+    # doesn't work without getting the user a second time
+    # i think the problem lies, that the user doesn't get updated
+    # when the password gets changed, so you need to get the user 
+    # a second time to check if password got changed
+    # assert user.verifyPassword(new_test_password) == True
+
+    # get user
+    with test_app.app_context():
+        user = db.session.get(User,1)
+    # check password got changed
+    assert user.verifyPassword(new_test_password) == True
+
+    # change password back to old one
+    user.password = old_password
+
+    with test_app.app_context():
+        db.session.commit()
+
+    #check that changed
+    assert user.verifyPassword(old_password) == True
+
+
+def test_new_password_post_token_invalid(test_client: FlaskClient,new_password_route: str,home_route:str):
+    '''
+        :param:`GIVEN` an auth route
+        :param:`WHEN` a not logged in user requests this route with an invalid token
+        :param:`THEN` check if redirected back to homepage
+    ''' 
+
+    invalid_token = "this_token_is_invalid_02vh9s0v"
+    route = new_password_route(invalid_token)
+
+    response = test_client.get(route,follow_redirects = True)
+
+    # check status code and webpage
+    assert response.status_code == 200
+    assert response.request.path == home_route

@@ -204,7 +204,7 @@ def new_password_route(test_app) -> str:
     def _get_route_by_token(token):
         #print(token)
         route =  RouteSetup.get_route_by_name(test_app,f"auth.new_password",token = token)
-        print(route)
+        #print(route)
 
         return route
 
