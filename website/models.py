@@ -451,7 +451,8 @@ class Role(db.Model):
     users = db.relationship("User", backref = "role")
 
 
-    def check_role_exists_by_name(self,role_name:str) -> bool:
+    @staticmethod
+    def check_role_exists_by_name(role_name:str) -> bool:
         '''
             Checks wether the Role with the given name exists or not
             Returns `true` or `false` 
@@ -468,6 +469,22 @@ class Role(db.Model):
                 return True
             else:
                 return False
+            
+
+    @staticmethod
+    def get_role_by_name(role_name:str) -> Role | None:
+        '''
+            Returns a Role by given `role_name`
+            :param: `role_name` is the name of the role
+        ''' 
+
+        # check if role exists
+        if Role.check_role_exists_by_name(role_name):
+
+            query = select(Role).where(Role.name == role_name)
+            result = db.session.scalar(query)
+
+            return result
 
 
 #class Guitar(db.Model):
