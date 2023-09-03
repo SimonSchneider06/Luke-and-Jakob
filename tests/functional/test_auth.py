@@ -289,6 +289,14 @@ def test_change_user_data(test_app: Flask,test_client:FlaskClient,new_user: User
     assert user.rememberMe == False
 
 
+    # change rememberMe back to on
+    with test_app.app_context():
+        user.set_rememberMe("on")
+        db.session.commit()
+    
+    # check that it got changed back
+    assert user.rememberMe == True
+
     # log user out
     logout_response = test_client.get(logout_route,follow_redirects = True)
     # check that logged out
