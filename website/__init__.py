@@ -9,6 +9,7 @@ import stripe
 db = SQLAlchemy()
 DB_NAME = "database.db"
 mail = Mail()
+login_manager = LoginManager()
 
 def create_app(config_name):
     #creating app 
@@ -53,7 +54,6 @@ def create_app(config_name):
         db.create_all()
 
     #making logging in 
-    login_manager = LoginManager()
     login_manager.login_view = "auth.login"
     login_manager.init_app(app)
 
