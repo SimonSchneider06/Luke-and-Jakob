@@ -1,5 +1,5 @@
 import pytest
-from flask import Flask,url_for
+from flask import Flask
 
 from website.models import User,Role,Guitar 
 from tests.testClient import CustomClient
@@ -84,6 +84,16 @@ def new_user(customer_role:Role) -> User:
 
 
 @pytest.fixture(scope = "module")
+def admin_user(admin_role:Role) -> User:
+    '''
+        Returns a new, valid admin user
+    '''
+    user = TestDataSetup().create_admin_user(admin_role)
+
+    return user
+
+
+@pytest.fixture(scope = "module")
 def third_party_user(customer_role:Role) -> User:
     '''
         Create a valid third party user
@@ -115,7 +125,7 @@ def new_guitar() -> Guitar:
 
 
 @pytest.fixture()
-def log_user_in(new_user,test_client,login_route,home_route) -> None:
+def log_user_in(new_user,test_client,login_route) -> None:
     '''
         Logs the new_user in 
     '''
@@ -260,3 +270,13 @@ def product_site_route(test_app,new_guitar) -> str:
     product_name = new_guitar.name
 
     return RouteSetup.get_route_by_name(test_app,"views.product_site",product_name = product_name)
+
+# admin routes
+
+@pytest.fixture()
+def admin_page_route(test_app) -> str:
+    '''
+        Returns the route to the admin page
+    '''
+
+    return RouteSetup.get_route_by_name(test_app,"admin.admin_page")

@@ -67,6 +67,29 @@ class TestDataSetup:
             )
                 
             return user
+    
+
+    def create_admin_user(self,admin_role:Role) -> User:
+            '''
+            Create and return a new, valid user with Role Admin
+            :param: `admin_role` is the Role of the User
+            '''
+            user = User(
+                email = "simon@jacksn.de",
+                firstName = "Simon",
+                lastName = "Schneider",
+                street = "Zum Wacholdertal",
+                houseNumber = "1",
+                plz = "93336",
+                city = "Altmannstein",
+                country = "Deutschland",
+                password = "PW_;Save42",
+                rememberMe = True,
+                thirdParty = False,
+                role = admin_role
+            )
+                
+            return user
 
 
     def create_admin_role(self) -> Role:
@@ -126,10 +149,11 @@ class TestDataSetup:
         customer_role = self.create_customer_role()
         admin_role = self.create_admin_role()
         user = self.create_user(customer_role)
+        admin_user = self.create_admin_user(admin_role)
         third_party_user = self.create_third_party_user(customer_role)
         guitar = self.create_guitar()
 
-        data = [customer_role,admin_role,user,third_party_user,guitar]
+        data = [customer_role,admin_role,user,third_party_user,guitar,admin_user]
 
         return data
         
