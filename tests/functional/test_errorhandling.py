@@ -1,5 +1,8 @@
+from flask import Flask
+from flask.testing import FlaskClient
 
-def test_page_not_found_error(test_app):
+
+def test_page_not_found_error(test_app:Flask):
     '''
         `GIVEN` a errorhandling function
         `WHEN` the 404 error gets raised(url which doesn't exist gets called)
@@ -29,14 +32,14 @@ def test_internal_server_error():
     # kein 500 status code zustande kommt. 
     pass
 
-def test_page_forbidden_error(test_client):
+def test_page_forbidden_error(test_client:FlaskClient,admin_page_route:str):
     '''
         `GIVEN` a errorhandling function
         `WHEN` the 403 error gets raised, page forbidden for user
         `THEN` check that errorpage gets shown
     '''
     
-    response = test_client.get("/admin")
+    response = test_client.get(admin_page_route)
 
     assert response.status_code == 403
 
