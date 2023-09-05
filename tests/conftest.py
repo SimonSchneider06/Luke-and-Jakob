@@ -1,5 +1,6 @@
 import pytest
 from flask import Flask
+from flask_login import FlaskLoginClient
 
 from website.models import User,Role,Guitar 
 from tests.testClient import CustomClient
@@ -57,11 +58,46 @@ def test_app():
 @pytest.fixture()
 def test_client(test_app:Flask,role:str = "Customer"):
     '''
-        Returns a test_client with authorisation
-        :param: `authorisation` is a string with default value of `Customer`
+        Returns a test_client with role
+        :param: `role` is a string with default value of `Customer`
     '''
     test_app.test_client_class = CustomClient
     return test_app.test_client(role = role)
+
+
+@pytest.fixture()
+def login_test_client(test_app:Flask,new_user:User):
+    '''
+        Returns a logged in test_client
+    '''
+
+    #set class to FlaskLoginClient, to login the user
+    test_app.test_client_class = FlaskLoginClient
+
+    with test_app.app_context():
+        #get user through db, because id is needed
+        user = User.get_from_email(new_user.email)
+
+    # returns test client who is already logged in because
+    # of FlaskLoginClient Class
+    return test_app.test_client(user = user)
+
+
+@pytest.fixture()
+def login_admin_test_client(test_app:Flask,admin_user:User):
+    '''
+        Returns a logged in admin as test client
+    '''
+    #set class to FlaskLoginClient, to login the user
+    test_app.test_client_class = FlaskLoginClient
+
+    with test_app.app_context():
+        #get user through db, because id is needed
+        user = User.get_from_email(admin_user.email)
+        
+    # returns test client who is already logged in because
+    # of FlaskLoginClient Class
+    return test_app.test_client(user = user)
 
 
 @pytest.fixture(scope = "module")
