@@ -1,5 +1,5 @@
 from flask import Blueprint,render_template
-from flask_login import login_required
+from . import db
 from .models import Guitar
 
 
@@ -37,7 +37,7 @@ def shopping_cart():
 
 @views.route("/shop")
 def shop():
-    products = Guitar.query.order_by(Guitar.id)
+    products = db.session.query(Guitar).order_by(Guitar.id)
     return render_template("shop.html",products = products)  
 
 @views.route("/product/<product_name>", methods = ["GET", "POST"]) #String default converter -> werkzeug routing rules
