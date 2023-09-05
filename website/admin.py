@@ -11,15 +11,13 @@ admin = Blueprint("admin",__name__)
 imageManager = ImageManager()
 
 @admin.before_request
-@admin_required()   # if now not logged in get 500 error
+@admin_required()   # if now not logged in get 403 error
 def before_request():
     pass
 
 #--------------admin page mit überblick--------------------------------
 
 @admin.route("/admin",methods = ["POST", "GET"])
-@login_required
-@admin_required()
 def admin_page():
     our_users = User.query.order_by(User.id)
     products = Guitar.query.order_by(Guitar.id)
@@ -29,8 +27,6 @@ def admin_page():
 #-----------add product-----------------------------------------------------
 
 @admin.route("/admin/add_product",methods=["POST","GET"])
-@login_required
-@admin_required()
 def add_product():
     if request.method == "POST":
         name = request.form.get("product-name")
@@ -47,6 +43,11 @@ def add_product():
 
         front_img.extend(uploaded_images)
 
+        # check front_img list is not empty
+        if front_img == []:
+            flash("Bitte setzen sie Bilder ein", category = "error")
+            return redirect(url_for("admin.add_product"))
+        
         
         guitar_name = Guitar.query.filter_by(name = name).first()
         #checks if guitarname already exists
@@ -60,12 +61,12 @@ def add_product():
             return redirect(url_for("admin.add_product"))
 
         else:
-            
+        
             for index,image in enumerate(front_img):
 
                 #check each image
                 if not imageManager.verify_image(image):
-                    flash("Bilder waren nicht gültig, bitte versuchen Sie es erneut", category="error")
+                    flash("Bilder waren nicht gültig oder nicht vorhanden, bitte versuchen Sie es erneut", category="error")
                     return redirect(url_for('admin.add_product'))
                 
                 #save if not not redirected
@@ -93,8 +94,6 @@ def add_product():
 
 
 @admin.route("admin/change_product/<int:id>", methods = ["POST","GET"])
-@login_required
-@admin_required()
 def change_product(id):
     product = Guitar.query.filter_by(id = id).first()
     if request.method == "POST":
@@ -170,8 +169,6 @@ def change_product(id):
 #---------------------delete product-------------------------------------
 
 @admin.route("admin/delete_product/<int:id>",methods = ["POST","GET"])
-@login_required
-@admin_required()
 def delete_product(id):
     product_to_delete = Guitar.query.filter_by(id = id).first_or_404()
     try:
@@ -190,8 +187,6 @@ def delete_product(id):
 #-----------------------change user role-----------------------------
 
 @admin.route("/admin/change_user/<int:id>",methods = ["POST","GET"])
-@login_required
-@admin_required()
 def change_user(id):
     user = User.query.filter_by(id = id).first()
     
@@ -221,8 +216,6 @@ def change_user(id):
 #----------------------------delete user----------------------------------------
 
 @admin.route("admin/delete_user/<int:id>", methods = ["POST","GET"])
-@login_required
-@admin_required()
 def delete_user(id):
     user_to_delete = User.query.filter_by(id = id).first()
 
@@ -239,8 +232,6 @@ def delete_user(id):
 
 #----------delete single img from product
 @admin.route("/delete_product_img/<product_name>/<int:number>", methods = ["GET"])
-@login_required
-@admin_required()
 def delete_product_img(product_name, number):
 
     product = Guitar.query.filter_by(name = product_name).first_or_404()
