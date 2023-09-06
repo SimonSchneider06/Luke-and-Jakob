@@ -3,7 +3,7 @@ from .models import User,Role
 from . import db
 from flask_login import login_user,logout_user,current_user,login_required
 from .email import send_password_reset_email
-from .debug import check_list_of_str_correct
+from .value_checker import check_list_of_str_correct
 
 auth = Blueprint("auth",__name__)
 

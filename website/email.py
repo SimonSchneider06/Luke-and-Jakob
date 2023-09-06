@@ -4,7 +4,7 @@ from flask import render_template
 from website import mail
 from .models import User
 import datetime
-from .debug import check_str_input_correct
+from .value_checker import check_str_input_correct
 import os
 
 

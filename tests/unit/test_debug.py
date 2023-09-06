@@ -1,5 +1,5 @@
 import pytest
-from website.debug import check_str_input_correct,check_str_correct
+from website.value_checker import check_str_input_correct,check_str_correct
 
 
 def test_check_str_input_correct():
