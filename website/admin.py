@@ -234,26 +234,6 @@ def change_user(id):
 
     return render_template("admin/change_user.html",user = user)
 
-#----------------------------delete user----------------------------------------
-#                           WHY???
-#                           WHY SHOULD AN ADMIN BE ALLOWED/WANT TO 
-#                           DELETE AN USER/CUSTOMER ??
-
-
-# @admin.route("admin/delete_user/<int:id>", methods = ["POST","GET"])
-# def delete_user(id):
-#     user_to_delete = User.query.filter_by(id = id).first()
-
-#     try:
-#         db.session.delete(user_to_delete)
-#         db.session.commit()
-#         flash("User deleted successfully", category = "success")
-#         return redirect(url_for("admin.admin_page"))
-
-#     except:
-#         flash("Es ist ein Fehler aufgetreten", category = "error")
-#         return redirect(url_for("admin.admin_page"))
-
 
 #----------delete single img from product
 @admin.route("/delete_product_img/<product_name>/<int:number>", methods = ["GET"])
