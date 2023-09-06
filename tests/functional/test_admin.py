@@ -5,7 +5,7 @@ from contextlib import ExitStack
 import os
 
 from website import db
-from website.models import Guitar
+from website.models import Guitar,User,Role
 from website.ImageManager import ImageManager
 
 from tests.testHelperFn import image_path_setup,recreate_image_in_folder
@@ -486,3 +486,95 @@ def test_delete_product(test_app:Flask,login_admin_test_client:FlaskClient,admin
             assert os.path.exists(f"{new_folder_path}/{ext}") == True
 
         assert Guitar.check_guitar_exists_by_name(new_guitar.name) == True
+
+
+def test_change_user_role_not_existing(login_admin_test_client:FlaskClient,admin_change_user_route):
+    '''
+        :param:`GIVEN` an admin route
+        :param:`WHEN` the user doesn't exist
+        :param:`THEN` check if 404 error returned
+    '''
+
+    not_existing_id = 3923
+    route = admin_change_user_route(not_existing_id)
+
+    response = login_admin_test_client.get(route,follow_redirects = True)
+
+    assert response.status_code == 404
+
+
+def test_change_user_role_role_empty(test_app:Flask,login_admin_test_client:FlaskClient,admin_change_user_route,new_user):
+    '''
+        :param:`GIVEN` an admin route
+        :param:`WHEN` the user exists but the role field is empty
+        :param:`THEN` check if flash message got send
+    '''
+
+    expected_flash_message = b"Bitte waehlen Sie eine Rolle aus"
+
+    with test_app.app_context():
+        user = User.get_from_email(new_user.email)
+
+    route = admin_change_user_route(user.id)
+
+    response = login_admin_test_client.post(route,data = {
+        "selectRole":""
+    }, follow_redirects = True)
+
+    assert response.status_code == 200
+    assert expected_flash_message in response.data
+
+
+def test_change_user_role_role_not_existing(test_app:Flask,login_admin_test_client:FlaskClient,admin_change_user_route,new_user):
+    '''
+        :param:`GIVEN` an admin route
+        :param:`WHEN` the user exists but the given role doesn't exist
+        :param:`THEN` check if flash message got send
+    '''
+
+    expected_flash_message = b"Diese Rolle existiert nicht"
+
+    with test_app.app_context():
+        user = User.get_from_email(new_user.email)
+
+    route = admin_change_user_route(user.id)
+
+    response = login_admin_test_client.post(route,data = {
+        "selectRole":"Not_Existing"
+    }, follow_redirects = True)
+
+    assert response.status_code == 200
+    assert expected_flash_message in response.data
+
+
+def test_change_user_role(test_app:Flask,login_admin_test_client:FlaskClient,admin_change_user_route,new_user,admin_role,customer_role):
+    '''
+        :param:`GIVEN` an admin route
+        :param:`WHEN` the user exists but the role field is empty
+        :param:`THEN` check if flash message got send
+    '''
+
+    expected_flash_message = b"User Rolle erfolgreich"
+
+    with test_app.app_context():
+        user = User.get_from_email(new_user.email)
+
+    route = admin_change_user_route(user.id)
+
+    response = login_admin_test_client.post(route,data = {
+        "selectRole":admin_role.name
+    }, follow_redirects = True)
+
+    assert response.status_code == 200
+    assert expected_flash_message in response.data
+
+    # change role back
+    with test_app.app_context():
+        c_role = Role.get_role_by_name(customer_role.name)
+        user_queried = User.get_from_email(new_user.email)
+
+        user_queried.role = c_role
+        db.session.commit()
+        
+        # check that back-change was successful
+        assert user_queried.role == c_role

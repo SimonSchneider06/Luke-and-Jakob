@@ -201,28 +201,36 @@ def delete_product(id):
 
 @admin.route("/admin/change_user/<int:id>",methods = ["POST","GET"])
 def change_user(id):
-    user = User.query.filter_by(id = id).first()
+    user = User.query.filter_by(id = id).first_or_404()
     
     if request.method == "POST":
         role_name = request.form.get("selectRole")
 
         if role_name == "": #if nothing selected throw error
-            flash("Bitte wählen sie eine Rolle aus", category = "error")
+            flash("Bitte waehlen Sie eine Rolle aus", category = "error")
             return redirect(url_for("admin.change_user",id = user.id))
         
         
         user_role = Role.query.filter_by(name = role_name).first()
 
         if user_role:
+            # how to test try-except statements and throw an 
+            # artificial exception
+            # https://stackoverflow.com/questions/72446381/how-to-test-try-except-block-with-pytest-and-cover-all-exceptions
             try:
                 user.role_id = user_role.id
                 db.session.commit()
-                flash("Account Role changed successfully", category = "success")
+                flash("User Rolle erfolgreich geändert", category = "success")
                 return redirect(url_for("admin.admin_page"))
 
             except:
                 flash("Es ist leider ein Fehler unterlaufen. Bitte versuchen sie es erneut", category = "error")
                 return redirect(url_for("admin.change_user",id = user.id))
+            
+        # wenn die rolle nicht existiert
+        else:
+            flash("Diese Rolle existiert nicht", category = "error")
+            return redirect(url_for("admin.change_user",id = user.id))
 
     return render_template("admin/change_user.html",user = user)
 
