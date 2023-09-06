@@ -50,7 +50,7 @@ def add_product():
             return redirect(url_for("admin.add_product"))
 
         # check if guitar with this name already exists
-        if Guitar.check_guitar_exists_by_name(name):
+        elif Guitar.check_guitar_exists_by_name(name):
             flash("Gitarren Name existiert schon", category="error")
             return redirect(url_for("admin.add_product"))
         
@@ -58,7 +58,12 @@ def add_product():
         elif check_list_of_str_correct([name,price,stock,description,stripe_price_id]) == False:
             flash("Bitte füllen sie alle Felder aus", category = "error")
             return redirect(url_for("admin.add_product"))
-
+        
+        #check if price and stock are digits
+        elif price.isdigit() == False or stock.isdigit() == False:
+            flash("Geben Sie bei Preis und Anzahl nur Zahlen ein", category = "error")
+            return redirect(url_for("admin.add_product"))
+ 
         else:
         
             for image in front_img:
@@ -104,13 +109,17 @@ def add_product():
 
 @admin.route("admin/change_product/<int:id>", methods = ["POST","GET"])
 def change_product(id):
-    product = Guitar.query.filter_by(id = id).first()
+    # get guitar
+    product = Guitar.query.filter_by(id = id).first_or_404()
+
     if request.method == "POST":
         product_name = request.form.get("product-name")
         price = request.form.get("price")
         stock = request.form.get("stock")
         description = request.form.get("description")
         stripe_price_id = request.form.get("stripe_price_id")
+
+        input_data = [product_name,price,stock,description,stripe_price_id]
 
         #check if new images recieved
         img_0 = request.files.get("img-0")
@@ -119,60 +128,55 @@ def change_product(id):
         img_3 = request.files.get("img-3")
         img_4 = request.files.get("img-4")
 
-        # front_img = request.files.getlist("image-deck")
-        # uploaded_images = request.files.getlist("image")
-
-        # adds the other images after the front_img so 
-        # they are all in one list with the front img first
-
-        # front_img.extend(uploaded_images)
-
-
         #search for guitars with same name
-        guitar_with_name = Guitar.query.filter_by(name = product_name).first()
-
-
         #if guitar has name but is same id as changeable product 
         #so products are identical 
-        #if id not equal -> different guitar with this name exists so dont allow overwriting of name
+        #if id not equal -> different guitar with this name exists so dont allow 
+        # overwriting of name
+        guitar_with_name = Guitar.get_by_name(product_name)
 
-        if guitar_with_name.id != product.id:
-            flash("Gitarre mit diesem Namen existiert schon", category = "error")
-
-        else:
-            if product:
-                        
-                imageManager.save_image_by_product_name_and_number(img_0,0,product.name)
-                imageManager.save_image_by_product_name_and_number(img_1,1,product.name)
-                imageManager.save_image_by_product_name_and_number(img_2,2,product.name)
-                imageManager.save_image_by_product_name_and_number(img_3,3,product.name)
-                imageManager.save_image_by_product_name_and_number(img_4,4,product.name)
-
-
-                #checks the images
-                # folder_path = save_uploaded_img(front_img,product_name)
-                # if folder_path == None:
-                #     flash("Images were not valid please try again", category="error")
-
-                
-
-                try:
-
-                    product.name = product_name
-                    product.price = price
-                    product.stock = stock
-                    product.description = description
-                    product.stripe_price_id = stripe_price_id
-                    db.session.commit()
-                    flash("Product Daten erfolgreich verändert",category = "success")
-                    return redirect(url_for("admin.admin_page"))
-                    
-                except:
-                    flash("Es ist ein Fehler unterlaufen bitte versuchen sie es erneut", category = "error")
-                    # return render_template("change_product.html",product = product)
-                    return redirect(url_for("admin.change_product",id = product.id ))
+        # first check if even exists
+        if guitar_with_name:
+            if guitar_with_name.id != product.id:
+                flash("Gitarre mit diesem Namen existiert schon", category = "error")
+                return redirect(url_for("admin.change_product", id = product.id))
+        
+        # verify data
+        if check_list_of_str_correct(input_data) == False:
+            flash("Eingegebene Daten sind nicht richtig", category = "error")
+            return redirect(url_for("admin.change_product",id = product.id))
+        
+        #check if price and stock are digits
+        elif price.isdigit() == False or stock.isdigit() == False:
+            flash("Geben Sie bei Preis und Anzahl nur Zahlen ein", category = "error")
+            return redirect(url_for("admin.change_product",id = product.id))
         
 
+        # verify images
+        if imageManager.verify_image(img_0) == False or imageManager.verify_image(img_1) == False or \
+        imageManager.verify_image(img_2) == False or imageManager.verify_image(img_3) == False or \
+        imageManager.verify_image(img_4) == False:
+            flash("Bilder nicht gültig, versuchen sie es mit anderen",category="error")
+            return redirect(url_for("admin.change_product",id = product.id)) 
+
+        else:
+                        
+            imageManager.save_image_by_product_name_and_number(img_0,0,product.name)
+            imageManager.save_image_by_product_name_and_number(img_1,1,product.name)
+            imageManager.save_image_by_product_name_and_number(img_2,2,product.name)
+            imageManager.save_image_by_product_name_and_number(img_3,3,product.name)
+            imageManager.save_image_by_product_name_and_number(img_4,4,product.name)
+
+
+            product.name = product_name
+            product.price = price
+            product.stock = stock
+            product.description = description
+            product.stripe_price_id = stripe_price_id
+            db.session.commit()
+            flash("Product Daten erfolgreich verändert",category = "success")
+            return redirect(url_for("admin.admin_page"))
+           
     return render_template("admin/change_product.html",product = product,os = os)
 
 #---------------------delete product-------------------------------------

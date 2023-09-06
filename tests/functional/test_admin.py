@@ -184,4 +184,215 @@ def test_add_product_name_valid(login_admin_test_client:FlaskClient,admin_add_pr
         db.session.commit()
         # check that deleted
         assert Guitar.check_guitar_exists_by_name(product_name) == False
-    
+
+
+def test_change_product_not_existing(login_admin_test_client:FlaskClient,admin_change_product_route):
+    '''
+        :param:`GIVEN` an admin route
+        :param:`WHEN` this route gets requested, but product doesn't exist
+        :param:`THEN` check if 404 error returned
+    '''
+
+    not_existing_id = 3293
+
+    route = admin_change_product_route(not_existing_id)
+
+    response = login_admin_test_client.get(route, follow_redirects = True)
+
+    assert response.status_code == 404
+    assert b"Die gesuchte Seite ist nicht auffindbar." in response.data
+    assert b'Das ist alles was wir wissen.' in response.data
+
+
+def test_change_product_guitar_name_exists_already(test_app:Flask,login_admin_test_client:FlaskClient,admin_change_product_route,new_guitar):
+    '''
+        :param:`GIVEN` an admin route
+        :param:`WHEN` valid data gets posted to this route, but the guitarname is already given
+        :param:`THEN` check if flash_message correct
+    '''
+
+    test_guitar_name = "New Model V2"
+    expected_flash_message = b"Gitarre mit diesem Namen existiert schon"
+
+    # create guitar for testing purpose, 2nd in db is needed
+    test_guitar = Guitar(
+        name = test_guitar_name,
+        price = 3000,
+        stock = 2,
+        stripe_price_id = "not_existing",
+        description = "Also has bluetooth"
+    )
+
+    with test_app.app_context():
+
+        # add test_guitar to db
+        db.session.add(test_guitar)
+        db.session.commit()
+
+        guitar = Guitar.get_by_name(new_guitar.name)
+
+    route = admin_change_product_route(guitar.id)
+
+    response = login_admin_test_client.post(route,data = {
+        "product-name":test_guitar_name,
+        "price":new_guitar.price,
+        "stock":new_guitar.stock,
+        "description":new_guitar.description,
+        "stripe_price_id":new_guitar.stripe_price_id
+    }, follow_redirects = True)
+
+    assert response.status_code == 200
+    assert expected_flash_message in response.data
+
+    # delete test_guitar from db
+    with test_app.app_context():
+        db.session.delete(test_guitar)
+        db.session.commit()
+
+        assert Guitar.check_guitar_exists_by_name(test_guitar_name) == False
+
+
+def test_change_product_change_name(test_app:Flask,login_admin_test_client:FlaskClient,admin_change_product_route,new_guitar:Guitar):
+    '''
+        :param:`GIVEN` an admin route
+        :param:`WHEN` valid data gets posted to this route
+        :param:`THEN` check if flash_message correct and product name got changed correct
+    '''
+
+    expected_flash_message = b"Product Daten erfolgreich"
+    new_name = "Neuer Name"
+
+    with test_app.app_context():
+        guitar = Guitar.get_by_name(new_guitar.name)
+
+    route = admin_change_product_route(guitar.id)
+
+    # get extensions of files and folder path
+    ext_list = ["0.png","1.JPG","2.JPG","3.png","4.JPG"]
+    folder_path = "./tests/test_files/img_of_Test_model"
+
+    result = image_path_setup(ext_list,folder_path)
+
+    filenames_without_front_img = result[0]
+    front_img_path = result[1]
+
+    # passes a file, so front_img check doesn't get called
+    with ExitStack() as stack:
+        file_list = [stack.enter_context(open(fname,"rb")) for fname in filenames_without_front_img]
+        file = stack.enter_context(open(front_img_path,"rb"))
+
+        file = FileStorage(file)
+        img_list = []
+        for item in file_list:
+            item_F = FileStorage(item)
+            img_list.append(item_F)
+
+        response = login_admin_test_client.post(route,data = {
+            "product-name":new_name,
+            "price":f'{new_guitar.price}',
+            "stock":f'{new_guitar.stock}',
+            "description":new_guitar.description,
+            "stripe_price_id":new_guitar.stripe_price_id,
+            "img-0":file,
+            "img-1":file_list[0],
+            "img-2":file_list[1],
+            "img-3":file_list[2],
+            "img-4":file_list[3]
+        }, follow_redirects = True)
+
+    assert response.status_code == 200
+    assert expected_flash_message in response.data
+
+    # check name got changed and rename back from db
+    with test_app.app_context():
+        assert Guitar.check_guitar_exists_by_name(new_name) == True
+
+        guitar = Guitar.get_by_name(new_name)
+        # change name back
+        guitar.name = new_guitar.name
+
+        db.session.commit()
+
+        assert Guitar.check_guitar_exists_by_name(new_guitar.name) == True
+
+
+def test_change_product_str_not_valid(test_app:Flask,login_admin_test_client:FlaskClient,admin_change_product_route,new_guitar):
+    '''
+        :param:`GIVEN` an admin route
+        :param:`WHEN` input data not string
+        :param:`THEN` check if flash_message correct
+    '''
+
+    expected_flash_message = b"Eingegebene Daten sind nicht richtig"
+
+    with test_app.app_context():
+        guitar = Guitar.get_by_name(new_guitar.name)
+
+    route = admin_change_product_route(guitar.id)
+
+    response = login_admin_test_client.post(route,data = {
+        "product-name":new_guitar.name,
+        "price":"",
+        "stock":f'{new_guitar.stock}',
+        "description":new_guitar.description,
+        "stripe_price_id":new_guitar.stripe_price_id,
+    },follow_redirects = True)
+
+    assert response.status_code == 200
+    assert expected_flash_message in response.data
+
+
+def test_change_product_int_not_valid(test_app:Flask,login_admin_test_client:FlaskClient,admin_change_product_route,new_guitar):
+    '''
+        :param:`GIVEN` an admin route
+        :param:`WHEN` input data is string, but price not digit
+        :param:`THEN` check if flash_message correct
+    '''
+
+    expected_flash_message = b"Geben Sie bei Preis und Anzahl nur Zahlen ein"
+
+    with test_app.app_context():
+        guitar = Guitar.get_by_name(new_guitar.name)
+
+    route = admin_change_product_route(guitar.id)
+
+    response = login_admin_test_client.post(route,data = {
+        "product-name":new_guitar.name,
+        "price":"892A",
+        "stock":f'{new_guitar.stock}',
+        "description":new_guitar.description,
+        "stripe_price_id":new_guitar.stripe_price_id,
+    },follow_redirects = True)
+
+    assert response.status_code == 200
+    assert expected_flash_message in response.data
+
+
+def test_change_product_img_not_valid(test_app:Flask,login_admin_test_client:FlaskClient,admin_change_product_route,new_guitar):
+    '''
+        :param:`GIVEN` an admin route
+        :param:`WHEN` input data is string,but imgs not valid
+        :param:`THEN` check if flash_message correct
+    '''
+
+    expected_flash_message = b"Bilder nicht"
+
+    with test_app.app_context():
+        guitar = Guitar.get_by_name(new_guitar.name)
+
+    route = admin_change_product_route(guitar.id)
+
+    with open("./tests/test_files/test_pdf.pdf","rb") as f:
+        file = FileStorage(f)
+
+        response = login_admin_test_client.post(route,data = {
+            "product-name":new_guitar.name,
+            "price":f"{new_guitar.price}",
+            "stock":f'{new_guitar.stock}',
+            "description":new_guitar.description,
+            "stripe_price_id":new_guitar.stripe_price_id,
+            "img-0":file
+        },follow_redirects = True)
+
+    assert response.status_code == 200
+    assert expected_flash_message in response.data
