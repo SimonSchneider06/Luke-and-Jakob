@@ -177,19 +177,6 @@ def log_user_in(new_user,test_client,login_route) -> None:
     },follow_redirects = True)
 
 
-@pytest.fixture()
-def log_user_out(test_client,logout_route,home_route) -> None:
-    '''
-        Logs a currently logged in user out
-    '''
-
-    # check if currently logged in
-    test_response = test_client.get(home_route)
-    # check if login in navbar. If it is client isn't logged in
-    if b'Login' not in test_response.data:
-        test_client.get(logout_route,follow_redirects = True)
-
-
 # routes----------
 
 # auth routes---------

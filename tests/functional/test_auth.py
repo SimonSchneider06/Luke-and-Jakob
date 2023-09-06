@@ -303,7 +303,7 @@ def test_change_user_data(test_app: Flask,test_client:FlaskClient,new_user: User
     assert b'Login' in logout_response.data
 
 
-def test_change_user_data_data_wrong(login_route: str,test_client:FlaskClient,new_user: User,change_user_data_route: str,log_user_out: None):
+def test_change_user_data_data_wrong(login_route: str,test_client:FlaskClient,new_user: User,change_user_data_route: str):
     '''
         `GIVEN` a auth route (/change_user)
         `WHEN` a user posts their new data, which is incorrect
@@ -337,9 +337,6 @@ def test_change_user_data_data_wrong(login_route: str,test_client:FlaskClient,ne
 
     #check flashed message
     assert expected_flashed_message in response.data
-
-    # log user out
-    log_user_out 
 
 
 def test_password_reset_user_logged_in(password_reset_route: str,test_client:FlaskClient,log_user_in: None,home_route: str):
