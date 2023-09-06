@@ -28,12 +28,12 @@ def pytest_sessionfinish(session,exitstatus):
     # https://docs.pytest.org/en/latest/reference/reference.html#pytest.hookspec.pytest_sessionfinish
     # https://docs.pytest.org/en/latest/reference/reference.html#exitcode
 
-    testApp = TestAppSetup.create_test_app()
+    testApp = TestAppSetup.create_test_app()    #pragma: no cover ;not testable because fn is called after the test_session
 
-    TestDatabaseSetup.database_teardown(testApp)
+    TestDatabaseSetup.database_teardown(testApp)    #pragma: no cover ;not testable because fn is called after the test_session
 
     # first character doesn't get shown
-    print("TEARDOWN SUCCESSFUL")
+    print("TEARDOWN SUCCESSFUL")    #pragma: no cover ;not testable because fn is called after the test_session
 
 
 @pytest.fixture(scope = "module")

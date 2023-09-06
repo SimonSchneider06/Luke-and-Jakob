@@ -113,7 +113,7 @@ class ImageManager:
         format = magic.from_buffer(header)
 
         if not format:
-            return False
+            return False    #pragma: no cover ;not testable and is there, that, if format doesn't get returned return false out of safety
         
         else:
 

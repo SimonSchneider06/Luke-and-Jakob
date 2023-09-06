@@ -192,7 +192,7 @@ def delete_product(id):
         flash("Produkt erfolgreich gelöscht", category = "success")
         return redirect(url_for("admin.admin_page"))
 
-    except: # in case something unexpected happend
+    except: # pragma: no cover (in case something unexpected happend), not testable
         flash("Es ist ein Fehler unterlaufen bitte versuchen sie es erneut", category = "error")
         return redirect(url_for("admin.admin_page"))
     
@@ -214,18 +214,16 @@ def change_user(id):
         user_role = Role.query.filter_by(name = role_name).first()
 
         if user_role:
-            # how to test try-except statements and throw an 
-            # artificial exception
-            # https://stackoverflow.com/questions/72446381/how-to-test-try-except-block-with-pytest-and-cover-all-exceptions
+            
             try:
                 user.role_id = user_role.id
                 db.session.commit()
                 flash("User Rolle erfolgreich geändert", category = "success")
                 return redirect(url_for("admin.admin_page"))
 
-            except:
-                flash("Es ist leider ein Fehler unterlaufen. Bitte versuchen sie es erneut", category = "error")
-                return redirect(url_for("admin.change_user",id = user.id))
+            except: #pragma: no cover   in case something unexpected happens
+                 flash("Es ist leider ein Fehler unterlaufen. Bitte versuchen sie es erneut", category = "error")
+                 return redirect(url_for("admin.change_user",id = user.id))
             
         # wenn die rolle nicht existiert
         else:

@@ -56,7 +56,7 @@ class MailTestingConfig(TestingConfig):
     
     # TESTING = False # so that emails get send
     if SEND_MAIL_DURING_TESTS == "True":
-        TESTING = False
+        TESTING = False # pragma: no cover this is not testable due to not sending emails in tests
     else:
         TESTING = True
 

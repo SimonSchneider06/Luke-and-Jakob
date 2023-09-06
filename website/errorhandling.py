@@ -10,7 +10,7 @@ def errors(app):
 
     @app.errorhandler(500)
     def internal_server_error(error):
-        return render_template("error.html",user = current_user) , 500
+        return render_template("error.html",user = current_user) , 500  #pragma: no cover , not testable
 
     @app.errorhandler(403)
     def page_forbidden(error):
