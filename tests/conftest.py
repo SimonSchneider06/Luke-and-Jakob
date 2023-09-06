@@ -94,7 +94,7 @@ def login_admin_test_client(test_app:Flask,admin_user:User):
     with test_app.app_context():
         #get user through db, because id is needed
         user = User.get_from_email(admin_user.email)
-        
+
     # returns test client who is already logged in because
     # of FlaskLoginClient Class
     return test_app.test_client(user = user)
@@ -316,3 +316,11 @@ def admin_page_route(test_app) -> str:
     '''
 
     return RouteSetup.get_route_by_name(test_app,"admin.admin_page")
+
+
+@pytest.fixture()
+def admin_add_product_route(test_app) -> str:
+    '''
+        Returns the admin route to add_product
+    '''
+    return RouteSetup.get_route_by_name(test_app,"admin.add_product")
