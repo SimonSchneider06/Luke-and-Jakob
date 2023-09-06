@@ -8,7 +8,8 @@ from website import db
 from website.models import Guitar
 from website.ImageManager import ImageManager
 
-from tests.testHelperFn import image_path_setup
+from tests.testHelperFn import image_path_setup,recreate_image_in_folder
+from tests.testSetup import TestDataSetup
 
 def test_add_product_without_images(login_admin_test_client:FlaskClient,admin_add_product_route,test_app:Flask):
     '''
@@ -147,7 +148,7 @@ def test_add_product_int_not_valid(login_admin_test_client:FlaskClient,admin_add
 
     assert response.status_code == 200
     assert expected_flash_message in response.data
-    
+
 
 def test_add_product_name_valid(login_admin_test_client:FlaskClient,admin_add_product_route,test_app:Flask,admin_page_route):
     '''
@@ -422,3 +423,66 @@ def test_change_product_img_not_valid(test_app:Flask,login_admin_test_client:Fla
 
     assert response.status_code == 200
     assert expected_flash_message in response.data
+
+
+def test_delete_product_not_existing(login_admin_test_client:FlaskClient,admin_delete_product_route):
+    '''
+        :param:`GIVEN` an admin route
+        :param:`WHEN` a id gets passed, but the product doesn't exist
+        :param:`THEN` check if 404 error raised
+    '''
+
+    not_existing_id = 32323
+    route = admin_delete_product_route(not_existing_id)
+
+    response = login_admin_test_client.get(route,follow_redirects = True)
+
+    assert response.status_code == 404
+
+
+def test_delete_product(test_app:Flask,login_admin_test_client:FlaskClient,admin_delete_product_route,new_guitar):
+    '''
+        :param:`GIVEN` an admin route
+        :param:`WHEN` an existing id gets passed
+        :param:`THEN` check if product deleted successfully
+    '''
+
+    expected_flash_message = b'Produkt erfolgreich'
+
+    with test_app.app_context():
+        guitar = Guitar.get_by_name(new_guitar.name)
+
+    route = admin_delete_product_route(guitar.id)
+
+    response = login_admin_test_client.get(route,follow_redirects = True)
+
+    assert response.status_code == 200
+    assert expected_flash_message in response.data 
+
+    # check if deleted
+    assert os.path.exists("./website/static/Bilder/Produktbilder/Test") == False
+
+    # recreate the folder structure ---------------
+
+    folder_path = "./tests/test_files/img_of_Test_model"
+
+    new_folder_path = "./website/static/Bilder/Produktbilder/Test"
+
+    ext_list = ["0.png","1.JPG","2.JPG","3.png","4.JPG"]
+
+    # add guitar and images back to db/storage
+    guitar = TestDataSetup().create_guitar()
+
+    with test_app.app_context():
+
+        db.session.add(guitar)
+        db.session.commit()
+
+        # loop through list
+        for ext in ext_list:
+            number = ext.split(sep=".")[0]
+
+            recreate_image_in_folder(f"{folder_path}/{ext}",number,new_guitar.name)
+            assert os.path.exists(f"{new_folder_path}/{ext}") == True
+
+        assert Guitar.check_guitar_exists_by_name(new_guitar.name) == True

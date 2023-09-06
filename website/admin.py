@@ -181,7 +181,7 @@ def change_product(id):
 
 #---------------------delete product-------------------------------------
 
-@admin.route("admin/delete_product/<int:id>",methods = ["POST","GET"])
+@admin.route("admin/delete_product/<int:id>",methods = ["GET"])
 def delete_product(id):
     product_to_delete = Guitar.query.filter_by(id = id).first_or_404()
     try:
@@ -189,10 +189,10 @@ def delete_product(id):
 
         db.session.delete(product_to_delete)
         db.session.commit()
-        flash("Product deleted successfully", category = "success")
+        flash("Produkt erfolgreich gelöscht", category = "success")
         return redirect(url_for("admin.admin_page"))
 
-    except:
+    except: # in case something unexpected happend
         flash("Es ist ein Fehler unterlaufen bitte versuchen sie es erneut", category = "error")
         return redirect(url_for("admin.admin_page"))
     
