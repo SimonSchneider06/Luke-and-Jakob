@@ -1,10 +1,11 @@
 from flask import Blueprint, render_template,url_for,request,flash, redirect
-from flask_login import login_required
+
 from .models import User, Guitar, Role
 from . import db
 from .decorators import admin_required
 import os
 from .ImageManager import ImageManager
+from .value_checker import check_list_of_str_correct
 
 admin = Blueprint("admin",__name__)
 
@@ -47,30 +48,25 @@ def add_product():
         if front_img == []:
             flash("Bitte setzen sie Bilder ein", category = "error")
             return redirect(url_for("admin.add_product"))
-        
-        
-        guitar_name = Guitar.query.filter_by(name = name).first()
-        #checks if guitarname already exists
-        if guitar_name:
+
+        # check if guitar with this name already exists
+        if Guitar.check_guitar_exists_by_name(name):
             flash("Gitarren Name existiert schon", category="error")
             return redirect(url_for("admin.add_product"))
         
         #checks if all fields contain information
-        elif name == "" or price == "" or stock == "" or description == "" or stripe_price_id == "":
+        elif check_list_of_str_correct([name,price,stock,description,stripe_price_id]) == False:
             flash("Bitte füllen sie alle Felder aus", category = "error")
             return redirect(url_for("admin.add_product"))
 
         else:
         
-            for index,image in enumerate(front_img):
+            for image in front_img:
 
                 #check each image
                 if not imageManager.verify_image(image):
                     flash("Bilder waren nicht gültig oder nicht vorhanden, bitte versuchen Sie es erneut", category="error")
                     return redirect(url_for('admin.add_product'))
-                
-                #save if not not redirected
-                imageManager.save_image_by_product_name_and_number(image,index,guitar_name)
             
             #flash("Image saved successfully", category = "success")
 
@@ -84,6 +80,19 @@ def add_product():
             
             db.session.add(new_guitar)
             db.session.commit()
+
+            # save image after product got created and stored in db and not in above
+            # loop because 
+            # 1) there might be a wrong image in front image, so got redirected, but
+            #       it's not the first one, so the others are already saved, but product
+            #       not created
+            # 2) imageManager.save_image_by... needs to get path from another imageManager
+            #       method which throws error, if product doesn't exist
+
+            for index, image in enumerate(front_img):
+                
+                imageManager.save_image_by_product_name_and_number(image,index,name)
+
             flash("Erfolgreich neues Modell hinzugefügt")
             return redirect(url_for("admin.admin_page"))
 
