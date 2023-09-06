@@ -578,3 +578,57 @@ def test_change_user_role(test_app:Flask,login_admin_test_client:FlaskClient,adm
         
         # check that back-change was successful
         assert user_queried.role == c_role
+
+
+def test_delete_product_img(test_app:Flask,login_admin_test_client:FlaskClient,admin_delete_product_img_route,new_guitar):
+    '''
+        :param:`GIVEN` an auth route
+        :param:`WHEN` a single product image(which exists) gets deleted
+        :param:`THEN` check if removed correctly and flash message correct
+    '''
+
+    expected_flash_message = b"Bild 0 erfolgreich"
+
+    # img_path to check
+    img_path = "./website/static/Bilder/Produktbilder/Test/0.png"
+
+    # img path from where to copy the image to restore the images
+    img_path_file_location = "./tests/test_files/img_of_Test_model/0.png"
+
+    route = admin_delete_product_img_route(
+        product_name = new_guitar.name,
+        number = 0
+        )
+    
+    response = login_admin_test_client.get(route,follow_redirects = True)
+
+    assert response.status_code == 200
+    assert expected_flash_message in response.data
+
+    # check that it got deleted
+    assert os.path.exists(img_path) == False
+
+    with test_app.app_context():
+        recreate_image_in_folder(img_path_file_location,0,new_guitar.name)
+
+    assert os.path.exists(img_path) == True
+
+
+def test_delete_product_img_not_existing(test_app:Flask,login_admin_test_client:FlaskClient,admin_delete_product_img_route,new_guitar):
+    '''
+        :param:`GIVEN` an auth route
+        :param:`WHEN` a single product image(which doesn't exist) gets deleted
+        :param:`THEN` check if flash message correct
+    '''
+
+    expected_flash_message = b"Bild existiert nicht"
+
+    route = admin_delete_product_img_route(
+        product_name = new_guitar.name,
+        number = 6  # 6 existiert nicht
+        )
+    
+    response = login_admin_test_client.get(route,follow_redirects = True)
+
+    assert response.status_code == 200
+    assert expected_flash_message in response.data

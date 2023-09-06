@@ -363,3 +363,16 @@ def admin_change_user_route(test_app) -> str:
         return route
     
     return _get_route_by_product_id
+
+
+@pytest.fixture()
+def admin_delete_product_img_route(test_app) -> str:
+    '''
+        Returns the delete product route
+    '''
+
+    def _get_route_by_product_name_and_img_number(product_name:str,number:int):
+        route = RouteSetup.get_route_by_name(test_app,"admin.delete_product_img",product_name = product_name,number = number)
+        return route
+    
+    return _get_route_by_product_name_and_img_number
