@@ -8,7 +8,7 @@ from flask import current_app as app
 from werkzeug.security import generate_password_hash, check_password_hash
 import pickle
 from sqlalchemy import select
-from .debug import check_str_input_correct, check_str_correct, check_list_of_str_correct
+from .value_checker import check_str_input_correct, check_str_correct, check_list_of_str_correct
 import string
 
 #------------user and roles--------------------------
@@ -545,3 +545,19 @@ class Guitar(db.Model):
                 return True
             else:
                 return False
+            
+
+    @staticmethod
+    def get_by_name(guitar_name:str) -> Guitar | None:
+        '''
+            Returns a Guitar by given `guitar_name`
+            :param: `guitar_name` is the name of the guitar
+        ''' 
+
+        # check if role exists
+        if Guitar.check_guitar_exists_by_name(guitar_name):
+
+            query = select(Guitar).where(Guitar.name == guitar_name)
+            result = db.session.scalar(query)
+
+            return result

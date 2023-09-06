@@ -1,6 +1,7 @@
 import pytest
 from website import db
 from website.models import Guitar
+from sqlalchemy import select
 
 
 def test_guitar_data_correct(new_guitar):
@@ -100,3 +101,18 @@ def test_check_guitar_exists_by_name_not_existing(test_app):
     with test_app.app_context():
 
         assert Guitar.check_guitar_exists_by_name("Not_Existing") == False
+
+
+def test_get_guitar_by_name(test_app,new_guitar):
+    '''
+        `GIVEN` a guitar method
+        `WHEN` a guitarname of a existing guitar, gets passed
+        `THEN` check if guitar gets returned
+    '''
+
+    with test_app.app_context():
+
+        query = select(Guitar).where(Guitar.name == new_guitar.name)
+        guitar = db.session.scalar(query)
+
+        assert Guitar.get_by_name(new_guitar.name) == guitar
