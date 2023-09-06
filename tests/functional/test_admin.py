@@ -92,7 +92,7 @@ def test_add_product_name_empty_field(login_admin_test_client:FlaskClient,admin_
     assert response.request.path == admin_add_product_route
 
 
-def test_add_product_name_invalid_files(login_admin_test_client:FlaskClient,admin_add_product_route,new_guitar):
+def test_add_product_name_invalid_files(login_admin_test_client:FlaskClient,admin_add_product_route):
     '''
         :param:`GIVEN` a admin route
         :param:`WHEN` an admin tryes to add a new product, but name exists already
@@ -122,6 +122,32 @@ def test_add_product_name_invalid_files(login_admin_test_client:FlaskClient,admi
         assert expected_flash_message in response.data
         assert response.request.path == admin_add_product_route
 
+
+def test_add_product_int_not_valid(login_admin_test_client:FlaskClient,admin_add_product_route):
+    '''
+        :param:`GIVEN` a admin route
+        :param:`WHEN` an admin tryes to add a new product, but name exists already
+        :param:`THEN` check if status code, flash message, redirect correct
+    '''
+
+    expected_flash_message = b"Geben Sie bei Preis und Anzahl nur Zahlen ein"
+
+    # passes a file, so front_img check doesn't get called
+    with open("./tests/test_files/test_img.png","rb") as f:
+        file = FileStorage(f)
+
+        response = login_admin_test_client.post(admin_add_product_route,data = {
+            "product-name":"Also_Not_existing",
+            "price":"2000A",
+            "stock":"3",
+            "description":"A Test Guitar",
+            "stripe_price_id":"Not_existing",
+            "image-deck":file
+        },follow_redirects = True)
+
+    assert response.status_code == 200
+    assert expected_flash_message in response.data
+    
 
 def test_add_product_name_valid(login_admin_test_client:FlaskClient,admin_add_product_route,test_app:Flask,admin_page_route):
     '''
