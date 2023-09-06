@@ -1,8 +1,10 @@
 import pytest
-from website.ImageManager import ImageManager
 from werkzeug.datastructures import FileStorage
 import os
 import shutil
+
+from website.ImageManager import ImageManager
+from tests.testHelperFn import recreate_image_in_folder
 
 
 def test_get_image_path_by_product_name_and_number(new_guitar,test_app):
@@ -273,7 +275,7 @@ def test_save_image_by_product_name_and_number(test_app):
             assert os.path.exists("./website/static/Bilder/Produktbilder/Test/5.png") == False
 
 
-def test_delete_directory_by_product_name(test_app):
+def test_delete_directory_by_product_name(test_app,new_guitar):
     '''
         `GIVEN` an ImageManager method
         `WHEN` the folder path should be removed, because product gets deleted
@@ -282,7 +284,7 @@ def test_delete_directory_by_product_name(test_app):
 
     with test_app.app_context():
 
-        ImageManager().delete_directory_by_product_name("Test")
+        ImageManager().delete_directory_by_product_name(new_guitar.name)
         
         # check if deleted
         assert os.path.exists("./website/static/Bilder/Produktbilder/Test") == False
@@ -299,18 +301,5 @@ def test_delete_directory_by_product_name(test_app):
         for ext in ext_list:
             number = ext.split(sep=".")[0]
 
-            recreate_image_in_folder(f"{folder_path}/{ext}",number)
+            recreate_image_in_folder(f"{folder_path}/{ext}",number,new_guitar.name)
             assert os.path.exists(f"{new_folder_path}/{ext}") == True
-
-
-def recreate_image_in_folder(img_path:str,number:int):
-    '''
-        Recreates the image back to the folder
-        :param: `img_path` is the path of the image, which should be saved back to 
-        the Produktbilder, because of Test purposes
-        :param: `number` is the number, by which the img should be saved
-    '''
-
-    with open(img_path, "rb") as f:
-        file = FileStorage(f)
-        ImageManager().save_image_by_product_name_and_number(file,number,"Test")
