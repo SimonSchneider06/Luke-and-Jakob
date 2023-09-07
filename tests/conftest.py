@@ -363,3 +363,15 @@ def admin_delete_product_img_route(test_app) -> str:
         return route
     
     return _get_route_by_product_name_and_img_number
+
+
+@pytest.fixture()
+def get_oauth_test_url_endpoints() -> dict[str,str]:
+    '''
+        Returns the json data for testing the url_endpoints
+    '''
+    json_data = {'authorization_endpoint': 'https://accounts.google.com/o/oauth2/v2/auth',
+                 'token_endpoint': 'https://oauth2.googleapis.com/token',
+                   'userinfo_endpoint': 'https://openidconnect.googleapis.com/v1/userinfo'}
+
+    return json_data

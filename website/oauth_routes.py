@@ -1,9 +1,9 @@
-from flask import Blueprint,url_for,redirect,request,flash,abort
-from flask_login import login_user
+from flask import Blueprint,url_for,redirect,flash,abort,request
+from flask_login import login_user,current_user
 
 from . import db
 from .oauth import OAuthSignIn
-from .models import User
+from .models import User,Role
 
 
 oauth_route = Blueprint("oauth_route",__name__)
@@ -11,53 +11,61 @@ oauth_route = Blueprint("oauth_route",__name__)
 #oauth login
 @oauth_route.route("/login/<provider_name>", methods = ["POST"])
 def oauth_login(provider_name):
+
+    #check if already logged in
+    if current_user.is_authenticated:
+        return redirect(url_for("views.home"))
     
     #get URL for google login
-    provider = OAuthSignIn(provider_name)
-    #get request_uri to ask for data
-    request_uri = provider.get_request_uri(request)
+    provider = OAuthSignIn.get_provider(provider_name)
 
-    return redirect(request_uri)
+    return provider.authorize(request)
 
 
 #get information from provider
 @oauth_route.route("/login/<provider_name>/callback/")
 def callback(provider_name):
-    # get authorization code
-    auth_code = request.args.get("code")
+
+    # check if already logged in
+    if current_user.is_authenticated:
+        return redirect(url_for("views.home"))
     
     #get provider
-    provider = OAuthSignIn(provider_name)
+    provider = OAuthSignIn.get_provider(provider_name)
+
+    #get data
+    email = provider.callback(request)
     
-    #get userinfo
-    userinfo_response = provider.token_request(request,auth_code)
+    if email:
 
-    #check email verification
-    if userinfo_response.json().get("email_verified"):
-        print(userinfo_response)
-        unique_id = userinfo_response.json()["sub"]
-        users_email = userinfo_response.json()["email"]
-        first_name = userinfo_response.json()["given_name"]
-        last_name = userinfo_response.json()["family_name"]
-
-        user = User.query.filter_by(email = users_email).first()
-        #wenn user bereits existiert einloggen
+        user = User.get_from_email(email)
+        #wenn user bereits existiert und dritt party service nutzt einloggen
         if user:
-            login_user(user)
-            flash("Sie haben sich erfolgreich eingeloggt", category="success")
+
+            if user.is_third_party:
+                login_user(user)
+                flash("Sie haben sich erfolgreich eingeloggt", category="success")
+                return redirect(url_for("views.home"))
+            
+            # user exists but is not 3rd party
+            flash("Diese Email ist bereits unter einem normalen Account angemeldet", category="error")
             return redirect(url_for("views.home"))
 
         else:
+            role = Role.get_role_by_name("Customer")
+
             new_user = User(
-                email = users_email,
-                firstName = first_name,
-                lastName = last_name,
+                email = email,
+                # firstName = first_name,
+                # lastName = last_name,
                 thirdParty = True,
-                role_id = 2 #Customer Role
+                role = role #Customer Role
             )
 
             db.session.add(new_user)
             db.session.commit()
+
+            login_user(new_user)
 
             flash("Sie haben sich erfolgreich registriert", category="success")
             return redirect(url_for("views.home"))
