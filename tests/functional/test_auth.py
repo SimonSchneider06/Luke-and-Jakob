@@ -17,15 +17,7 @@ def test_sign_up(test_client:FlaskClient,sign_up_route: str,home_route: str):
 
     response = test_client.post(sign_up_route,data = {
         "email":  "Max@Mustermann.de",
-        "firstName": "Max",
-        "lastName": "Mustermann",
-        "street": "Teststraße",
-        "houseNumber":"14c",
-        "PLZ":"87638",
-        "city":"Frankfurt",
-        "selectCountry":"Germany",
         "passwort1": "789LiJ;a_H",
-        "passwort2": "789LiJ;a_H",
         "rememberMe": "on",
     },follow_redirects = True)
 
@@ -58,15 +50,7 @@ def test_sign_up_wrong_data(test_client:FlaskClient,sign_up_route: str):
 
     response = test_client.post(sign_up_route,data = {
         "email":  "Max@Mustermann.de",
-        "firstName": "Max",
-        "lastName": "Mustermann",
-        "street": "Teststraße",
-        "houseNumber":"14c",
-        "PLZ":"87638",
-        "city":"Frankfurt",
-        "selectCountry":"Germany",
         "passwort1": "789LiJ;a_H",
-        "passwort2": "789LiJ;a_H",
         "rememberMe": "on",
     }, follow_redirects = True)
 

@@ -3,7 +3,7 @@ from .models import User,Role
 from . import db
 from flask_login import login_user,logout_user,current_user,login_required
 from .email import send_password_reset_email
-from .value_checker import check_list_of_str_correct
+from .data_validation import check_list_of_str_correct,check_sign_in_data_correct,convert_rememberMe
 
 auth = Blueprint("auth",__name__)
 
@@ -17,47 +17,49 @@ def sign_up():
 
         email = request.form.get("email")
         #name
-        firstName = request.form.get("firstName")
-        lastName = request.form.get("lastName")
+        # firstName = request.form.get("firstName")
+        # lastName = request.form.get("lastName")
         #address
-        street = request.form.get("street")
-        houseNumber = request.form.get("houseNumber")
-        plz = request.form.get("PLZ")
-        city = request.form.get("city")
-        country = request.form.get("selectCountry")
+        # street = request.form.get("street")
+        # houseNumber = request.form.get("houseNumber")
+        # plz = request.form.get("PLZ")
+        # city = request.form.get("city")
+        # country = request.form.get("selectCountry")
         #password
         passwort1 = request.form.get("passwort1")
-        passwort2 = request.form.get("passwort2")
+        # passwort2 = request.form.get("passwort2")
         rememberMe = request.form.get("rememberMe") #can be on or off
-        role = Role.query.filter_by(name = "Customer").first()
+        role = Role.get_role_by_name("Customer")
+
+        data_check = check_sign_in_data_correct(email,passwort1,rememberMe)
 
         #checking the user_data
-        user_check = User.check_all_user_data_correct(email = email,
-                                            firstName= firstName,
-                                            lastName= lastName,
-                                            houseNumber= houseNumber,
-                                            street = street,
-                                            plz = plz,
-                                            city = city,
-                                            country = country,
-                                            password1 = passwort1,
-                                            password2 = passwort2,
-                                            rememberMe = rememberMe)
+        # user_check = User.check_all_user_data_correct(email = email,
+        #                                     firstName= firstName,
+        #                                     lastName= lastName,
+        #                                     houseNumber= houseNumber,
+        #                                     street = street,
+        #                                     plz = plz,
+        #                                     city = city,
+        #                                     country = country,
+        #                                     password1 = passwort1,
+        #                                     password2 = passwort2,
+        #                                     rememberMe = rememberMe)
         
-        if user_check == True:
+        if data_check == True:
             # if successful create new user
 
             # convert rememberMe
-            rememberMe_converted = User.convert_rememberMe(rememberMe)
+            rememberMe_converted = convert_rememberMe(rememberMe)
 
             new_user = User(email = email,
-                firstName = firstName,
-                lastName = lastName,
-                street = street,
-                houseNumber = houseNumber,
-                plz = plz,
-                city = city,
-                country = country,
+                # firstName = firstName,
+                # lastName = lastName,
+                # street = street,
+                # houseNumber = houseNumber,
+                # plz = plz,
+                # city = city,
+                # country = country,
                 rememberMe = rememberMe_converted,
                 password = passwort1,
                 thirdParty = False,
@@ -77,7 +79,7 @@ def sign_up():
             return redirect(url_for("views.home"))
         
         else:
-            flash(user_check, category="error")
+            flash(data_check, category="error")
             return redirect(url_for('auth.sign_up'))
 
     return render_template("auth/sign_up.html")
@@ -92,10 +94,10 @@ def login():
 
         if User.check_email_exists(email) == True:
 
-            if User.check_is_third_party(email) == False:
-                # user should exist an not be registered through 3rd party
+            user = User.get_from_email(email)
 
-                user = User.get_from_email(email)
+            if user.is_third_party == False:
+                # user should exist an not be registered through 3rd party
         
                 if user.verifyPassword(passwort):
                     

@@ -6,36 +6,6 @@
     <h6 class="text-center" >Bereits Registriert? <a href="{{url_for('auth.login')}}">Anmelden</a></h6>
     <h6 class="text-center" ><a href="{{url_for('auth.password_reset')}}">Passwort vergessen?</a></h6>
     <form class="row g-3 mt-3 mb-3" action="{{url_for('auth.sign_up')}}", method="POST">
-        <div class="col-md-6 form-floating">
-          <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Vorname">
-          <label for="firstName">Vorname</label>
-        </div>
-        <div class="col-md-6 form-floating">
-            <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Nachname">
-            <label for="lastName">Nachname</label>
-        </div>
-        <div class="col-md-10 form-floating">
-            <input type="text" class="form-control" id="street" name="street" placeholder="Straße">
-            <label for="street">Straße</label>
-        </div>
-        <div class="col-md-2 form-floating">
-            <input type="text" class="form-control" id="houseNumber" name="houseNumber" placeholder="Hausnummer">
-            <label for="houseNumber">Hausnummer</label>
-        </div>
-        <div class="col-md-6 form-floating">
-            <input type="text" class="form-control" id="PLZ" name="PLZ" placeholder="PLZ">
-            <label for="PLZ">PLZ</label>
-        </div>
-        <div class="col-md-6 form-floating">
-            <input type="text" class="form-control" id="city" name="city" placeholder="Ort">
-            <label for="city">Ort</label>
-        </div>
-        <div class="col-12">
-            <select class="form-select form-select-lg" aria-label="select your Country" name="selectCountry" id="selectCountry">
-                <option selected value="Deutschland">Deutschland</option>
-                <option value="Österreich">Österreich</option>
-            </select>
-        </div>
         <div class="col-12 form-floating">
             <input type="email" class="form-control" id="email" name="email" placeholder="Email">
             <label for="email">Email</label>
@@ -43,10 +13,6 @@
         <div class="col-md-6 form-floating">
             <input type="password" class="form-control" id="password1" name="password1" placeholder="Passwort">
             <label for="password1">Passwort</label>
-        </div>
-        <div class="col-md-6 form-floating">
-            <input type="password" class="form-control" id="password2" name="password2" placeholder="Passwort Bestätigen">
-            <label for="password2">Passwort Bestätigen</label>
         </div>
         <div class="col-12">
             <div class="form-check">

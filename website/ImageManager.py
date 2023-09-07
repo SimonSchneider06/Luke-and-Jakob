@@ -7,7 +7,7 @@ from sqlalchemy import select
 from . import db 
 from .models import Guitar
 import magic   # for image stream validation
-from .value_checker import check_str_input_correct
+from .data_validation import check_str_input_correct
 
 class ImageManager:
     '''

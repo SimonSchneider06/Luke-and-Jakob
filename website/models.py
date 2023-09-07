@@ -8,8 +8,7 @@ from flask import current_app as app
 from werkzeug.security import generate_password_hash, check_password_hash
 import pickle
 from sqlalchemy import select
-from .value_checker import check_str_input_correct, check_str_correct, check_list_of_str_correct
-import string
+from .data_validation import check_str_input_correct, check_str_correct,convert_rememberMe
 
 #------------user and roles--------------------------
 
@@ -188,7 +187,7 @@ class User(db.Model,UserMixin):
         if check_str_correct(rememberMe):
 
             # convert rememberMe
-            rememberMe_converted = User.convert_rememberMe(rememberMe)
+            rememberMe_converted = convert_rememberMe(rememberMe)
 
             self.rememberMe = rememberMe_converted
             db.session.commit()
@@ -301,7 +300,7 @@ class User(db.Model,UserMixin):
             :param: `email` is the Email to be checked
         '''
 
-        if check_str_input_correct(email,"email","User.check_email_exists"):
+        if check_str_correct(email):
             # what to query
             query = select(User).where(User.email == email)
             # get result
@@ -313,122 +312,13 @@ class User(db.Model,UserMixin):
                 return False
 
 
-    @staticmethod
-    def check_is_third_party(email:str) -> bool:
+    @property
+    def is_third_party(self) -> bool:
         '''
-            Returns True if User with this email is third party registered.
-
-            Returns False if not.
-            :param: `email` is the Email of the User
+            Returns `True` if User with this email is third party registered.
+            Returns `False` if not.
         '''
-
-        if check_str_correct(email):
-            
-            query = select(User).where(User.email == email)
-
-            result = db.session.scalar(query)
-
-            if result.thirdParty == True: # if third party return true
-                return True
-            else:   # if not third party, or if no User, return false
-                return False
-
-
-    @staticmethod
-    def _check_password_secure(password:str) -> bool:
-        '''
-            Takes a Password and checks if it is secure
-            Returns True if secure.
-            :param: `password` is the password
-        '''
-        # for a password to be considered secure it should have
-        # - more than 8 characters
-        # - at least one lowercase letter
-        # - at least one uppercase letter
-        # - at least one number
-        # - at least one punctuation
-
-        #should have more than 8 Characters
-        if len(password) > 8:
-
-            lowercase = False
-            uppercase = False
-            number = False
-            punctuations = False 
-            
-            for element in password:
-                if element in string.ascii_lowercase:
-                    lowercase = True
-                elif element in string.ascii_uppercase:
-                    uppercase = True
-                elif element in string.digits:
-                    number = True
-                elif element in string.punctuation:
-                    punctuations = True
-
-            if lowercase == False or uppercase == False or number == False or punctuations == False:
-                return False
-            else:
-                return True
-            
-        else:
-            return False
-
-
-    @staticmethod
-    def convert_rememberMe(rememberMe:str) -> bool:
-        '''
-            Converts the rememberMe value from a string to a boolean.
-            Returns `true` or `false`.
-            :param: `rememberMe` is either `on` or `off` 
-        '''
-
-        if check_str_correct(rememberMe):
-
-            if rememberMe == "on":
-                return True
-            else:
-                return False
-
-
-    @staticmethod
-    def check_all_user_data_correct(email:str,firstName:str,lastName:str,houseNumber:str,street:str,plz:str,city:str,country:str,password1:str,password2:str,rememberMe:str) -> str | bool:
-        '''
-            When data from HTML-Forms gets requested, check if everything is correct
-            Returns string with output message to be flashed, e.g. if email exists returns `Emails exists already` and so on
-            if the data is correct, return `Data Correct`
-            :param: `email` is the email of the User, check if it already exists
-            :param: `firstName` is the firstName of the User
-            :param: `lastName` is the lastName of the User
-            :param: `houseNumber` is the houseNumber of the User
-            :param: `street` is the street the User lives in
-            :param: `plz` is the current Postleitzahl of the User
-            :param: `city` is the city of the User
-            :param: `country` is the country in which the User lives
-            :param: `password1` is the password of the User
-            :param: `password2` is the control password, to check if the User typed it correctly
-            :param: `rememberMe` is either `on` or `off`. See if User wants to stay logged in
-        '''
-        
-        # check if everything is a nonempty string
-        if check_list_of_str_correct([email,firstName,lastName,street,houseNumber,plz,city,country,password1,password2,rememberMe]) == True:
-
-            # check that email doesn't exist jet
-            if User.check_email_exists(email):
-                return "Email exists already"
-            
-            # check that passwords are equal
-            elif password2 != password1:
-                return "Passwords don't match"
-            
-            elif User._check_password_secure(password1) != True:
-                return "Password not secure enough, please choose a more secure one"
-
-            else: 
-                return True
-                        
-        else:
-            return "Input values are not correct"
+        return self.thirdParty if self.thirdParty else False
 
 
     @staticmethod

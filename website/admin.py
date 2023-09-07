@@ -5,7 +5,7 @@ from . import db
 from .decorators import admin_required
 import os
 from .ImageManager import ImageManager
-from .value_checker import check_list_of_str_correct
+from .data_validation import check_list_of_str_correct
 
 admin = Blueprint("admin",__name__)
 

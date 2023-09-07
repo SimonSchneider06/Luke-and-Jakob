@@ -1,6 +1,6 @@
 from werkzeug.datastructures import FileStorage
 from website.ImageManager import ImageManager
-from website.value_checker import check_list_of_str_correct,check_str_correct
+from website.data_validation import check_list_of_str_correct,check_str_correct
 
 def recreate_image_in_folder(img_path:str,number:int,product_name:str):
     '''
