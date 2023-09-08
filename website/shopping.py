@@ -16,7 +16,7 @@ def add_to_cart(product_id:int):
     if "cart" in session and session["cart"] != None:
         session["cart"] = cartManager.add_product(product.id,session["cart"])
     else:
-        session["cart"] = [{"id": product.id,"quantity":1}]
+        session["cart"] = [cartManager.create_product_dict(product_id,1)]
 
     flash("Produkt erfolgreich im Einkaufswagen hinzugefügt", category = "success")
     return redirect(url_for('views.product_site',product_name = product.name))

@@ -401,3 +401,42 @@ def oauth_callback_route(test_app) -> str:
         return route
     
     return _get_route_by_provider_name
+
+
+@pytest.fixture()
+def shopping_add_to_cart_route(test_app) -> str:
+    '''
+        Returns the shopping add_to_cart route
+    '''
+
+    def _get_route_by_product_id(id):
+        route = RouteSetup.get_route_by_name(test_app,"shopping.add_to_cart",product_id = id)
+        return route
+    
+    return _get_route_by_product_id
+
+
+@pytest.fixture()
+def shopping_delete_from_cart_route(test_app) -> str:
+    '''
+        Returns the shopping add_to_cart route
+    '''
+
+    def _get_route_by_product_id(id):
+        route = RouteSetup.get_route_by_name(test_app,"shopping.delete_from_cart",product_id = id)
+        return route
+    
+    return _get_route_by_product_id
+
+
+@pytest.fixture()
+def shopping_set_product_quantity_route(test_app) -> str:
+    '''
+        Returns the shopping add_to_cart route
+    '''
+
+    def _get_route_by_product_id(id,quantity):
+        route = RouteSetup.get_route_by_name(test_app,"shopping.set_product_quantity",product_id = id,quantity = quantity)
+        return route
+    
+    return _get_route_by_product_id
