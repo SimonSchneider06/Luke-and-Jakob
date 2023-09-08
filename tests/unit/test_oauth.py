@@ -149,8 +149,6 @@ def test_Google_authorize(test_app:Flask,get_oauth_test_url_endpoints):
     # user a mock response, because test shouldn't depend on 3rd party 
     # things and should be fast
 
-    request_uri = "https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=880053595851-jsj507rb9gqvp80put9di2stq9pa8c2m.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%2F%2Fcallback%2F&scope=openid+email+profile"
-
     with test_app.test_request_context():
         google_client = GoogleSignIn()
 

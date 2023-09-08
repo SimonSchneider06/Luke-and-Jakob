@@ -375,3 +375,29 @@ def get_oauth_test_url_endpoints() -> dict[str,str]:
                    'userinfo_endpoint': 'https://openidconnect.googleapis.com/v1/userinfo'}
 
     return json_data
+
+
+@pytest.fixture()
+def oauth_login_route(test_app) -> str:
+    '''
+        Returns the oauth route for login
+    '''
+
+    def _get_route_by_provider_name(name:str) -> str:
+        route = RouteSetup.get_route_by_name(test_app,"oauth_route.oauth_login",provider_name = name)
+        return route
+    
+    return _get_route_by_provider_name
+
+
+@pytest.fixture()
+def oauth_callback_route(test_app) -> str:
+    '''
+        Returns the oauth route for login
+    '''
+
+    def _get_route_by_provider_name(name:str) -> str:
+        route = RouteSetup.get_route_by_name(test_app,"oauth_route.callback",provider_name = name)
+        return route
+    
+    return _get_route_by_provider_name

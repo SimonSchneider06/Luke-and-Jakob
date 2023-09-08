@@ -91,7 +91,7 @@ class GoogleSignIn(OAuthSignIn):
         return userinfo_response
     
 
-    def token_request(self,request,code:str,config:dict[str , str]) -> Response:
+    def token_request(self,request:Request,code:str,config:dict[str , str]) -> Response:
         
         #get token endpoint
         token_endpoint = config["token_endpoint"]
@@ -144,6 +144,8 @@ class GoogleSignIn(OAuthSignIn):
 
         # get userinfo
         userinfo_response = self.token_request(request,auth_code,config)
+
+        email = None
 
         if userinfo_response.json().get("email_verified"):
             email = userinfo_response.json()["email"]

@@ -47,9 +47,10 @@ def callback(provider_name):
                 flash("Sie haben sich erfolgreich eingeloggt", category="success")
                 return redirect(url_for("views.home"))
             
-            # user exists but is not 3rd party
-            flash("Diese Email ist bereits unter einem normalen Account angemeldet", category="error")
-            return redirect(url_for("views.home"))
+            else:   # technically not neccesary because after the "if user.is_third_party" is a return statement, but so its more clear
+                # user exists but is not 3rd party
+                flash("Diese Email ist bereits unter einem normalen Account angemeldet", category="error")
+                return redirect(url_for("views.home"))
 
         else:
             role = Role.get_role_by_name("Customer")
@@ -71,5 +72,5 @@ def callback(provider_name):
             return redirect(url_for("views.home"))
 
     else:
-        flash(f"User email not available or not verified by {provider}", category="error")
+        flash(f"User email not available or not verified by {provider_name}", category="error")
         abort(400)
