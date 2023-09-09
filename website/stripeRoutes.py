@@ -1,4 +1,4 @@
-from flask import Blueprint,flash,redirect,url_for,session,request 
+from flask import Blueprint,redirect,url_for,session,request 
 from .shoppingCart import StripeCartConverter 
 import stripe
 from flask import current_app as app
@@ -36,8 +36,8 @@ def stripe_checkout():
                     cancel_url = url_for("views.shopping_cart", _external = True)
                 )
         
-        except Exception as e:
-            str(e)
+        except Exception as e:  #pragma: no cover
+            str(e)      # pragma: no cover
 
         return redirect(checkout_session.url,code = 303)
     

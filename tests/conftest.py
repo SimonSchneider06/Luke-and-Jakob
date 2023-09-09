@@ -440,3 +440,22 @@ def shopping_set_product_quantity_route(test_app) -> str:
         return route
     
     return _get_route_by_product_id
+
+
+@pytest.fixture()
+def stripe_checkout_route(test_app) -> str:
+    '''
+        Returns the stripe checkout route
+    '''
+
+    route = RouteSetup.get_route_by_name(test_app,"stripeBlueprint.stripe_checkout")
+    return route
+
+
+@pytest.fixture()
+def stripe_webhook_route(test_app) -> str:
+    '''
+        Returns the stripe webhook route
+    '''
+    route = RouteSetup.get_route_by_name(test_app,"stripeBlueprint.stripe_webhook")
+    return route
