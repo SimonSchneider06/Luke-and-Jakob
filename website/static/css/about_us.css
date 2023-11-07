@@ -7,3 +7,6 @@ body{
 .rounded-m{
     border-radius:1em;
 }
+.rounded-special{
+    border-radius:2.05em;
+}
