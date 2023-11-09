@@ -1,0 +1,49 @@
+<div class="footer-part">
+    <div class="flex-space-between">
+        <div class="flex-column-64">
+            <div class="nav-logo"></div>
+            <div class="flex-column-32">
+                <p class="p-l c-b">
+                    Lukas Osterrieder<br>
+                    Altmannsteiner Str. 10<br>
+                    93336 Altmannstein
+                </p>
+                <p class="p-l c-p">
+                    Tel: 0 1515 6086992<br>
+                    Email: kontakt@lukeandjakob.com
+                </p>
+                <div class="cta-btn-l">
+                    Kontakt
+                </div>
+            </div>
+        </div>
+        <div class="flex-column-64">
+            <p class="h5-l c-b">Links</p>
+            <div class="flex-column-32">
+                {% for link_name in links %}
+                <a class="h6-l c-b" href="{{url_for('views.{}'.format(link_name) )}}">{{link_name}}</a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="flex-column-64">
+            <p class="h5-l c-b">Rechtliches</p>
+            <div class="flex-column-32">
+                <a class="h6-l c-b" href="#">AGB's</a>
+                <a class="h6-l c-b" href="#">Impressum</a>
+                <a class="h6-l c-b" href="#">Datenschutzerklärung</a>
+            </div>
+        </div>
+    </div>
+    <div class="flex-space-between">
+        <p class="h7-l c-b">&#169; Luke&Jakob 2023</p>
+        <div class="flex-center-16">
+            <a class="c-b" href="https://whatsapp.com/channel/0029Va8ZKBOD38CN2PKytz2D">
+                <img src="{{url_for('static', filename = 'Bilder/icons/whatsapp-bootstrap.svg')}}" alt="WhatsApp Icon">
+            </a>
+            <a class="c-b" href="https://instagram.com/lukeandjakob_guitars?igshid=MTVyN20zOHkwc3h5ZQ%3D%3D&utm_source=qr">
+                <img src="{{url_for('static', filename = 'Bilder/icons/instagram-bootstrap.svg')}}" alt="WhatsApp Icon">
+            </a>
+        </div>
+        <a class="h7-l c-b" href="https://github.com/SimonSchneider06">Made by SimonSchneider06</a>
+    </div>
+</div>

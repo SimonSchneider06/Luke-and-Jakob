@@ -1,0 +1,35 @@
+.footer-part{
+    display: flex;
+    width: fill;
+    padding: 32px 64px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 64px;
+}
+
+.flex-space-between{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    align-self: stretch;
+}
+
+.flex-column-64{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 64px;
+}
+
+.flex-column-32{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
+}
+
+.flex-center-16{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}

@@ -12,10 +12,13 @@
     <link rel="stylesheet" href="{{url_for('static',filename = 'css/assets.css')}}">
     <link rel="stylesheet" href="{{url_for('static',filename = 'css/setup.css')}}">
     <link rel="stylesheet" href="{{url_for('static',filename = 'css/components/cta-btn.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename = 'css/components/footer-part.css')}}">
     {% block head %}{% endblock %}
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
+
+  {% set links = ["Home","About","Services","Nachhaltigkeit"] %}
   
   {% include "/part_templates/navbar.html" %}
 
@@ -24,6 +27,8 @@
   {% set imageManager = ImageManager() %}
 
   {% block content %}{% endblock %}
+
+  {% include "/part_templates/footer-part.html" %}
 
   {% include "/part_templates/footer.html" %}
   <script
