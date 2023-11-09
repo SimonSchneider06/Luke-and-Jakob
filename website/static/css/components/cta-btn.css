@@ -1,0 +1,23 @@
+.cta-btn-l{
+    display: inline-flex;
+    padding: 16px 32px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    background: var(--secondary);
+    color: var(--white);
+    box-sizing:border-box;
+    width: 137px;
+    height: 61px;
+}
+
+.cta-btn-l:hover{
+    /* secondary color with 0.75% opacity */
+    background: rgba(0, 23, 173, 0.75);
+    cursor: pointer;
+}
+
+.cta-btn-l:active{
+    border: 2px solid var(--secondary);
+    background: rgba(0, 23, 173, 0.50);
+}

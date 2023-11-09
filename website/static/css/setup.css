@@ -1,0 +1,16 @@
+html{
+    font-size: 131.25%
+}
+
+body{
+    margin:0;
+    padding:0;
+    background-color: var(--white);
+}
+
+a{
+    text-decoration: none;
+}
+a:hover{
+    color:initial;
+}

@@ -1,0 +1,58 @@
+.nav-bar{
+    display: flex;
+    width: fill;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.group-logo{
+    display: flex;
+    padding: 16px 64px;
+    justify-content: space-between;
+    align-items: center;
+    align-self: stretch;
+}
+
+.nav-logo{
+    width: 18rem;
+    height: 1.3rem;
+    background: url("/static/Bilder/Laptop/Logo.png");  
+    background-repeat:no-repeat;
+    background-size:contain;
+}
+
+.group-links-CTA{
+    display: flex;
+    align-items: center;
+    gap: 96px;
+}
+
+.group-links{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+}
+
+.link-nav{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+
+.link-active{
+    color:var(--primary);
+    border-bottom: 2px solid var(--primary);
+}
+
+.link-active:hover{
+    color:var(--primary);
+}
+
+.line{
+    align-self: stretch;
+    height: 0px;
+    border: 1px var(--black) solid;
+}

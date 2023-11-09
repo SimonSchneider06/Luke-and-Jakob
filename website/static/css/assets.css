@@ -1,5 +1,6 @@
 :root{
     --primary:#FB4C0D;
+    --secondary:#0017AD;
     --white:#fff;
     --black:#0D0401;
     --black75:rgba(13,4,1,0.75);
@@ -22,17 +23,17 @@
     src: url("/static/fonts/OpenSans.ttf");
 }
 
-body{
-    margin:0;
-    padding:0;
-    background-color: var(--white);
-}
-
 /* ------------- Laptop Fonts ----------*/
 
-.mont{
-    font-family: var(--paragraph-font);
+.c-b{
+    color:var(--black);
+}
+.c-p{
     color:var(--primary);
+}
+
+.p-l{
+    font-family: var(--paragraph-font);
     font-size: 21px;
     font-style: normal;
     font-weight: 400;
@@ -42,7 +43,7 @@ body{
 .h1-l{
     /* H1 - Laptop */
     font-family: var(--heading-font);
-    font-size: 119px;
+    font-size: 5.66667em;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
@@ -51,7 +52,7 @@ body{
 .h2-l{
     /* H2 - Laptop */
     font-family: var(--heading-font);
-    font-size: 84px;
+    font-size: 4rem;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
@@ -60,7 +61,7 @@ body{
 .h3-l{
     /* H3 - Laptop */
     font-family: var(--heading-font);
-    font-size: 60px;
+    font-size: 2.85714rem;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
@@ -69,7 +70,7 @@ body{
 .h4-l{
     /* H4 - Laptop */
     font-family: var(--heading-font);
-    font-size: 42px;
+    font-size: 2rem;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
@@ -78,7 +79,7 @@ body{
 .h5-l{
     /* H5 - Laptop */
     font-family: var(--heading-font);
-    font-size: 30px;
+    font-size: 1.42857rem;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
@@ -87,7 +88,7 @@ body{
 .h6-l{
     /* H6 - Laptop */
     font-family: var(--heading-font);
-    font-size: 21px;
+    font-size: 1rem;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
@@ -96,7 +97,7 @@ body{
 .h7-l{
     /* H7 - Laptop */
     font-family: var(--heading-font);
-    font-size: 15px;
+    font-size: 0.71429rem;
     font-style: normal;
     font-weight: 700;
     line-height: normal;

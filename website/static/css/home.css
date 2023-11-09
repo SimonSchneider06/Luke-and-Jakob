@@ -1,4 +1,10 @@
 .hero{
-    background:rgb(205, 200, 200);
+    background:var(--primary);
     background-size:100%;
+}
+
+.errorpage{
+    text-align:center;
+    font-size:xx-large;
+    margin-top:15%;
 }

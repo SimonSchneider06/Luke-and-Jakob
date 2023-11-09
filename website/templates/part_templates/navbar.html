@@ -1,35 +1,26 @@
-    <nav class="navbarr">
-        <div class="navbar-logo_burgermenu-div">
-            <button class="navbar-burgermenu-button" id="burgermenu-btn"><i id="navbar-burgermenu-icon-open-id" class="fa-solid fa-bars navbar-burgermenu-icon-open"></i><i id="navbar-burgermenu-icon-close-id" class="fa-solid fa-xmark navbar-burgermenu-icon-close"></i></button>
+{% set links = ["Home","About","Services","Nachhaltigkeit"] %}
 
-            <div class="navbar-logo-div"><a class="navbar-logo-a" href="/">LUKE&JAKOB</a></div>
+<div class="nav-bar">
+    <div class="group-logo">
+        <div class="nav-logo"></div>
+        <div class="group-links-CTA">
+            <div class="group-links">
+                {% for link_name in links %}
+                    {% if link_name == active %}
+                    <div class="link-nav ">
+                        <a class="h6-l link-active" href="{{url_for('views.{}'.format(link_name) )}}">{{link_name}}</a>
+                    </div>
+                    {% else %}
+                    <div class="link-nav">
+                        <a class="h6-l c-b" href="{{url_for('views.{}'.format(link_name) )}}">{{link_name}}</a>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="cta-btn-l h6-l">
+                Kontakt
+            </div>
         </div>
-        <div class="navbar-nav-div navbar-burgermenu-content" id="navbar-burgermenu-content-id1">
-            <div class=" navbar-nav-text-div"><a class="navbar-nav-text-a" href="/shop">Shop</a></div>
-            <div class=" navbar-nav-text-div"><a class="navbar-nav-text-a" href="{{url_for('views.about_us')}}">About us</a></div>
-            {% if current_user.is_authenticated %}
-            
-            {% if current_user.role_id == 1 %}
-            <div class=" navbar-nav-text-div"><a class="navbar-nav-text-a" href="/admin">Admin</a></div>
-            {% endif %}
-            
-            {% endif %}
-            <div class=" navbar-nav-searchcart-div"><a class=" navbar-nav-searchcart-a" id="navbar-search-btn"><i class="bi bi-search navbar-nav-searchcart-i"></i></a></div>
-            <div class=" navbar-nav-searchcart-div"><a class=" navbar-nav-searchcart-a" href="/cart"><i class="bi bi-cart navbar-nav-searchcart-i"></i></a></div>
-        </div>
-
-        <div class="navbar-social-div navbar-burgermenu-content" id="navbar-burgermenu-content-id2">
-            {% if current_user.is_authenticated %} 
-            <div  class="navbar-social-icon-div"><a class="navbar-nav-text-a login" href="/account">Account <i class="bi bi-person-circle"></i></a></div>
-            {% else %}
-            <div><a class="navbar-nav-text-a login" href="{{url_for('auth.sign_up')}}">Login <i class="bi bi-person-circle"></i></a></div>
-
-            {% endif %}
-        </div>
-    </nav>
-
-    <div id="myOverlay" class="search-overlay">
-        <a class=" navbar-overlay-search-a" id="overlay-nav-search-btn"><i class="bi bi-search navbar-overlay-search-i"></i></a>
-        <input id="navbar-overlay-search-input-id" class="navbar-overlay-search-input" type="text" placeholder="search..." />
-        <a class="navbar-overlay-search-x-a" id="overlay-nav-close-btn"><i class="fa-solid fa-xmark navbar-overlay-search-x-i"></i> </a>
     </div>
+    <div class="line"></div>
+</div>
