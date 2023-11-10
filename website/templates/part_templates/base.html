@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{{url_for('static',filename = 'css/setup.css')}}">
     <link rel="stylesheet" href="{{url_for('static',filename = 'css/components/cta-btn.css')}}">
     <link rel="stylesheet" href="{{url_for('static',filename = 'css/components/footer-part.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename = 'css/components/contactform.css')}}">
     {% block head %}{% endblock %}
     <title>{% block title %}{% endblock %}</title>
 </head>
@@ -28,6 +29,7 @@
 
   {% block content %}{% endblock %}
 
+  {% include "/part_templates/contactform.html" %}
   {% include "/part_templates/footer-part.html" %}
 
   {% include "/part_templates/footer.html" %}
