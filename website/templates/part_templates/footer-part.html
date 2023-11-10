@@ -19,7 +19,7 @@
         </div>
         <div class="flex-column-64">
             <p class="h5-l c-b">Links</p>
-            <div class="flex-column-32">
+            <div class="flex-column-32 w-1028">
                 {% for link_name in links %}
                 <a class="h6-l c-b" href="{{url_for('views.{}'.format(link_name) )}}">{{link_name}}</a>
                 {% endfor %}
@@ -35,7 +35,7 @@
         </div>
     </div>
     <div class="flex-space-between">
-        <p class="h7-l c-b">&#169; Luke&Jakob 2023</p>
+        <p class="h7-l c-b">&#169; Copyright Luke&Jakob 2023</p>
         <div class="flex-center-16">
             <a class="c-b" href="https://whatsapp.com/channel/0029Va8ZKBOD38CN2PKytz2D">
                 <img src="{{url_for('static', filename = 'Bilder/icons/whatsapp-bootstrap.svg')}}" alt="WhatsApp Icon">

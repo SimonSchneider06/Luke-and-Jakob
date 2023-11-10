@@ -4,16 +4,18 @@
     flex-direction: column;
     align-items: flex-start;
     border-bottom: 2px solid var(--black50);
+    border-left: 2px solid transparent;
+    border-top:2px solid transparent;
+    border-right:2px solid transparent;
     background: var(--black10);
+    outline: none;
+    flex: 1 0 0;
+    align-self: stretch;
+    transition: border 0.3s ease;
 }
 
 .size-b-l{
-    width: 38.09524rem;
-    height: 13.52381rem;
-}
-
-.size-d-l{
-    width: 12.19048rem;
+    height: 284px;
 }
 
 .input-form-l:hover{
@@ -23,4 +25,8 @@
 
 .state-error{
     border: 2px solid var(--error);
+}
+.expand{
+    display: flex;
+    align-self: stretch;
 }

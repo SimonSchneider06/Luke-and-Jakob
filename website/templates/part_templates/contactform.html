@@ -1,5 +1,19 @@
-<form class="container-contact" action="#" method="POST">
+<form class="container-contact" action="#" method="POST" enctype="multipart/form-data">
     <p class="c-b h4-l">Kontakt aufnehmen</p>
-    <div></div>
+    <div class="container-input-fields column">
+        <div class="container-input-fields">
+            <input type="text" class="p-l c-b input-form-l" placeholder="Service">
+            <input type="text" class="p-l c-b input-form-l" placeholder="Name">
+            <input type="email" class="p-l c-b input-form-l" placeholder="E-Mail">
+        </div>
+        <div class="expand">
+            <textarea class="p-l c-b input-form-l size-b-l" name="Beschreibung" id="" cols="30" rows="10">Beschreibung/Extrawünsche
+            </textarea>
+        </div>
+        <div class="expand">
+            <input type="file" class="p-l c-b input-form-l" placeholder="Bilder">
+        </div>
+           
+    </div>
     <div class="cta-btn-l">Senden</div>
 </form>
