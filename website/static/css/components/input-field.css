@@ -1,0 +1,26 @@
+.input-form-l{
+    display: flex;
+    padding: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    border-bottom: 2px solid var(--black50);
+    background: var(--black10);
+}
+
+.size-b-l{
+    width: 38.09524rem;
+    height: 13.52381rem;
+}
+
+.size-d-l{
+    width: 12.19048rem;
+}
+
+.input-form-l:hover{
+    border: 2px solid var(--black50);
+    background: var(--black5);
+}
+
+.state-error{
+    border: 2px solid var(--error);
+}
