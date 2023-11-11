@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 256px;
+    gap: 12.19048rem; 
     align-self: stretch;
 }
 
@@ -49,7 +49,11 @@
     padding: 3.04762rem;
 }
 
-.flex-col-center-all{
+.pad-2-4{
+    padding:1.52381rem 3.04762rem;
+}
+
+.flex-center-all{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -69,6 +73,69 @@
     background: url("/static/Bilder/Laptop/Home/Gründer.jpg");
     background-repeat: no-repeat;
     background-size: contain;
+}
+
+.service-section{ 
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    align-content: flex-start;
+    gap: 3.04762rem 6.09524rem;
+    align-self: stretch;
+    flex-wrap: wrap;
+}
+
+.text-box-with-img-vertical{
+    max-width: 22.09523rem;
+    padding: 0.7619rem 1.52381rem;
+    justify-content: center;
+    gap: 1.52381rem;
+    border-radius: 0.7619rem 0.7619rem 0rem 0rem;
+    border-top: 3px solid var(--primary);
+    border-right: 3px solid var(--primary);
+    border-left: 3px solid var(--primary);
+}
+
+.img-box-vertical{
+    width: 22.09524rem;
+    height: 31.28571rem;
+    border-radius: 0rem 0rem 0.7619rem 0.7619rem;
+}
+
+.service-g3{
+    min-width: 32.38095rem;
+    flex: 1 0 0;
+}
+
+.text-box-with-img-horizontal{
+    display: flex;
+    min-width: 32.38095rem;
+    justify-content: center;
+    align-items: flex-start;
+    align-self: stretch;
+}
+.img-box-horizontal{
+    max-width: 9.33333rem;
+    flex: 1 0 0;
+    align-self: stretch;
+    border-radius: 0.7619rem 0rem 0rem 0.7619rem; 
+}
+.text-box-horizontal{
+    display: flex;
+    padding: 0.7619rem 1.52381rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.52381rem;
+    flex: 1 0 0;
+    align-self: stretch;
+    border-radius: 0rem 0.7619rem 0.7619rem 0rem;
+    border-top: 3px solid var(--primary);
+    border-right: 3px solid var(--primary);
+    border-bottom: 3px solid var(--primary);
+}
+
+.flex-100{
+    flex: 1 0 0;
 }
 
 .errorpage{
