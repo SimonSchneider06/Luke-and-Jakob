@@ -1,6 +1,6 @@
 <div class="nav-bar">
     <div class="group-logo">
-        <div class="nav-logo"></div>
+        <a href="{{url_for('views.Home')}}" class="nav-logo"></a>
         <div class="group-links-CTA">
             <div class="group-links">
                 {% for link_name in links %}
@@ -15,9 +15,9 @@
                     {% endif %}
                 {% endfor %}
             </div>
-            <div class="cta-btn-l h6-l">
+            <a href="#" class="cta-btn-l h6-l">
                 Kontakt
-            </div>
+            </a>
         </div>
     </div>
     <div class="line"></div>

@@ -6,8 +6,7 @@
     border-radius: 16px;
     background: var(--secondary);
     color: var(--white);
-    box-sizing:border-box;
-    width: 137px;
+    border: 2px solid transparent;
     height: 61px;
 }
 
@@ -15,6 +14,7 @@
     /* secondary color with 0.75% opacity */
     background: rgba(0, 23, 173, 0.75);
     cursor: pointer;
+    color:var(--white);
 }
 
 .cta-btn-l:active{

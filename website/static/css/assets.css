@@ -32,6 +32,14 @@
     color:var(--primary);
 }
 
+.c-w{
+    color:var(--white);
+}
+
+.b-b5{
+    background-color: var(--black5);
+}
+
 .p-l{
     font-family: var(--paragraph-font);
     font-size: 21px;

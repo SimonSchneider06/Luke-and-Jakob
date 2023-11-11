@@ -6,16 +6,49 @@
 
 {% block content %}
 
-    <div>
-        <div>
-            <p class="h1-l">Ueberschrift-Fett-Fueller</p>
-            <p class="p-l">
-                Einfacher Text, soll hier nur als Fueller dienen. Noch mehr Text, soll hier nur als Fueller dienen.
-                Einfacher Text, soll hier nur als Fueller dienen.
-            </p>
-            <a class="mt-2 btn b-orange" href="#">Kaufen</a>
+<div class="d-flex flex-column align-items-start">
+    <div class="page-container-l">
+        <div class="flex-column align-items-start expand">
+            <div class="h-30 flex-col-align-start-stretch guitar-background">
+                <div class="h-30 flex-col-align-start-stretch black-overlay">
+                    <div class="flex-col-align-start-stretch hero-title">
+                        <p class="expand h1-l c-w">Design your Dream</p>
+                        <p class="expand h5-l c-w">
+                        Wir gestalten, reparieren oder bauen mit Ihnen die E-Gitarre Ihrer Träume,
+                        sodass Sie Ihre Leidenschaft voll ausleben können,
+                         ohne Aussehen und Klangqualität vernachlässigen zu müssen.
+                        </p>
+                        <a  href="#" class="cta-btn-l">Jetzt Kontakt aufnehmen</a>
+                    </div>
+                </div>
+            </div>
+            <div class="line"></div>
+            <div class="expand align-items-center justify-content-center flex-column gap-8 pad-4 b-b5">
+                <div class="flex-col-center-all">
+                    <p class="h3-l c-b">Über uns</p>
+                </div>
+                <div class="flex-col-center-all gap-8 expand flex-wrap">
+                    <div class="flex-col-align-start-stretch gap-4 about-text">
+                        <p class="h5-l c-b">
+                            Wir bauen hochwertige E-Gitarren nach Wunsch
+                        </p>
+                        <div class="flex-col-align-start-stretch gap-2">
+                            <p class="p-l c-b">
+                                Seine eigene E-Gitarre zu bauen ist ein Traum vieler leidenschaftlicher E-Gitarristen. Doch die Tonqualität, das Aussehen und die Verarbeitung leiden dabei oft darunter.
+                            </p>
+                            <p class="p-l c-b">
+                                Das muss nicht sein. Mit unseren professionellen Werkzeugen und angesammelten Wissen helfen wir Gitarristen deren Wunschinstrument zu verwirklichen.
+                            </p>
+                            <a href="{{url_for('views.About')}}" class="p-l c-p">
+                                Mehr erfahren
+                            </a>
+                        </div>
+                    </div>
+                    <div class="founder-img"></div>
+                </div>
+            </div>
         </div>
-        <div></div>
     </div>
+</div>
 
 {% endblock %}

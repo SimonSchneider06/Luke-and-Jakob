@@ -1,6 +1,74 @@
-.hero{
-    background:var(--primary);
-    background-size:100%;
+.page-container-l{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 256px;
+    align-self: stretch;
+}
+
+.flex-col-align-start-stretch{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: stretch;
+}
+
+.h-30{
+    height: 45rem;
+}
+
+.guitar-background{
+    background: url("/static/Bilder/Laptop/Home/Gitarre-Jakob.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.black-overlay{
+    background: var(--black25);  
+}
+
+.hero-title{
+    max-width: 58.09524rem;
+    padding: 3.04762rem 0rem 1.52381rem 3.04762rem; 
+    gap: 1.52381rem;
+}
+
+.gap-8{
+    gap: 3.04762rem;
+}
+
+.gap-4{
+    gap:4rem;
+}
+
+.gap-2{
+    gap:2rem;
+}
+
+.pad-4{
+    padding: 3.04762rem;
+}
+
+.flex-col-center-all{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.about-text{
+    flex: 1 0 0;
+    min-width: 19.04762rem;
+}
+
+.founder-img{
+    height: 23.80952rem;
+    min-width: 28.57143rem;
+    flex: 1 0 0;
+    border-radius: 0.7619rem;
+    background: url("/static/Bilder/Laptop/Home/Gründer.jpg");
+    background-repeat: no-repeat;
+    background-size: contain;
 }
 
 .errorpage{
