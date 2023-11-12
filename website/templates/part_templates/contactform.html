@@ -2,7 +2,14 @@
     <p class="c-b h4-l">Kontakt aufnehmen</p>
     <div class="container-input-fields column">
         <div class="container-input-fields">
-            <input type="text" class="p-l c-b input-form-l" placeholder="Service">
+            <select class="p-l c-b input-form-l" name="ServicesSelect" id="ServiceSelect">
+                <option class="p-l c-b" selected="selected" value="">Service auswählen</option>
+                <option class="p-l c-b" value="Custom E-Gitarre">Custom E-Gitarre</option>
+                <option class="p-l c-b" value="Bearbeitung">E-Gitarre bearbeiten</option>
+                <option class="p-l c-b" value="Reparatur">Reparatur</option>
+                <option class="p-l c-b" value="Hals-Korpus-Anfertigung">Hals und Korpus Einzelanfertigung</option>
+                <option class="p-l c-b" value="Sonstiges">Sonstiges</option>
+            </select>
             <input type="text" class="p-l c-b input-form-l" placeholder="Name">
             <input type="email" class="p-l c-b input-form-l" placeholder="E-Mail">
         </div>
