@@ -25,7 +25,7 @@ def Services():
 
 @views.route("/nachhaltigkeit", methods = ["GET"])
 def Nachhaltigkeit():
-    return render_template("/part_templates/base.html", active = "Nachhaltigkeit")
+    return render_template("nachhaltigkeit.html", active = "Nachhaltigkeit")
 
 # @views.route("/design-your-dream",methods = ["GET","POST"])
 # def design_your_dream():
