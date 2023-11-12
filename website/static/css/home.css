@@ -33,16 +33,33 @@
     gap: 1.52381rem;
 }
 
+.gap-14{
+    gap:10.66667rem;
+}
+.gap-1206{
+    gap:9.19048rem;
+}
+.gap-12{
+    gap:9.14286rem;
+}
 .gap-8{
     gap: 3.04762rem;
 }
-
+.gap-6{
+    gap:4.57143rem;
+}
 .gap-4{
     gap:3.04762rem;
 }
 
 .gap-2{
     gap:1.52381rem;
+}
+.gap-0625{
+    gap:0.47619rem;
+}
+.gap-05{
+    gap:0.38095rem;
 }
 
 .pad-4{
@@ -52,7 +69,16 @@
 .pad-2-4{
     padding:1.52381rem 3.04762rem;
 }
+.pad-0-4{
+    padding:0rem 3.04762rem;
+}
 
+.max-83{
+    max-width: 63.2381rem;
+}
+.h-3662{
+    height: 27.90476rem;
+}
 .flex-center-all{
     display: flex;
     justify-content: center;
@@ -138,6 +164,58 @@
     flex: 1 0 0;
 }
 
+.box-icon-text-l{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.52381rem;
+    flex: 1 0 0;
+}
+
+.icon-l{
+    width: 6.09524rem;
+    height: 6.09524rem;
+}
+
+.text-box-left-l{
+    border-radius: 0.7619rem 0rem 0rem 0.7619rem;
+    border-top: 3px solid var(--primary);
+    border-bottom: 3px solid var(--primary);
+    border-left: 3px solid var(--primary);
+}
+.img-right-l{
+    flex: 1 0 0;
+    align-self: stretch;
+    border-radius: 0rem 0.7619rem 0.7619rem 0rem;
+}
+
+.text-box-right-l{
+    border-radius: 0rem 0.7619rem 0.7619rem 0rem;
+    border-top: 3px solid var(--primary);
+    border-right: 3px solid var(--primary);
+    border-bottom: 3px solid var(--primary);
+}
+.img-left-l{
+    flex: 1 0 0;
+    align-self: stretch;
+    border-radius: 0.7619rem 0rem 0rem 0.7619rem;
+}
+
+.b-img-guitar-blue{
+    background:url("/static/Bilder/Laptop/Home/E-Gitarre-Katrin-Schneider.jpg");
+    background-size:cover;
+    background-repeat: no-repeat;
+}
+.b-img-body{ 
+    background:url("/static/Bilder/Laptop/Home/black_limba_2.jpg");
+    background-size:cover;
+    background-repeat: no-repeat;
+}
+.b-img-repair{ 
+    background:url("/static/Bilder/Laptop/Home/reparatur3.jpg");
+    background-size:cover;
+    background-repeat: no-repeat;
+}
 .errorpage{
     text-align:center;
     font-size:xx-large;
