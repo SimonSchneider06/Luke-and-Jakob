@@ -1,1 +1,43 @@
-{% extends "/part_templates/base.html" %}
+{% extends "/part_templates/base.html" %}{% block title %}Luke&Jakob{% endblock %}
+
+{% block content %}
+
+<div class="flex-col-align-start-stretch gap-8">
+    <div class="flex-col-align-start-stretch">
+        <div class="flex-col-align-start-stretch h-50rem b-img-wood">
+            <div class="flex-col-align-start-stretch gap-0625 flex-100 b-b25">
+                <div class="flex-col-align-start-stretch header-nachhaltig">
+                    <p class="h2-l c-w align-self-stretch">
+                        Wie wir unsere Umwelt schützen
+                    </p>
+                    <p class="h4-l c-w align-self-stretch">
+                        Für jeden Auftrag, den wir bekommen, von einer einfachen 
+                        Reparatur bis zu einer selbstentworfenen E-Gitarre, 
+                        pflanzen wir einen Baum. 
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="flex-center-all flex-wrap align-self-stretch">
+            <div class="img-text-box-nachhaltigkeit">
+                <div class="text-nachhaltig-container b-g-nachhaltig pad-1-2 gap-0625">
+                    <p class="c-w text-center h5-l text-nachhaltig-p">
+                        Helfen Sie mit uns zu mehr Natur und einem langfristig 
+                        grüneren Planeten.
+                    </p>
+                </div>
+                <div class="img-box-nachhaltig b-img-wood2"></div>
+            </div>
+            <div class="img-text-box-nachhaltigkeit">
+                <div class="img-box-nachhaltig b-img-nature"></div>
+                <div class="text-nachhaltig-container b-b-nachhaltig pad-1-2 gap-0625">
+                    <p class="c-w text-center h5-l text-nachhaltig-p">
+                        Gemeinsam zu einer besseren Welt
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

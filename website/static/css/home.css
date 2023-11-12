@@ -65,7 +65,9 @@
 .pad-4{
     padding: 3.04762rem;
 }
-
+.pad-1-2{
+    padding: 0.7619rem 1.52381rem; 
+}
 .pad-2-4{
     padding:1.52381rem 3.04762rem;
 }
