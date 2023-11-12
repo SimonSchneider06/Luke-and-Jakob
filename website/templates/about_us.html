@@ -1,34 +1,98 @@
 {% extends "/part_templates/base.html" %} {% block title %}Über uns{% endblock %} 
 
-{% block head %} 
-<link rel="stylesheet" href="{{url_for('static', filename = 'css/about_us.css')}}">
-{% endblock %}
-
 {% block content %} 
-<div class="container-fluid">
-    <div class="container-lg d-flex flex-column align-items-center">
-        <h1 class="m-5">Ueber uns</h1>
-        <div class="d-flex flex-row justify-content-around b-white p-3 rounded-big blur-grey-l">
-            <div class="w-100 d-flex flex-row align-items-center"><img class="rounded-special w-75" src="{{url_for('static', filename = 'Bilder/AboutUs/Werkstatt.jpg')}}" alt="Bild der 4 Gründer: Christoph, Jakob, Lukas, Simon"></div>
-            <div class="font-xxl w-100 d-flex align-items-center">
-                Wir sind Lukas, Simon, Christoph und Jakob und wir sind das Team hinter Firmenname.
-            </div>
-        </div>
 
-        <div class="d-flex flex-row justify-content-around mt-5 blur-grey-l p-2 rounded-big color-inverse">
-            <div class="w-100 font-xl p-3 ms-3 rounded-m d-flex align-items-center justify-content-center">In unserer Werkstatt in Altmannstein, nahe Ingolstadt fertigen
-                wir jede E-Gitarre mit voller hingabe, mit dem Ziel ein makelloses Instrument zu kreiren.
-                Dafür fräsen wir mit unserer selbstgebauten CNC-Fräse den Körper, Hals und Body der Gitarre.
-                Diese haben wir zuvor mit 3D-Design erstellt und werden, nachdem sie ausgefräst sind, zu einer vollen,
-                funktionsfähigen E-Gitarre gefertigt.
-            </div>
-            <div class="w-100 rounded-big p-2 d-flex flex-column align-items-center justify-content-evenly">
-                <div class="mb-4 text-center p-1"><img class="rounded-m w-50" src="{{url_for('static', filename = 'Bilder/AboutUs/Werkstatt.jpg')}}" alt="Bild der Werkstatt"></div>
-                <div class="text-center p-1"><video class="rounded-m w-50" controls src="{{url_for('static', filename='Videos/AboutUs/CNC-Zeitraffer.mp4')}}">Ihr Browser unterstützt das HTML Videoformat leider nicht</video></div>
+<div class="flex-col-align-start-stretch gap-8">
+    <div class="flex-col-align-start-stretch">
+        <div class="expand justify-content-center align-items-center h-10 b-b10">
+            <p class="h3-l c-b">Über uns</p>
+        </div>
+        <div class="expand align-items-start pad-2-4 gap-8 b-b5">
+            <div class="b-img-about-us"></div>
+            <div class="flex-col-align-start-stretch flex-100 gap-2 max-50">
+                <p class="h5-l c-b align-self-stretch">
+                    Mit professionellen Werkzeugen und Knowhow 
+                    helfen wir E-Gitarristen ihr eigenes Instrument zu bauen.
+                </p>
+                <div class="expand align-start gap-0625">
+                    <p class="flex-100 c-b p-l">
+                        Wir sind das Team hinter Luke&Jakob. Als leidenschaftliche 
+                        E-Gitarristen aus der Umgebung Ingolstadt haben Lukas und Jakob 
+                        mehrere solche Instrumente bereits selbst angefertigt. Wir alle 
+                        wissen, dass bei so einem Bau schnell die Tonqualität, das 
+                        Aussehen und die Verarbeitung nicht so sind, wie sie gewünscht 
+                        wird. Deswegen helfen wir Menschen ihren Traum zu verwirklichen, 
+                        um ein großartiges Instrument in Händen halten zu können.
+                    </p>
+                </div>
             </div>
         </div>
-        <h1 class="m-5"><b>Unsere Geschichte</b></h1>
+    </div>
+    <!-- Wie wir helfen -->
+    <div class="expand flex-column pad-2-4 align-items-center gap-4">
+        <p class="h4-l c-b align-self-stretch text-center">
+            Wie wir anderen E-Gitarristen dabei helfen
+        </p>
+        <div class="flex-col-align-start-stretch">
+            <div class="flex-col-align-start-stretch pad-2-4 gap-2 text-box-vertical-border">
+                <p class="h5-l c-b align-self-stretch">
+                    Professionelles Werkzeug für besondere Kundenanforderungen
+                </p>
+                <div class="expand align-items-center justify-content-center gap-0625">
+                    <p class="p-l flex-100 c-b">
+                        Mit unserer selbstgebauten CNC-Fräse und unserem Spezialwerkzeug 
+                        können wir auch die ausgefallensten Wünsche erfüllen.
+                    </p>
+                </div>
+            </div>
+            <div class="expand align-items-start align-content-start flex-wrap">
+                <div class="b-img-cnc b-2-imgs border-left-corner-1"></div>
+                <div class="b-img-werkstatt b-2-imgs border-right-corner-1"></div>
+            </div>
+        </div>
+        <div class="flex-center-all flex-wrap flex-stretch gap-4-8">
+            <div class="d-flex flex-column align-items-start flex-100 size-text-img-container">
+                <div class="flex-col-align-start-stretch gap-2 pad-2-4 text-box-vertical-border">
+                    <p class="h5-l c-b align-self-stretch">
+                        Erstklassige E-Gitarren
+                    </p>
+                    <div class="flex-center-all gap-0625 align-self-stretch">
+                        <p class="flex-100 c-b p-l">
+                            Unsere E-Gitarren sollen die Leidenschaft des Kunden entfesseln 
+                            und deshalb erzeugen wir nur Spitzenresultate und geben uns nicht 
+                            mit „in Ordnung“ zufrieden.
+                        </p>
+                    </div>
+                </div>
+                <div class="br-0011 b-img-guitars-cross flex-100 align-self-stretch"></div>
+            </div>
+            <div class="d-flex flex-column align-items-start flex-100 size-text-img-container">
+                <div class="flex-col-align-start-stretch gap-2 pad-2-4 text-box-vertical-border">
+                    <p class="h5-l c-b align-self-stretch">
+                        Bereitstellen unserer Erfahrung
+                    </p>
+                    <div class="flex-center-all gap-0625 align-self-stretch">
+                        <p class="flex-100 c-b p-l">
+                            Wir teilen unser Wissen und unsere Erfahrung, um eine 
+                            hochwertige E-Gitarre nach Wünschen zu bauen.
+                        </p>
+                    </div>
+                </div>
+                <div class="br-0011 b-img-3D-Model flex-100 align-self-stretch"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Standort -->
+    <div class="expand flex-column align-items-center pad-2-8 gap-4">
+        <div class="flex-center-all">
+            <p class="h4-l c-b">
+                Unser Standort
+            </p>
+        </div>
+        <!-- Google Maps -->
         <div></div>
     </div>
 </div>
+
 {% endblock %}

@@ -39,6 +39,9 @@
 .b-b5{
     background-color: var(--black5);
 }
+.b-b10{
+    background-color:var(--black10);
+}
 
 .p-l{
     font-family: var(--paragraph-font);
