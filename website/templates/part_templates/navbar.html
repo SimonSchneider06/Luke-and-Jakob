@@ -15,9 +15,15 @@
                     {% endif %}
                 {% endfor %}
             </div>
-            <a href="#" class="cta-btn-l h6-l">
+            {% if "Kontakt" == active %}
+            <a href="{{url_for('views.Kontakt')}}" class="cta-btn-l cta-active h6-l">
                 Kontakt
             </a>
+            {% else %}
+            <a href="{{url_for('views.Kontakt')}}" class="cta-btn-l h6-l">
+                Kontakt
+            </a>
+            {% endif %}
         </div>
     </div>
     <div class="line"></div>

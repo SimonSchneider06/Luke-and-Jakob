@@ -21,3 +21,8 @@
     border: 2px solid var(--secondary);
     background: rgba(0, 23, 173, 0.50);
 }
+
+.cta-active{
+    border: 2px solid var(--secondary);
+    background: rgba(0, 23, 173, 0.50);
+}

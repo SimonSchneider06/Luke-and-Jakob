@@ -27,6 +27,10 @@ def Services():
 def Nachhaltigkeit():
     return render_template("nachhaltigkeit.html", active = "Nachhaltigkeit")
 
+@views.route("/kontakt", methods = ["GET"])
+def Kontakt():
+    return render_template("contact.html", active = "Kontakt")
+
 # @views.route("/design-your-dream",methods = ["GET","POST"])
 # def design_your_dream():
 #     return render_template("design_your_dream.html")
