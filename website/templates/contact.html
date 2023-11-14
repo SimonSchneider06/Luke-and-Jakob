@@ -2,4 +2,92 @@
 
 {% block content %}
 
+<div class="expand flex-column align-items-center gap-8">
+    <div class="expand justify-content-center align-items-center h-10 b-b10">
+        <p class="h3-l c-b text-center">Kontakt</p>
+    </div>
+    <!-- Standort -->
+    <div class="expand flex-column align-items-center pad-2-4 gap-4">
+        <div class="flex-center-all">
+            <p class="h4-l c-b">
+                Unser Standort
+            </p>
+        </div>
+        <!-- Google Maps -->
+        <div class="h-10 b-b10 align-self-stretch"></div>
+    </div>
+
+    <div class="expand flex-column align-items-center gap-0625 pad-0-4">
+        <div class="flex-center-all align-self-stretch pad-2-4 gap-8 icon-left-box">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon-l" viewBox="0 0 256 256" fill="none">
+                <path d="M143.077 216.205L142.461 193.231H123.384C100.971 193.231 81.9143 185.381 66.2153 169.682C50.5161 153.983 42.6665 134.926 42.6665 112.513C42.6665 90.2358 50.5263 71.2477 66.246 55.5485C81.9656 39.8495 101.053 32 123.508 32C134.625 32 144.981 34.0615 154.574 38.1845C164.167 42.3076 172.52 47.9794 179.631 55.2C186.742 62.4204 192.359 70.9025 196.482 80.6461C200.605 90.3898 202.667 100.951 202.667 112.328C202.667 122.421 201.275 132.376 198.492 142.195C195.709 152.014 191.713 161.402 186.503 170.359C181.292 179.316 175.002 187.679 167.631 195.446C160.26 203.214 152.075 210.134 143.077 216.205ZM150.051 200.328C163.535 189.019 174.308 175.668 182.369 160.277C190.431 144.886 194.461 128.903 194.461 112.328C194.461 91.6513 187.641 74.4615 174 60.7589C160.359 47.0564 143.528 40.2051 123.508 40.2051C103.268 40.2051 86.1024 47.2512 72.01 61.3435C57.9177 75.4359 50.8716 92.4924 50.8716 112.513C50.8716 132.67 57.9177 149.795 72.01 163.887C86.1024 177.979 103.227 185.026 123.384 185.026H150.051V200.328ZM123.918 168.226C126.078 168.226 127.897 167.487 129.374 166.01C130.851 164.533 131.59 162.783 131.59 160.759C131.59 158.735 130.851 156.985 129.374 155.508C127.897 154.031 126.078 153.292 123.918 153.292C121.894 153.292 120.143 154.031 118.667 155.508C117.19 156.985 116.451 158.735 116.451 160.759C116.451 162.783 117.19 164.533 118.667 166.01C120.143 167.487 121.894 168.226 123.918 168.226ZM119.589 136.062H127.795C128.068 132.164 129.029 128.715 130.677 125.713C132.325 122.711 135.549 118.81 140.349 114.01C144.055 110.304 146.783 106.759 148.533 103.374C150.284 99.9897 151.159 96.1914 151.159 91.9795C151.159 84.7999 148.653 78.8375 143.641 74.0923C138.629 69.347 132.205 66.9744 124.369 66.9744C117.996 66.9744 112.39 68.6906 107.549 72.1229C102.708 75.5555 99.07 79.8974 96.6358 85.1488L104.184 88.164C106.14 84.2257 108.714 81.1454 111.908 78.9232C115.101 76.701 119.125 75.5899 123.979 75.5899C130.407 75.5899 135.166 77.2206 138.256 80.4821C141.347 83.7436 142.892 87.5077 142.892 91.7744C142.892 95.5623 141.949 98.9503 140.061 101.938C138.174 104.926 135.22 108.451 131.2 112.513C126.673 116.807 123.607 120.738 122 124.308C120.393 127.877 119.589 131.795 119.589 136.062Z" fill="var(--primary)"/>
+            </svg>
+            <div class="d-flex align-items-start gap-0625 flex-100 max-55">
+                <div class="d-flex justify-content-center align-items-center flex-100">
+                    <p class="flex-100 c-b p-l">
+                        Sie können die Kontaktform benutzen, um einen Auftrag 
+                        anzugeben oder eine Frage zu stellen. Sie erhalten ca 1-2 Tage 
+                        nach Eingang Ihrer Nachricht eine Rückmeldung, bei der wir Ihnen 
+                        gleich eine Einschätzung über die Dauer und Kosten Ihrer Anfrage 
+                        geben. Wenn Sie diesen Antrag Annehmen möchten, schreiben Sie 
+                        uns dies zurück.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include "/part_templates/contactform.html" %}
+
+    <div class="expand flex-column align-items-center gap-4 b-w">
+        <div class="flex-center-all pad-1-2 gap-0625">
+            <p class="h4-l c-b">FAQ</p>
+        </div>
+        <div class="flex-col-align-start-stretch pad-0-4">
+            
+            {% set question = "Wie viel kostet ein Reparaturservice?" %}
+            {% set answer = "Das hängt von der jeweiligen Reparatur ab und ob Sie 
+                noch Extrawünsche haben, die wir umsetzen sollen. 
+                Nachdem Sie einen Antrag gestellt haben, können wir 
+                Ihnen einen Kostenvoranschlag geben." 
+            %}
+            {% include "/part_templates/faq-question.html" %}
+
+
+            {% set question = "Wie lange dauert es, bis meine E-Gitarre repariert ist?" %}
+            {% set answer = "Das hängt vom jeweiligen Auftrag ab. Wir geben Ihnen eine Einschätzung in unserer Antwort auf Ihre Anfrage." %}
+            {% include "/part_templates/faq-question.html" %}
+
+            {% set question = "Wie viel kostet eine selbstgebaute E-Gitarre?" %}
+            {% set answer = "Das hängt von ihren Spezifikationen, 
+            wie Farbe, Body-Form und Ausstattung der verbauten Hardware ab. 
+            Wir befinden uns zwischen 2500€-3500€." %}
+            {% include "/part_templates/faq-question.html" %}
+
+            {% set question = "Wie lange dauert es eine solche E-Gitarre zu bauen?" %}
+            {% set answer = "Im Normalfall 7 Wochen." %}
+            {% include "/part_templates/faq-question.html" %}
+
+            {% set question = "Was ist, wenn mir die E-Gitarre nicht gefällt?" %}
+            {% set answer = "Da wir die Gitarre nach Ihren Kriterien bauen, versuchen wir diese bestmöglich umzusetzen. Falls 
+            Änderungen gewünscht werden, wollen wir diese miteinbringen. Dadurch kann aufgrund des größeren Aufwands ein Aufpreis entstehen, 
+            über den wir Sie im Voraus informieren. Sollte die Gitarre Ihnen trotzdem nicht gefallen, geben wir Ihnen, aufgrund unserer 
+            Geld-Zurück-Garantie, ihr Geld selbstverständlich im Tausch gegen die E-Gitarre zurück." %}
+            {% include "/part_templates/faq-question.html" %}
+
+            {% set question = "Wie viel kosten Umgestaltungen an einer existierenden E-Gitarre?" %}
+            {% set answer = "Das hängt von den jeweiligen Umgestaltungen und der Arbeitszeit ab." %}
+            {% include "/part_templates/faq-question.html" %}
+
+            {% set question = "Ich bestelle meine Traumgitarre, möchte jetzt aber doch noch Änderungen, ist dies möglich?" %}
+            {% set answer = "Es kommt darauf an, was dies für Änderungen sind. Das wird individuell für den Auftrag bestimmt. 
+            Wir geben natürlich unser Bestes Ihre E-Gitarre nach Ihren Wünschen zu gestallten. Dafür bitten wir Sie Änderungen spätestens 
+            1 Woche nach Auftragsvergabe bekannt zu geben." %}
+            {% include "/part_templates/faq-question.html" %}
+
+        </div>
+    </div>
+    
+</div>
+
 {% endblock %}

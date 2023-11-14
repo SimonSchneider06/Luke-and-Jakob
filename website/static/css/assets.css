@@ -22,6 +22,9 @@
     font-family: "OpenSans";
     src: url("/static/fonts/OpenSans.ttf");
 }
+p{
+    margin:0;
+}
 
 /* ------------- Laptop Fonts ----------*/
 
@@ -34,6 +37,9 @@
 
 .c-w{
     color:var(--white);
+}
+.b-w{
+    background:var(--white);
 }
 
 .b-b5{

@@ -1,0 +1,42 @@
+.icon-left-box{
+    border-radius:0.7619rem;
+    max-width: 66.66667rem;
+    background: var(--black5);
+}
+
+.max-55{
+    max-width: 41.90476rem;
+}
+.faq-box{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    align-self: stretch;
+    border-top: 1px solid var(--black);
+    background: var(--black10);
+}
+
+.faq-heading{
+    display: flex;
+    padding:1.52381rem 3.04762rem;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1.52381rem;
+    align-self: stretch;
+    cursor: pointer;
+}
+
+.faq-text{
+    display: none;
+    padding: 0.7619rem 1.52381rem 0.7619rem 5.52381rem;
+    justify-content: center;
+    align-items: center;
+    align-self: stretch;
+}
+.hidden{
+    display:none;
+}
+
+.visible{
+    display: inline;
+}
