@@ -4,10 +4,82 @@
 
 {% block content %}
 
-<div class="container">
-    <h2 class="text-center">Dienstleistungen</h2>
+<div class="flex-center-all flex-column gap-8">
+    <div class="expand justify-content-center align-items-center h-10 b-b10">
+        <p class="text-center h3-l c-b">Services</p>
+    </div>
+    <div class="expand flex-column flex-center-all gap-4">
+        
+        {% set service_title = "Wunsch E-Gitarre" %}
+        {% set service_text = "Wir designen und produzieren von Grund 
+        auf E-Gitarren nach Ihren Anforderungen." %}
+        {% set service_price = "ca. 2500€- 3500€" %}
+        {% set img_class = "b-img-guitar-blue-2" %}
+        {% include "/part_templates/service-box-r.html" %}
 
-    
+        {% set service_title = "Reparaturen" %}
+        {% set service_text = "Wir reparieren Ihre E-Gitarre, 
+        sodass Sie wieder unbesorgt spielen können." %}
+        {% set service_price = "auftragsabhängig" %}
+        {% set img_class = "b-img-repair" %}
+        {% include "/part_templates/service-box-l.html" %}
+
+        {% set service_title = "Hals und Korpus Einzelanfertigungen" %}
+        {% set service_text = "Wir übernehmen den Umbau von Body, 
+        Hals oder Kopf Ihrer E-Gitarre." %}
+        {% set service_price = "ca. 100€ - 500€" %}
+        {% set img_class = "b-img-einzelanfertigung" %}
+        {% include "/part_templates/service-box-r.html" %}
+
+        {% set service_title = "E-Gitarren Bearbeitung" %}
+        {% set service_text = "Wir verändern den Lack, die Tonabnehmer 
+        oder andere Bestandteile Ihrer E-Gitarre nach Ihrem Bedürfnis." %}
+        {% set service_price = "auftragsabhängig" %}
+        {% set img_class = "b-img-change" %}
+        {% include "/part_templates/service-box-l.html" %}
+
+    </div>
+
+    <div class="expand flex-column align-items-center gap-6">
+        <p class="h3-l c-b">Benefits</p>
+        <div class="benefits b-b5">
+            <div class="d-flex flex-column align-items-center gap-4 flex-100 min-1812">
+                <p class="align-self-stretch c-b text-center h5-l">
+                    6 Monate Geld-Zurück-Garantie
+                </p>
+                <img class="icon-l" src="{{url_for('static', filename = 'Bilder/icons/security-badge-forge_icons.svg')}}" alt="Sicherheitsschild icon">
+            </div>
+
+            <div class="d-flex flex-column align-items-center gap-4 flex-100 min-1812">
+                <p class="align-self-stretch c-b text-center h5-l">
+                    Herausragende Qualität
+                </p>
+                <img class="icon-l" src="{{url_for('static', filename = 'Bilder/icons/badge-forge_icons.svg')}}" alt="Abzeichen icon">
+            </div>
+            <div class="d-flex flex-column align-items-center gap-4 flex-100 min-1812">
+                <p class="align-self-stretch c-b text-center h5-l">
+                    Pünktliche Lieferung
+                </p>
+                <img class="icon-l" src="{{url_for('static', filename = 'Bilder/icons/calendar-clock-forge_icons.svg')}}" alt="Kalender icon">
+            </div>
+            <div class="d-flex flex-column align-items-center gap-4 flex-100 min-1812">
+                <p class="align-self-stretch c-b text-center h5-l">
+                    Nachhaltige Holzauswahl
+                </p>
+                <img class="icon-l" src="{{url_for('static', filename = 'Bilder/icons/forest-google.svg')}}" alt="Forest icon">
+            </div>
+            <div class="d-flex flex-column align-items-center gap-4 flex-100 min-1812">
+                <p class="align-self-stretch c-b text-center h5-l">
+                    2-Jahre-Reparaturgarantie
+                </p>
+                <img class="icon-l" src="{{url_for('static', filename = 'Bilder/icons/tools-google.svg')}}" alt="Werkzeug icon">
+            </div>
+        </div>
+    </div>
+
+    {% include "/part_templates/contactform.html" %}
 </div>
+
+
 
 {% endblock %} 
