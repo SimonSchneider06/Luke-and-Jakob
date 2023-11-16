@@ -26,3 +26,11 @@
     border: 2px solid var(--secondary);
     background: rgba(0, 23, 173, 0.50);
 }
+
+@media (max-width:1260px) {
+    .cta-btn-l{
+        padding: 0.38095rem 0.7619rem; 
+        border-radius: 0.7619rem; 
+        height:auto;
+    }
+}
