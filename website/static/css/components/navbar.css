@@ -55,3 +55,19 @@
     height: 0px;
     border: 1px var(--black) solid;
 }
+
+@media (max-width:1260px){
+    .group-logo{
+        padding:0.7619rem 1.52381rem;
+    }
+    .nav-logo{
+        width: 10.57143rem;
+        height: 0.95238rem; 
+    }
+    .group-links-CTA{
+        gap:3.04762rem;
+    }
+    .group-links{
+        gap: 0.7619rem; 
+    }
+}
