@@ -1,6 +1,3 @@
-.max-7075{
-    max-width: 53.90476rem;
-}
 
 .b-img-guitar-blue-2{
     background: url("/static/Bilder/Laptop/Service/TraumGitarre.jpg");
@@ -35,7 +32,4 @@
     row-gap: 3.04762rem;
     align-self: stretch;
     flex-wrap: wrap;
-}
-.min-1812{
-    min-width: 13.80952rem;
 }

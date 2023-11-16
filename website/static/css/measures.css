@@ -1,0 +1,82 @@
+/* GAP Measures */
+.gap-14{
+    gap:10.66667rem;
+}
+.gap-1206{
+    gap:9.19048rem;
+}
+.gap-12{
+    gap:9.14286rem;
+}
+.gap-8{
+    gap: 6.09524rem;
+}
+.gap-6{
+    gap:4.57143rem;
+}
+.gap-4{
+    gap:3.04762rem;
+}
+.gap-2{
+    gap:1.52381rem;
+}
+.gap-0625{
+    gap:0.47619rem;
+}
+.gap-05{
+    gap:0.38095rem;
+}
+.gap-4-8{
+    gap:3.04762rem 6.09524rem;
+}
+
+
+/* Padding Measures */
+.pad-2-8{
+    padding: 1.52381rem 6.09524rem; 
+}
+.pad-4{
+    padding: 3.04762rem;
+}
+.pad-1-2{
+    padding: 0.7619rem 1.52381rem; 
+}
+.pad-2-4{
+    padding:1.52381rem 3.04762rem;
+}
+.pad-0-4{
+    padding:0rem 3.04762rem;
+}
+
+
+/* Max and min width Measures */
+.max-83{
+    max-width: 63.2381rem;
+}
+.max-7075{
+    max-width: 53.90476rem;
+}
+.max-55{
+    max-width: 41.90476rem;
+}
+.max-50{
+    max-width: 38.09524rem;
+}
+.min-1812{
+    min-width: 13.80952rem;
+}
+
+
+/* height Measures */
+.h-50rem{
+    height:38.09524rem;
+}
+.h-3662{
+    height: 27.90476rem;
+}
+.h-30{
+    height: 34.28571rem;
+}
+.h-10{
+    height:7.61905rem;
+}
