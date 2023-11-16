@@ -21,20 +21,6 @@
     min-width: 22.85714rem;
     flex: 1 0 0;
 }
-
-.b-img-cnc{
-    background:url("/static/Bilder/Laptop/About/CNC.jpg");
-    background-repeat:no-repeat;
-    background-size: cover;
-}
-
-.b-img-werkstatt{
-    background:url("/static/Bilder/Laptop/About/Werkstatt.jpg");
-    background-repeat:no-repeat;
-    background-size: cover;
-}
-
-
 .size-text-img-container{
     height: 31.52381rem;
     min-width: 22.85714rem;
@@ -42,14 +28,4 @@
 
 .br-0011{
     border-radius: 0rem 0rem 0.7619rem 0.7619rem;
-}
-.b-img-guitars-cross{
-    background: url("/static/Bilder/Laptop/About/Gitarren-Kreuz.jpg");
-    background-repeat: no-repeat;
-    background-size:cover;
-}
-.b-img-3D-Model{
-    background: url("/static/Bilder/Laptop/About/3D-Model.jpg");
-    background-repeat: no-repeat;
-    background-size:cover;
 }

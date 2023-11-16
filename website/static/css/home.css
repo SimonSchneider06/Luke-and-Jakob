@@ -13,13 +13,6 @@
     align-self: stretch;
 }
 
-
-.guitar-background{
-    background: url("/static/Bilder/Laptop/Home/Gitarre-Jakob.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-
 .black-overlay{
     background: var(--black25);  
 }
@@ -148,22 +141,6 @@
     flex: 1 0 0;
     align-self: stretch;
     border-radius: 0.7619rem 0rem 0rem 0.7619rem;
-}
-
-.b-img-guitar-blue{
-    background:url("/static/Bilder/Laptop/Home/E-Gitarre-Katrin-Schneider.jpg");
-    background-size:cover;
-    background-repeat: no-repeat;
-}
-.b-img-body{ 
-    background:url("/static/Bilder/Laptop/Home/black_limba_2.jpg");
-    background-size:cover;
-    background-repeat: no-repeat;
-}
-.b-img-repair{ 
-    background:url("/static/Bilder/Laptop/Home/reparatur3.jpg");
-    background-size:cover;
-    background-repeat: no-repeat;
 }
 
 .testimonial{
