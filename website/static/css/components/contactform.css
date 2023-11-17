@@ -16,3 +16,9 @@
 .column{
     flex-direction: column;
 }
+
+@media (max-width:1260px){
+    .container-input-fields{
+        flex-direction: column;
+    }
+}
