@@ -80,3 +80,12 @@
 .h-10{
     height:7.61905rem;
 }
+
+@media (max-width:1260px) {
+    .max-83{
+        max-width: 41.90476rem;
+    }
+    .h-3662{
+        height:19.04762rem;
+    }
+}

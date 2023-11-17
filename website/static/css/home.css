@@ -35,6 +35,15 @@
     min-width: 19.04762rem;
 }
 
+.container-standing{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.container-tablet{
+    display: none !important;
+}
+
 .founder-img{
     height: 23.80952rem;
     min-width: 28.57143rem;
@@ -118,6 +127,9 @@
     width: 6.09524rem;
     height: 6.09524rem;
 }
+.gap-icon-container{
+    gap:9.19048rem;
+}
 
 .text-box-left-l{
     border-radius: 0.7619rem 0rem 0rem 0.7619rem;
@@ -169,4 +181,33 @@
     text-align:center;
     font-size:xx-large;
     margin-top:15%;
+}
+
+@media (max-width:1260px) {
+    .hero-title{
+        max-width: 41.90476rem;
+        padding: 6.09524rem 0rem 1.52381rem 3.04762rem; 
+    }
+    .page-container-l{
+        gap: 6.09524rem; 
+    }
+    .container-standing{
+        display: none;
+    }
+    .container-tablet{
+        display: flex !important;
+    }
+    #benefits-box-home{
+        gap:1.52381rem;
+    }
+    .box-icon-text-l{
+        min-width: 8.09524rem;
+    }
+    .icon-l{
+        width: 3.04762rem;
+        height: 3.04762rem;
+    }
+    .gap-icon-container{
+        gap: 3.04762rem 6.09524rem; 
+    }
 }

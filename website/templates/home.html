@@ -28,7 +28,7 @@
                     <p class="h3-l c-b">Über uns</p>
                 </div>
                 <div class="flex-center-all gap-8 expand flex-wrap">
-                    <div class="flex-col-align-start-stretch gap-4 about-text">
+                    <div class="d-flex flex-column align-items-start gap-4 about-text">
                         <p class="h5-l c-b">
                             Wir bauen hochwertige E-Gitarren nach Wunsch
                         </p>
@@ -51,7 +51,7 @@
         <div class="flex-center-all flex-column expand gap-4 pad-2-4">
             <p class="h3-l c-b">Unsere Services</p>
             <div class="service-section">
-                <div class="d-flex flex-column align-items-start">
+                <div class="container-standing">
                     <div class="text-box-with-img-vertical text-box-vertical-border flex-col-align-start-stretch">
                         <div class="align-items-start expand">
                             <p class="h5-l c-b flex-100">
@@ -67,6 +67,21 @@
                     <img class="img-box-vertical" src="{{url_for('static', filename = 'Bilder/Laptop/Home/Gitarren-Vertikal.jpg')}}" alt="2 E-Gitarren stehend nebeneinander">
                 </div>
                 <div class="d-flex flex-column align-items-center gap-4 service-g3">
+                    <div class="text-box-with-img-horizontal container-tablet">
+                        <img class="img-box-horizontal" src="{{url_for('static', filename = 'Bilder/Laptop/Home/Gitarren-Vertikal.jpg')}}" alt="E-Gitarrenhals bearbeitet">
+                        <div class="text-box-horizontal text-box-right-l">
+                            <div class="expand align-items-start">
+                                <p class="h5-l c-b flex-100">
+                                    E-Gitarre nach eigenen Wünschen bestellen
+                                </p>
+                            </div>
+                            <p class="expand p-l c-b">
+                                Wir bauen für Sie nach Ihren Vorstellungen eine eigene E-Gitarre,
+                            damit Sie endlich das Instrument Ihrer Träume in der Hand halten 
+                            können, ohne Klangqualität und Aussehen zu vernachlässigen.
+                            </p>
+                        </div>
+                    </div>
                     <div class="text-box-with-img-horizontal">
                         <img class="img-box-horizontal" src="{{url_for('static', filename = 'Bilder/Laptop/Home/E-Gitarrenteile-Bearbeiten.jpg')}}" alt="E-Gitarrenhals bearbeitet">
                         <div class="text-box-horizontal text-box-right-l">
@@ -118,13 +133,13 @@
         </div>
         <div class="flex-col-align-start-stretch gap-05">
             <div class="line"></div>
-            <div class="expand flex-column align-items-center gap-6 pad-0-4">
+            <div id="benefits-box-home" class="expand flex-column align-items-center gap-6 pad-0-4">
                 <div class="flex-center-all">
                     <p class="h3-l c-b flex-100">Was wir bieten</p>
                 </div>
                 <div class="expand flex-column align-items-center gap-6">
                     <div class="expand flex-column align-items-center gap-12">
-                        <div class="expand align-items-start gap-1206">
+                        <div class="expand align-items-start gap-icon-container flex-wrap">
                             <div class="box-icon-text-l">
                                 <p class="h6-l c-b align-self-stretch text-center">
                                     Herausragende Tonqualität
@@ -143,8 +158,6 @@
                                 </p>
                                 <img class="icon-l" src="{{url_for('static', filename = 'Bilder/icons/design_services-google.svg')}}" alt="Design Werkzeug icon">
                             </div>
-                        </div>
-                        <div class="expand align-items-end gap-14">
                             <div class="box-icon-text-l">
                                 <p class="h6-l c-b align-self-stretch text-center">
                                     6 Monate Geld-Zurück-Garantie
