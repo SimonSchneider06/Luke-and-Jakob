@@ -49,9 +49,9 @@
     min-width: 28.57143rem;
     flex: 1 0 0;
     border-radius: 0.7619rem;
-    background: url("/static/Bilder/Laptop/Home/Gründer.jpg");
+    background: url("/static/Bilder/Laptop/Home/Gründer3.jpg");
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover;
 }
 
 .service-section{ 

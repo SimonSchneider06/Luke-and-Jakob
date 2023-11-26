@@ -4,9 +4,9 @@
     max-width: 30.47619rem;
     flex: 1 0 0;
     border-radius: 0.7619rem;
-    background: url("/static/Bilder/Laptop/About/Gründer.jpg");
+    background: url("/static/Bilder/Laptop/About/Gründer3.jpg");
     background-repeat:no-repeat;
-    background-size:cover;
+    background-size:contain;
 }
 
 .border-left-corner-1{
