@@ -29,3 +29,13 @@
 .br-0011{
     border-radius: 0rem 0rem 0.7619rem 0.7619rem;
 }
+
+.container-laptop{
+    display:flex;
+}
+
+@media (max-width:1260px){
+    .container-laptop{
+        display:none !important;
+    }
+}
