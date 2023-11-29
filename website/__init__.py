@@ -72,5 +72,6 @@ def create_app(config_name):
     app.jinja_env.globals.update(ImageManager = ImageManager)
     app.jinja_env.globals.update(CartManager = CartManager)
     app.jinja_env.globals.update(get_product_by_id = get_product_by_id)
+    app.jinja_env.globals.update(GoogleAPIKey = app.config["OAUTH_CREDENTIALS"]["google"]["id"])
 
     return app
