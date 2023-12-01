@@ -71,3 +71,13 @@
         gap: 0.7619rem; 
     }
 }
+
+@media (max-width:900px){
+    .nav-logo{
+        background:url("/static/Bilder/Mobile/Logo-Mobile.png");
+        width: 2.03176rem;
+        height: 3.04762rem;
+        background-size:cover;
+        background-repeat: no-repeat;
+    }
+}
