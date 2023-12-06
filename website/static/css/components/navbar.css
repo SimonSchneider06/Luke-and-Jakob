@@ -47,6 +47,7 @@
     top:97.3px;
     right:0;
     background:var(--white);
+    height:100vh;
 }
 
 .link-nav{
