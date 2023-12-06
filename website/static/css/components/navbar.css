@@ -107,4 +107,7 @@
     #menu-icon{
         display: block;
     }
+    .group-links-CTA{
+        gap: 0.7619rem; 
+    }
 }
