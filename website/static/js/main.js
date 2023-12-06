@@ -67,9 +67,18 @@ for(let i = 0; i<imgs.length; i++){
 const popUpCloseBtn = document.getElementById("pop-up-close");
 
 //adding event to close imgHolderEl
-popUpCloseBtn.addEventListener("click",() => {
-    imgHolderEl.style.display = "none";
-})
+if(popUpCloseBtn != null){
+    popUpCloseBtn.addEventListener("click",() => {
+        imgHolderEl.style.display = "none";
+    })
+}
+
 
 
 //for the responsive navbar
+let navbarEl = document.getElementById("group-links");
+const menuIconEl = document.getElementById("menu-icon");
+
+menuIconEl.addEventListener("click", () => {
+    navbarEl.classList.toggle("responsive");
+})

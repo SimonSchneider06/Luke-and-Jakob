@@ -2,6 +2,10 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    position: sticky;
+    width:100%;
+    top:0;
+    background:var(--white);
 }
 
 .group-logo{
@@ -32,6 +36,18 @@
     align-items: center;
     gap: 32px;
 }
+.group-links.responsive{
+    display:flex;
+    justify-content: start;
+    flex-direction: column;
+    align-items: start;
+    gap: 0.7619rem; 
+    padding: 0.7619rem 1.52381rem;
+    position:absolute;
+    top:97.3px;
+    right:0;
+    background:var(--white);
+}
 
 .link-nav{
     display: flex;
@@ -54,6 +70,10 @@
     align-self: stretch;
     height: 0px;
     border: 1px var(--black) solid;
+}
+
+#menu-icon{
+    display:none;
 }
 
 @media (max-width:1260px){
@@ -79,5 +99,11 @@
         height: 3.04762rem;
         background-size:cover;
         background-repeat: no-repeat;
+    }
+    .group-links{
+        display:none;
+    }
+    #menu-icon{
+        display: block;
     }
 }

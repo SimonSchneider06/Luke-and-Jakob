@@ -1,8 +1,8 @@
-<div class="nav-bar">
+<div class="nav-bar" id="navbar">
     <div class="group-logo">
         <a href="{{url_for('views.Home')}}" class="nav-logo"></a>
         <div class="group-links-CTA">
-            <div class="group-links">
+            <div class="group-links"  id="group-links">
                 {% for link_name in links %}
                     {% if link_name == active %}
                     <div class="link-nav ">
@@ -24,8 +24,12 @@
                 Kontakt
             </a>
             {% endif %}
-            <a href="javascript:void(0);" class="icon-menu">
-
+            <a href="#" id="menu-icon">
+                <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7.67969 32H56.3197" stroke="black" stroke-width="3"/>
+                    <path d="M7.67969 15.97H56.3197" stroke="black" stroke-width="3"/>
+                    <path d="M7.67969 48.03H56.3197" stroke="black" stroke-width="3"/>
+                </svg>
             </a>
         </div>
     </div>
