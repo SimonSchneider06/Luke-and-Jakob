@@ -94,3 +94,9 @@
         height:6.09524rem;
     }
 }
+
+@media (max-width:900px){
+    .pad-4{
+        padding:0.7619rem;
+    }
+}

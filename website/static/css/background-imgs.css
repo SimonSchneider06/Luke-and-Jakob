@@ -87,3 +87,13 @@
     background-repeat: no-repeat;
     background-size:cover;
 }
+
+
+
+@media(max-width:900px){
+    .guitar-background{
+        background:url("/static/Bilder/Laptop/Home/Gitarren-Vertikal.jpg");
+        background-size:cover;
+        background-repeat:no-repeat;
+    }
+}

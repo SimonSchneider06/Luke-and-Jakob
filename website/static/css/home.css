@@ -45,13 +45,14 @@
 }
 
 .founder-img{
-    height: 23.80952rem;
-    min-width: 28.57143rem;
+    aspect-ratio: auto;
+    object-fit: contain;
+    object-position:center;
+    overflow: hidden;
+    width:100%;
     flex: 1 0 0;
     border-radius: 0.7619rem;
-    background: url("/static/Bilder/Laptop/Home/Gründer3.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
+    max-height:20rem;
 }
 
 .service-section{ 
@@ -194,9 +195,6 @@
     .container-standing{
         display: none;
     }
-    .container-tablet{
-        display: flex !important;
-    }
     #benefits-box-home{
         gap:1.52381rem;
     }
@@ -209,5 +207,28 @@
     }
     .gap-icon-container{
         gap: 3.04762rem 6.09524rem; 
+    }
+}
+
+@media (max-width:1260px) and (min-width:900px){
+    .container-tablet{
+        display: flex !important;
+    }
+}
+
+@media (max-width:900px){
+    .container-standing{
+        display:flex;
+    }
+    .container-tablet{
+        display:none;
+    }
+    .about-text{
+        min-width:10rem;
+    }
+    .founder-img{
+        min-width:8.5rem;
+        width:100%;
+        margin-top:40px;
     }
 }

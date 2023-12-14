@@ -1,5 +1,5 @@
 window.onresize = () => {
-    screenwidth = window.innerWidth
+    let screenwidth = window.innerWidth
     //on window resize check if class needs to be changed
     if(screenwidth <= 805){
         // align headcontainer items in column
