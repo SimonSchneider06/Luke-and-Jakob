@@ -16,9 +16,17 @@
 .column{
     flex-direction: column;
 }
+textarea{
+    width:100%;
+}
 
 @media (max-width:1260px){
     .container-input-fields{
         flex-direction: column;
+    }
+}
+@media(max-width:550px){
+    .container-contact{
+        padding:0 0.7619rem;
     }
 }
