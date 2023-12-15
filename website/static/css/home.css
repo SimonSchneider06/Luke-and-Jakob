@@ -199,6 +199,9 @@
     .container-standing{
         display: none;
     }
+    .container-tablet{
+        display: flex !important;
+    }
     #benefits-box-home{
         gap:1.52381rem;
     }
@@ -218,9 +221,6 @@
 }
 
 @media (max-width:900px){
-    .container-tablet{
-        display: flex !important;
-    }
     .about-text{
         min-width:10rem;
     }
@@ -283,6 +283,9 @@
     }
     .container-customer-projects{
         width:auto;
+    }
+    .testimonial-text{
+        padding:0;
     }
 }
 
