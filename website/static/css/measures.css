@@ -81,6 +81,11 @@
     height:7.61905rem;
 }
 
+/* Margin Measures */
+.margin-bottom-6{
+    margin-bottom:6.09524rem;
+}
+
 @media (max-width:1260px) {
     .h-3662{
         height:19.04762rem;
@@ -101,5 +106,8 @@
     }
     .h-3662{
         height:fit-content;
+    }
+    .margin-bottom-6{
+        margin-bottom:3rem;
     }
 }
