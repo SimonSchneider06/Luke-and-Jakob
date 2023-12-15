@@ -189,12 +189,14 @@
 
         <div class="expand flex-column align-items-center pad-2-4 gap-4">
             <p class="h3-l c-b text-center">Bisherige Kundenprojekte</p>
-            <div class="d-flex flex-column align-items-start gap-4 max-83">
-                <div class="flex-center-all h-3662 align-self-stretch">
-                    <div class="text-box-left-l expand flex-column justify-content-center align-items-center pad-2-4 gap-2 flex-100">
-                        <div class="expand align-items-start gap-0625">
+            <div class="d-flex flex-column align-items-start gap-4 container-customer-projects">
+                
+                <div class="flex-center-all h-3662 align-self-stretch img-text-container-left">
+                    <div class="text-box-left-l text-box-horizontal justify-content-center flex-100">
+                        <!-- <div class="expand align-items-start gap-0625">
                             <p class="h5-l c-b">Custom E-Gitarre</p>
-                        </div>
+                        </div> -->
+                        <p class="h5-l c-b align-self-stretch text-center">Custom E-Gitarre</p>
                         <p class="p-l c-b align-self-stretch">
                             Wir haben eine E-Gitarre mit speziellem blauem Farbton 
                             nach Wunsch gebaut. Dafür wurde Black Limba Holz für den 
@@ -202,11 +204,14 @@
                             verwendet.
                         </p>
                     </div>
-                    <div class="img-right-l b-img-guitar-blue"></div>
+                    <!-- <div class="img-right-l b-img-guitar-blue"></div> -->
+                    <img src="{{url_for('static', filename = '/Bilder/Laptop/Home/E-Gitarre-Katrin-Schneider.jpg')}}" class="img-right-l" alt="">
                 </div>
-                <div class="flex-center-all h-3662 align-self-stretch">
-                    <div class="img-left-l b-img-repair"></div>
-                    <div class="text-box-right-l expand flex-column justify-content-center align-items-center pad-2-4 gap-2 flex-100">
+                
+                <div class="flex-center-all h-3662 align-self-stretch img-text-container-right">
+                    <!-- <div class="img-left-l b-img-repair"></div> -->
+                    <img src="{{url_for('static', filename = '/Bilder/Laptop/Home/reparatur3.jpg')}}" class="img-left-l" alt="">
+                    <div class="text-box-right-l text-box-horizontal justify-content-center">
                         <div class="expand align-items-start gap-0625">
                             <p class="h5-l c-b">Reparaturarbeiten</p>
                         </div>
@@ -217,8 +222,8 @@
                         </p>
                     </div>
                 </div>
-                <div class="flex-center-all h-3662 align-self-stretch">
-                    <div class="text-box-left-l expand flex-column justify-content-center align-items-center pad-2-4 gap-2 flex-100">
+                <div class="flex-center-all h-3662 align-self-stretch img-text-container-left">
+                    <div class="text-box-left-l text-box-horizontal justify-content-center">
                         <div class="expand align-items-start gap-0625">
                             <p class="h5-l c-b">Korpus Einzelanfertigung</p>
                         </div>
@@ -226,7 +231,8 @@
                             Wir haben einen Body aus Black Limba Holz hergestellt.
                         </p>
                     </div>
-                    <div class="img-right-l b-img-body"></div>
+                    <!-- <div class="img-right-l b-img-body"></div> -->
+                    <img src="{{url_for('static', filename = '/Bilder/Laptop/Home/black_limba_2.jpg')}}" class="img-right-l" alt="">
                 </div>
             </div>
         </div>
