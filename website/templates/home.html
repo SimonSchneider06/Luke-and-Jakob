@@ -28,9 +28,9 @@
             <div class="line"></div>
             <div class="expand align-items-center justify-content-center flex-column gap-8 pad-4 b-b5">
                 <div class="flex-center-all">
-                    <p class="h3-l c-b">Über uns</p>
+                    <p class="h3-l c-b text-center">Über uns</p>
                 </div>
-                <div class="flex-center-all gap-8 expand flex-wrap">
+                <div class="flex-center-all gap-8 expand" id="about-container">
                     <div class="d-flex flex-column align-items-start gap-4 about-text">
                         <p class="h5-l c-b">
                             Wir bauen hochwertige E-Gitarren nach Wunsch
@@ -67,7 +67,7 @@
                             können, ohne Klangqualität und Aussehen zu vernachlässigen.
                         </p>
                     </div>
-                    <img class="img-box-vertical" src="{{url_for('static', filename = 'Bilder/Laptop/Home/Gitarren-Vertikal.jpg')}}" alt="2 E-Gitarren stehend nebeneinander">
+                    <img class="img-box-vertical" src="{{url_for('static', filename = 'Bilder/Laptop/Home/Gitarren-Vertikal.jpg')}}" alt="2 E-Gitarren stehend nebeneinander" loading="lazy">
                 </div>
                 <div class="d-flex flex-column align-items-center gap-4 service-g3">
                     <div class="text-box-with-img-horizontal container-tablet">
@@ -86,7 +86,7 @@
                         </div>
                     </div>
                     <div class="text-box-with-img-horizontal">
-                        <img class="img-box-horizontal" src="{{url_for('static', filename = 'Bilder/Laptop/Home/E-Gitarrenteile-Bearbeiten.jpg')}}" alt="E-Gitarrenhals bearbeitet">
+                        <img class="img-box-horizontal" src="{{url_for('static', filename = 'Bilder/Laptop/Home/E-Gitarrenteile-Bearbeiten.jpg')}}" alt="E-Gitarrenhals bearbeitet" loading="lazy">
                         <div class="text-box-horizontal text-box-right-l">
                             <div class="expand align-items-start">
                                 <p class="h5-l c-b flex-100">
