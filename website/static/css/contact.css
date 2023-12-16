@@ -36,3 +36,8 @@
 .visible{
     display: inline;
 }
+@media(max-width:900px){
+    .icon-left-box{
+        flex-direction:column;
+    }
+}

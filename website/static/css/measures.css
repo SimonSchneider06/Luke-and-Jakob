@@ -113,4 +113,10 @@
     .max-7075{
         max-width: 13.7142rem;
     }
+    .pad-0-4{
+        padding:0rem 0.7619rem;
+    }
+    .gap-8{
+        gap:1.52381rem;
+    }
 }
