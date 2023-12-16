@@ -142,6 +142,7 @@
     flex: 1 0 0;
     align-self: stretch;
     border-radius: 0rem 0.7619rem 0.7619rem 0rem;
+    object-fit: cover;
 }
 
 .text-box-right-l{
@@ -154,6 +155,7 @@
     flex: 1 0 0;
     align-self: stretch;
     border-radius: 0.7619rem 0rem 0rem 0.7619rem;
+    object-fit: cover;
 }
 .container-customer-projects{
     max-width: 63.2381rem;
