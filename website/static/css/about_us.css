@@ -1,12 +1,7 @@
 .b-img-about-us{
-    height: 26.47619rem;
-    min-width: 25.71429rem;
-    max-width: 30.47619rem;
+    object-fit: contain;
     flex: 1 0 0;
     border-radius: 0.7619rem;
-    background: url("/static/Bilder/Laptop/About/Gründer3.jpg");
-    background-repeat:no-repeat;
-    background-size:contain;
 }
 
 .border-left-corner-1{
@@ -37,5 +32,10 @@
 @media (max-width:1260px){
     .container-laptop{
         display:none !important;
+    }
+}
+@media(max-width:600px){
+    .b-img-about-us{
+        min-width: 10rem;
     }
 }
