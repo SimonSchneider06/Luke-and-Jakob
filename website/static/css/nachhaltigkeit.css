@@ -38,3 +38,13 @@
     flex-shrink: 0;
     align-self: stretch;
 }
+@media (max-width:900px){
+    .header-nachhaltig{
+        padding: 1.52381rem 0rem 0.3809525rem 0.761905rem;
+    }
+}
+@media (max-width:500px){
+    .img-text-box-nachhaltigkeit{
+        min-width:13.7142rem;
+    }
+}
