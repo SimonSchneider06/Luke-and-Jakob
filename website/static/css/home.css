@@ -257,11 +257,6 @@
         border-radius: 0rem 0rem 0.7619rem 0.7619rem;
         max-width: 13.7142rem;
     }
-
-
-    .img-text-container{
-        max-width: 13.7142rem;
-    }
     .text-box-left-l{
         border-radius: 0.7619rem 0.7619rem 0rem 0rem;
         border-right: 3px solid var(--primary);

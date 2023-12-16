@@ -1,7 +1,7 @@
 
 
-<div class="flex-center-all max-7075 w-100 h-3662">
-    <div class="text-box-left-l expand flex-column justify-content-center align-items-center pad-2-4 gap-2 flex-100">
+<div class="flex-center-all max-7075 w-100 h-3662 img-text-container-left">
+    <div class="text-box-left-l text-box-horizontal justify-content-center">
         <div class="expand align-items-start gap-0625">
             <p class="h5-l c-b">{{service_title}}</p>
         </div>
@@ -13,5 +13,5 @@
             <p class="c-b p-l">{{service_price}}</p>
         </div>
     </div>
-    <div class="img-right-l {{img_class}}"></div>
+    <img class="img-right-l" src="{{url_for('static', filename = '/Bilder/Laptop/Service/' + img_name)}}" alt="Bild {{service_title}}">
 </div>
