@@ -40,4 +40,10 @@
     .icon-left-box{
         flex-direction:column;
     }
+    .faq-heading{
+        padding:0.3809525rem 0.7619rem;
+    }
+    .faq-text{
+        padding: 0.19047rem 0.3809525rem 0.19047rem 1.38095rem
+    }
 }
