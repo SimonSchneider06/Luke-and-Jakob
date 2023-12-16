@@ -1,19 +1,4 @@
 /* Home page */
-.b-img-guitar-blue{
-    background:url("/static/Bilder/Laptop/Home/E-Gitarre-Katrin-Schneider.jpg");
-    background-size:cover;
-    background-repeat: no-repeat;
-}
-.b-img-body{ 
-    background:url("/static/Bilder/Laptop/Home/black_limba_2.jpg");
-    background-size:cover;
-    background-repeat: no-repeat;
-}
-.b-img-repair{ 
-    background:url("/static/Bilder/Laptop/Home/reparatur3.jpg");
-    background-size:cover;
-    background-repeat: no-repeat;
-}
 .guitar-background{
     background: url("/static/Bilder/Laptop/Home/Gitarre-Jakob.jpg");
     background-repeat: no-repeat;
@@ -32,16 +17,6 @@
     background:url("/static/Bilder/Laptop/About/Werkstatt.jpg");
     background-repeat:no-repeat;
     background-size: cover;
-}
-.b-img-guitars-cross{
-    background: url("/static/Bilder/Laptop/About/Gitarren-Kreuz.jpg");
-    background-repeat: no-repeat;
-    background-size:cover;
-}
-.b-img-3D-Model{
-    background: url("/static/Bilder/Laptop/About/3D-Model.jpg");
-    background-repeat: no-repeat;
-    background-size:cover;
 }
 
 
@@ -62,34 +37,6 @@
     background-size:cover;
 }
 
-
-/* Service page */
-.b-img-guitar-blue-2{
-    background: url("/static/Bilder/Laptop/Service/TraumGitarre.jpg");
-    background-repeat: no-repeat;
-    background-size:cover;
-}
-
-.b-img-repair-2{
-    background: url("/static/Bilder/Laptop/Service/Reparatur.jpg");
-    background-repeat: no-repeat;
-    background-size:cover;
-}
-
-.b-img-einzelanfertigung{
-    background: url("/static/Bilder/Laptop/Service/Einzelanfertigung.jpg");
-    background-repeat: no-repeat;
-    background-size:cover;
-}
-
-.b-img-change{
-    background: url("/static/Bilder/Laptop/Service/Bearbeitung.jpg");
-    background-repeat: no-repeat;
-    background-size:cover;
-}
-
-
-
 @media(max-width:900px){
     .guitar-background{
         background:url("/static/Bilder/Laptop/Home/Gitarren-Vertikal.jpg");
@@ -102,11 +49,6 @@
 @media (max-width:500px){
     .b-img-cnc{
         background:url("/static/Bilder/Mobile/About/CNC.jpg");
-        background-size:cover;
-        background-repeat:no-repeat;
-    }
-    .b-img-guitars-cross{
-        background:url("/static/Bilder/Mobile/About/Gitarren-Vertikal.jpg");
         background-size:cover;
         background-repeat:no-repeat;
     }
