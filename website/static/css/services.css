@@ -8,3 +8,8 @@
     align-self: stretch;
     flex-wrap: wrap;
 }
+@media (max-width:900px){
+    .benefits{
+        padding:0.3809525rem 0.761905rem;
+    }
+}
