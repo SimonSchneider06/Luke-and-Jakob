@@ -96,4 +96,18 @@
         background-size:cover;
         background-repeat:no-repeat;
     }
+    
+}
+
+@media (max-width:500px){
+    .b-img-cnc{
+        background:url("/static/Bilder/Mobile/About/CNC.jpg");
+        background-size:cover;
+        background-repeat:no-repeat;
+    }
+    .b-img-guitars-cross{
+        background:url("/static/Bilder/Mobile/About/Gitarren-Vertikal.jpg");
+        background-size:cover;
+        background-repeat:no-repeat;
+    }
 }

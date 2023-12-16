@@ -17,8 +17,7 @@
     flex: 1 0 0;
 }
 .size-text-img-container{
-    height: 31.52381rem;
-    min-width: 22.85714rem;
+    min-width: 24rem;
 }
 
 .br-0011{
@@ -34,8 +33,14 @@
         display:none !important;
     }
 }
-@media(max-width:600px){
+@media(max-width:650px){
     .b-img-about-us{
         min-width: 10rem;
+    }
+}
+@media(max-width:570px){
+    .size-text-img-container{
+        min-width: 10rem;
+        height:min-content;
     }
 }
