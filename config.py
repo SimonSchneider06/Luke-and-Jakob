@@ -38,6 +38,7 @@ class Config:
             "url":"https://accounts.google.com/.well-known/openid-configuration"
         }
     }
+    SSL_REDIRECT = False
 
     @staticmethod
     def init_app(app):
@@ -65,11 +66,16 @@ class MailTestingConfig(TestingConfig):
 class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL") or "sqlite:///productionDatabase.db"
 
+class HostingerConfig(Config):
+    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URI")
+    SSL_REDIRECT = True
+
 config = {
     "development":DevelopmentConfig,
     "testing":TestingConfig,
     "production":ProductionConfig,
     "mail-testing":MailTestingConfig,
+    "hostinger":HostingerConfig,
 
     "default":DevelopmentConfig
 }

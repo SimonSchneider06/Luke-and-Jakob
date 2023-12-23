@@ -7,7 +7,6 @@ from flask_mail import Mail
 #import stripe
 
 db = SQLAlchemy()
-DB_NAME = "database.db"
 mail = Mail()
 login_manager = LoginManager()
 
@@ -23,6 +22,12 @@ def create_app(config_name):
     db.init_app(app) 
     migrate = Migrate(app,db)
     mail.init_app(app)
+
+    #if should redirect all http to https requests
+    if app.config["SSL_REDIRECT"]:
+        
+        from flask_sslify import SSLify
+        sslify = SSLify(app)
 
     #configuring the stripe account
     # stripe.api_key = app.config["PAYMENT_SERVICES"]["stripe"]["secret_key"]
