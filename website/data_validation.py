@@ -60,6 +60,14 @@ def check_list_of_str_correct(liste:list[str]) -> bool:
     return True
 
 
+def check_int_input_correct(number:int) -> bool:
+    try:
+        int(number)
+        return True
+    except:
+        return False
+
+
 def convert_rememberMe(rememberMe:str) -> bool:
     '''
         Converts the rememberMe value from a string to a boolean.

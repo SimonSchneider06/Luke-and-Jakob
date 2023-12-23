@@ -1,24 +1,15 @@
 Eine Neue Bestellung ist eingetroffen.
 
-Der Kunde {{user.firstName}} {{user.lastName}} hat ein Produkt bestellt.
+Der Kunde {{user.name}} hat ein Produkt bestellt.
 
 Kundendaten:
-Name: {{user.firstName}}, {{user.lastName}} 
+Name: {{user.name}} 
 Email: {{user.email}}
-Addresse:
-    Land:                   {{user.country}} 
-    plz und Stadt:          {{user.plz}} {{user.city}} 
-    Straße und Hausnummer:  {{user.street}} {{user.houseNumber}} 
 
-{% for product_dict in order %} 
-{% set product = get_product_by_id(product_dict["id"]) %} 
+Daten:
+ID:             {{order.id}} 
+Service:        {{order.service}}
+Beschreibung:   {{order.description}} 
 
-Produktdaten:
-ID:     {{product.id}} 
-Name:   {{product.name}}
-Preis:  {{product.price}} 
-Anzahl: {{product_dict["quantity"]}} 
 
-{% endfor %}
-
-Kaufdatum(UTC): {{buying_date}}
+Kaufdatum(UTC): {{order.date}}

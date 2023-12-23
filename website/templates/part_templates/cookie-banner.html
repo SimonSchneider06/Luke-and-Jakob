@@ -1,0 +1,32 @@
+<div id="cookie-container" class="{{class_cookie_container}}">
+    <div id="cookie-banner">
+        <img class="cookie-img" src="{{url_for('static', filename = 'Bilder/icons/cookie.svg')}}" alt="">
+        <div class="flex-center-all gap-2 align-self-stretch flex-column">
+            <div class="flex-center-all">
+                <p class="h6-l c-b text-center">Wir verwenden Cookies</p>
+            </div>
+            <div class="flex-center-all flex-column align-self-stretch">
+                <p class="align-self-stretch c-b p-l">
+                    Wir verwenden Cookies, um Inhalte und Anzeigen zu 
+                    personalisieren und unseren Datenverkehr zu analysieren. 
+                    Wir geben auch Informationen über Ihre Nutzung unserer Website 
+                    an unsere Analysepartner weiter, die diese mit anderen 
+                    Informationen kombinieren können, die Sie ihnen zur Verfügung 
+                    gestellt haben oder die sie durch Ihre Nutzung ihrer Dienste 
+                    gesammelt haben.
+                </p>
+            </div>
+            <div class="flex-center-all gap-2 flex-wrap align-self-stretch">
+                <button id="cookie-allow" class="cta-btn-l">Zustimmen</button>
+                <button id="cookie-deny" class="cta-btn-l">Ablehnen</button>
+            </div>
+            <div class="gap-2 d-flex align-items-center">
+                <a href="#" class="c-b75 h7-l">Impressum</a>
+                <a href="#" class="c-b75 h7-l">Datenschutzerklärung</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="cookie-floating" class="{{class_cookie_floating}}">
+    <img class="cookie-img-2" src="{{url_for('static', filename = 'Bilder/icons/cookie.svg')}}" alt="">
+</div>

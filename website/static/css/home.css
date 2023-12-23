@@ -222,6 +222,12 @@
     }
 }
 
+@media(max-width:1050px){
+    #about-container{
+        flex-direction:column;
+    }
+}
+
 @media (max-width:900px){
     .page-container-l{
         gap:3rem;

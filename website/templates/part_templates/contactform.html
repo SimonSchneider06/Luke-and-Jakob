@@ -1,8 +1,8 @@
-<form class="container-contact" action="#" method="POST" enctype="multipart/form-data">
+<form class="container-contact" action="{{url_for('actions.contact_form')}}" method="POST" enctype="multipart/form-data">
     <p class="c-b h4-l">Kontakt aufnehmen</p>
     <div class="container-input-fields column">
         <div class="container-input-fields">
-            <select class="p-l c-b input-form-l" name="ServicesSelect" id="ServiceSelect">
+            <select class="p-l c-b input-form-l" name="servicesSelect" id="ServiceSelect">
                 <option class="p-l c-b" selected="selected" value="">Service auswählen</option>
                 <option class="p-l c-b" value="Custom E-Gitarre">Custom E-Gitarre</option>
                 <option class="p-l c-b" value="Bearbeitung">E-Gitarre bearbeiten</option>
@@ -10,17 +10,18 @@
                 <option class="p-l c-b" value="Hals-Korpus-Anfertigung">Hals und Korpus Einzelanfertigung</option>
                 <option class="p-l c-b" value="Sonstiges">Sonstiges</option>
             </select>
-            <input type="text" class="p-l c-b input-form-l" placeholder="Name">
-            <input type="email" class="p-l c-b input-form-l" placeholder="E-Mail">
+            <input type="text" class="p-l c-b input-form-l" placeholder="Name" name = "name">
+            <input type="email" class="p-l c-b input-form-l" placeholder="E-Mail" name = "email">
         </div>
         <div class="expand">
-            <textarea class="p-l c-b input-form-l size-b-l" name="Beschreibung" id="" cols="30" rows="10">Beschreibung/Extrawunsch
+            <textarea class="p-l c-b input-form-l size-b-l" name="description" id="" cols="30" rows="10">Beschreibung/Extrawunsch
             </textarea>
         </div>
         <div class="expand">
-            <input type="file" class="p-l c-b input-form-l" placeholder="Bilder">
+            <input id="input-data" type="file" class="p-l c-b input-form-l" placeholder="Bilder" multiple name="images">
         </div>
            
     </div>
-    <div class="cta-btn-l">Senden</div>
+    <!-- <div class="cta-btn-l">Senden</div> -->
+    <button type="submit" class="cta-btn-l">Senden</button>
 </form>

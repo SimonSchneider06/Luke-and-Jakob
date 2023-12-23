@@ -30,3 +30,6 @@
     display: flex;
     align-self: stretch;
 }
+#input-data{
+    width:100%;
+}

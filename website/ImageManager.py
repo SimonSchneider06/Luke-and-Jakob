@@ -5,38 +5,14 @@ from werkzeug.utils import secure_filename
 from werkzeug.datastructures import FileStorage 
 from sqlalchemy import select
 from . import db 
-from .models import Guitar
+# from .models import Guitar
 import magic   # for image stream validation
-from .data_validation import check_str_input_correct
+from .data_validation import check_str_input_correct,check_int_input_correct, check_str_correct
 
 class ImageManager:
     '''
         Manages the Images
-    '''
-
-    def get_image_path_by_product_name_and_number(self,product_name:str,img_number:int) -> (str | None):
-        '''
-            Returns the file path of a product-image by a given number.
-            Returns None if product_name doesn't exist or file by number doens't exist
-            :param: `product_name` the name of the product
-            :param: `img_number` the number of the searched image
-        '''
-
-        folder = self.get_folder_path_by_product_name(product_name)
-    
-        path = f"Bilder/Produktbilder/{product_name}"
-        
-        for (_, __ , filenames) in os.walk(folder):
-            for file in filenames:
-                file_name = file.split(".")[0]
-
-                #filename is a string !!!!!!
-                if file_name == f"{img_number}":
-                    full_path = path + f"/{file}"
-                    return full_path
-        
-        return None
-        
+    ''' 
 
     def get_file_path_ext(self,file_path:str) -> str:
 
@@ -58,25 +34,6 @@ class ImageManager:
             
             else:
                 raise ValueError("file_path should have an extension. Don't pass a path without one as argument")     
-
-
-    def get_folder_path_by_product_name(self,product_name:str) -> str:
-        
-        '''
-            Returns the folder path of a product, by it's name
-            Path Structure: './website/static/Bilder/Produktbilder/<product_name>'
-            :param: `product_name` name of the product
-        '''
-
-        if check_str_input_correct(product_name,"product_name","get_folder_path_by_product_name"):
-        
-            # check if product exists
-            if not Guitar().check_guitar_exists_by_name(product_name):
-
-                raise ValueError(f"Product with name {product_name} does not exist")
-            
-            else:
-                return f'{app.config["UPLOAD_PATH"]}/{product_name}'
             
 
     def check_img_ext(self,img_path:str) -> bool:
@@ -87,7 +44,7 @@ class ImageManager:
         '''
 
         #check if valid input
-        if check_str_input_correct(img_path,"img_path","check_img_ext"):
+        if check_str_correct(img_path):
         
             #get the extension
             path_ext = self.get_file_path_ext(img_path)
@@ -127,7 +84,10 @@ class ImageManager:
 
             if stream_ext != "":
 
-                if stream_ext == self.get_file_path_ext(image.filename):
+                if stream_ext == ".JPG" and self.get_file_path_ext(image.filename) == ".jpg":
+                    return True
+
+                elif stream_ext == self.get_file_path_ext(image.filename):
                     return True
             else:
                 return False
@@ -149,6 +109,17 @@ class ImageManager:
             return False
                     
 
+    def verify_image_list(self,image_list:list[FileStorage]) -> bool:
+        '''
+            head level function: verifies the images from a given list
+            :param: `image_list` is a list of items of type FileStorage, from Flask
+        '''
+        for img in image_list:
+            if not self.verify_image(img):
+                return False
+        return True
+
+
     def create_folder_structure(self,path:str) -> None:
 
         '''
@@ -163,19 +134,149 @@ class ImageManager:
                 os.mkdir(path)
 
 
-    def save_image_by_product_name_and_number(self,image:FileStorage,number:int,product_name:str) -> None:
+
+
+# class ProductImageManager(ImageManager):
+
+#     '''
+#         Manages the Images of the products
+#     '''
+
+#     def get_image_path_by_product_name_and_number(self,product_name:str,img_number:int) -> (str | None):
+#         '''
+#             Returns the file path of a product-image by a given number.
+#             Returns None if product_name doesn't exist or file by number doens't exist
+#             :param: `product_name` the name of the product
+#             :param: `img_number` the number of the searched image
+#         '''
+
+#         folder = self.get_folder_path_by_product_name(product_name)
+    
+#         path = f"Bilder/Produktbilder/{product_name}"
+        
+#         for (_, __ , filenames) in os.walk(folder):
+#             for file in filenames:
+#                 file_name = file.split(".")[0]
+
+#                 #filename is a string !!!!!!
+#                 if file_name == f"{img_number}":
+#                     full_path = path + f"/{file}"
+#                     return full_path
+        
+#         return None
+    
+
+#     def get_folder_path_by_product_name(self,product_name:str) -> str:
+        
+#         '''
+#             Returns the folder path of a product, by it's name
+#             Path Structure: './website/static/Bilder/Produktbilder/<product_name>'
+#             :param: `product_name` name of the product
+#         '''
+
+#         if check_str_input_correct(product_name,"product_name","get_folder_path_by_product_name"):
+        
+#             # check if product exists
+#             if not Guitar().check_guitar_exists_by_name(product_name):
+
+#                 raise ValueError(f"Product with name {product_name} does not exist")
+            
+#             else:
+#                 return f'{app.config["UPLOAD_PATH"]}/{product_name}'
+
+
+#     def save_image_by_product_name_and_number(self,image:FileStorage,number:int,product_name:str) -> None:
+
+#         '''
+#             Saves the image according to the product it belongs to and the number it has; 
+#             :param: `image` is of type FileStorage, from Flask
+#             :param: `number` is the number by which it should be stored
+#             :param: `product_name` is the name of the product the image belongs to 
+#         '''
+
+#         if self.verify_image(image):
+#             img_ext = self.get_file_path_ext(image.filename)
+
+#             folder_path = self.get_folder_path_by_product_name(product_name)
+
+#             self.create_folder_structure(folder_path)
+
+#             path_to_save = f'{folder_path}/{number}{img_ext}'
+
+#             # checks if the path exists
+
+#             image.save(path_to_save)
+
+
+#     def delete_directory_by_product_name(self,product_name:str) -> None:
+#         '''
+#             Deletes the folder directory and it's content from a given product
+#             :param: `product_name` name of the product
+#         '''
+
+#         if check_str_input_correct(product_name,"product_name","delete_directory_by_product_name"):
+
+#             folder_path = self.get_folder_path_by_product_name(product_name)
+#             shutil.rmtree(folder_path)
+
+
+class OrderImageManager(ImageManager):
+
+    '''
+        Manages the Images submitted from customers
+    '''
+    def get_image_path_by_order_and_img_number(self,order_id:int,img_number:int) -> (str | None):
+        '''
+            Returns the file path of a order-image by a given number.
+            Returns None if order_id doesn't exist or file by number doens't exist
+            :param: `order_id` the id of the order
+            :param: `img_number` the number of the searched image
+        '''
+
+        folder = self.get_folder_path_by_order_id(order_id)
+    
+        path = f"Bilder/Kundenauftragsbilder/{order_id}"
+        
+        for (_, __ , filenames) in os.walk(folder):
+            for file in filenames:
+                file_name = file.split(".")[0]
+
+                #filename is a string !!!!!!
+                if file_name == f"{img_number}":
+                    full_path = path + f"/{file}"
+                    return full_path
+        
+        return None
+    
+
+    def get_folder_path_by_order_id(self,order_id:int) -> str | None:
+        
+        '''
+            Returns the folder path of an order, by it's id
+            Path Structure: './website/static/Bilder/Kundenauftragsbilder/<order_id>'
+            :param: `order_id` of the order
+        '''
+
+        if check_int_input_correct(order_id):
+
+            path = f'{app.config["UPLOAD_PATH_ORDER_IMGS"]}/{order_id}'
+            print(path)
+            return path
+            
+    
+    def save_image_by_order_id_and_number(self,image:FileStorage,number:int,order_id:int) -> None:
 
         '''
-            Saves the image according to the product it belongs to and the number it has; 
+            Saves the image according to the order it belongs to and the number it has; 
             :param: `image` is of type FileStorage, from Flask
             :param: `number` is the number by which it should be stored
-            :param: `product_name` is the name of the product the image belongs to 
+            :param: `order_id` is the id of the order the image belongs to 
         '''
 
         if self.verify_image(image):
             img_ext = self.get_file_path_ext(image.filename)
 
-            folder_path = self.get_folder_path_by_product_name(product_name)
+            folder_path = self.get_folder_path_by_order_id(order_id)
 
             self.create_folder_structure(folder_path)
 
@@ -185,15 +286,27 @@ class ImageManager:
 
             image.save(path_to_save)
 
-
-    def delete_directory_by_product_name(self,product_name:str) -> None:
+            
+    def delete_directory_by_order_id(self,order_id:int) -> None:
         '''
             Deletes the folder directory and it's content from a given product
-            :param: `product_name` name of the product
+            :param: `order_id` id of the order
         '''
 
-        if check_str_input_correct(product_name,"product_name","delete_directory_by_product_name"):
+        if check_int_input_correct(order_id):
 
-            folder_path = self.get_folder_path_by_product_name(product_name)
-            shutil.rmtree(folder_path)
-    
+            folder_path = self.get_folder_path_by_order_id(order_id)
+            
+            if os.path.exists(folder_path):
+                shutil.rmtree(folder_path)
+
+
+    def save_image_list_by_order_id(self,image_list:list[FileStorage],order_id:int):
+        '''
+            Save the images of a list
+            :param: `image_list` is a list of images
+            :param: `order_id` is the id of the order
+        '''
+
+        for index, image in enumerate(image_list):
+            self.save_image_by_order_id_and_number(image,index,order_id)

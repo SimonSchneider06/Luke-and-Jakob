@@ -1,6 +1,6 @@
 from flask import Blueprint,render_template
 from . import db
-from .models import Guitar
+# from .models import Guitar
 
 
 views = Blueprint('views',__name__)

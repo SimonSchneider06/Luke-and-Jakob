@@ -27,6 +27,9 @@
 .container-laptop{
     display:flex;
 }
+.aspect-165{
+    aspect-ratio: 1.65;
+}
 
 @media (max-width:1260px){
     .container-laptop{
@@ -35,7 +38,7 @@
 }
 @media(max-width:650px){
     .b-img-about-us{
-        min-width: 10rem;
+        min-width: 14rem;
     }
 }
 @media(max-width:570px){

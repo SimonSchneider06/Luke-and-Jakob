@@ -1,53 +1,18 @@
 <h1>Eine neue Bestellung ist eingetroffen</h1> <br>
 
+{% set order_img_manager = OrderImageManager() %}
+
 <p>Kundeninfos</p> <br>
 
-<table>
-    <tr>
-        <td>Vorname</td>
-        <td>Nachname</td>
-        <td>Email</td>
-    </tr>
-    <tr>
-        <td>{{user.firstName}}</td>
-        <td>{{user.lastName}}</td>
-        <td>{{user.email}}</td>
-    </tr>
-    <br>
-    <td>Addresse---------------------------------</td>
-    <br>
-    <tr>
-        <td>Land</td>
-        <td>PLZ</td>
-        <td>Stadt</td>
-        <td>Straße</td>
-        <td>Hausnummer</td>
-    </tr>
-    <tr>
-        <td>{{user.country}}</td>
-        <td>{{user.plz}}</td>
-        <td>{{user.city}}</td>
-        <td>{{user.street}}</td>
-        <td>{{user.houseNumber}}</td>
-    </tr>
-    <td><b>Produktdaten------------------------------------------</b></td>
-    <tr>
-        <td>ProduktId</td>
-        <td>ProduktName</td>
-        <td>ProduktPreis</td>
-        <td>Produktanzahl</td>
-    </tr>
-    {% for product_dict in order %}
-    {% set product = get_product_by_id(product_dict["id"]) %} 
-    <tr>
-        <td>{{product.id}}</td>
-        <td>{{product.name}}</td>
-        <td>{{product.price}}</td>
-        <td>{{product_dict["quantity"]}}</td>
-    </tr>
-    {% endfor %}
+<p>Name: {{user.name}}</p><br>
+<p>Email: {{user.email}}</p><br><br>
 
-</table>
-<br>
+<p>Order_Id: {{order.id}}</p><br>
+<p>Service: {{order.service}}</p><br>
+<p>Beschreibung: {{order.description}}</p><br>
 
-<p>Kaufdatum(UTC): {{buying_date}}</p>
+{% for i in range(img_count) %} 
+<img src="cid:Myimage-{{i}}" alt="">
+{% endfor %}
+
+<p>Kaufdatum(UTC): {{order.date}}</p>

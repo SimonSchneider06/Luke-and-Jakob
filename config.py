@@ -19,8 +19,9 @@ class Config:
     # ADMIN = os.environ.get("ADMIN")
     # SQLALCHEMY_TRACK_MODIFICATIONS = False
     MAX_CONTENT_LENGTH = 1024 * 1024 * 15
-    UPLOAD_EXTENSIONS = [".JPG", ".png"]
+    UPLOAD_EXTENSIONS = [".JPG", ".png", ".jpg"]
     UPLOAD_PATH = "./website/static/Bilder/Produktbilder"
+    UPLOAD_PATH_ORDER_IMGS = "./website/static/Bilder/Kundenauftragsbilder"
     PAYMENT_SERVICES = {
         "stripe":{
             "public_key": os.environ.get("STRIPE_PUBLIC_KEY"),
@@ -45,7 +46,7 @@ class Config:
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = os.environ.get("DEV_DATABASE_URL") or f"sqlite:///database.db"
+    SQLALCHEMY_DATABASE_URI = os.environ.get("DEV_DATABASE_URL") or f"sqlite:///database2.db"
 
 class TestingConfig(Config):
     TESTING = True

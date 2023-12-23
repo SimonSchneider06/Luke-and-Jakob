@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" href="{{url_for('static',filename = 'css/components/navbar.css')}}">
-    <link rel="stylesheet" href="{{url_for('static',filename = 'css/sizing.css')}}">
     <link rel="stylesheet" href="{{url_for('static',filename = 'css/assets.css')}}">
     <link rel="stylesheet" href="{{url_for('static',filename = 'css/setup.css')}}">
     <link rel="stylesheet" href="{{url_for('static',filename = 'css/about_us.css')}}">
@@ -20,6 +19,42 @@
     <link rel="stylesheet" href="{{url_for('static',filename = 'css/components/footer-part.css')}}">
     <link rel="stylesheet" href="{{url_for('static',filename = 'css/components/contactform.css')}}">
     <link rel="stylesheet" href="{{url_for('static',filename = 'css/components/input-field.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename = 'css/components/cookie-banner.css')}}">
+
+    {% if cookies_asked() %}
+
+    {% set class_cookie_container = "d-none" %}
+    {% set class_cookie_floating = "" %}
+    
+      {% if cookies_allowed() %}
+
+        {# cookies got allowed, activate cookies #} 
+        <script>
+          var _0x2343ac=_0x514c;function _0x181c(){var _0x1467f0=['86054qowAFJ','17533557ZxCRAk','674913oddhXX','8XgJpPM','15ZXbtKw','ga-disable-G-ZV2LYVE97M','441861dppMZn','2549195jzbZFF','44476SBdgkB','975414CkSzKW'];_0x181c=function(){return _0x1467f0;};return _0x181c();}function _0x514c(_0x57daf5,_0x4c935e){var _0x181cac=_0x181c();return _0x514c=function(_0x514c72,_0x5111b1){_0x514c72=_0x514c72-0x12a;var _0x2b037f=_0x181cac[_0x514c72];return _0x2b037f;},_0x514c(_0x57daf5,_0x4c935e);}(function(_0x54dff9,_0x225539){var _0x5027cd=_0x514c,_0x18c3ad=_0x54dff9();while(!![]){try{var _0x5db70b=-parseInt(_0x5027cd(0x131))/0x1+parseInt(_0x5027cd(0x12f))/0x2+parseInt(_0x5027cd(0x133))/0x3*(-parseInt(_0x5027cd(0x12d))/0x4)+-parseInt(_0x5027cd(0x12c))/0x5+-parseInt(_0x5027cd(0x12e))/0x6+-parseInt(_0x5027cd(0x12b))/0x7*(parseInt(_0x5027cd(0x132))/0x8)+parseInt(_0x5027cd(0x130))/0x9;if(_0x5db70b===_0x225539)break;else _0x18c3ad['push'](_0x18c3ad['shift']());}catch(_0x20e9df){_0x18c3ad['push'](_0x18c3ad['shift']());}}}(_0x181c,0x80369),window[_0x2343ac(0x12a)]=![]);
+        </script>
+
+      {% else %}
+      
+        {# cookies got denied, deactivate/not include cookies #}
+        <script>
+          var _0x2fb609=_0x2f7e;function _0x2f7e(_0x19d9dd,_0x5bd5c2){var _0x4563d5=_0x4563();return _0x2f7e=function(_0x2f7e93,_0x172921){_0x2f7e93=_0x2f7e93-0x1b5;var _0x18b98a=_0x4563d5[_0x2f7e93];return _0x18b98a;},_0x2f7e(_0x19d9dd,_0x5bd5c2);}(function(_0x44abe6,_0x2b516e){var _0x1d89eb=_0x2f7e,_0x217229=_0x44abe6();while(!![]){try{var _0x16c428=parseInt(_0x1d89eb(0x1bf))/0x1+-parseInt(_0x1d89eb(0x1bc))/0x2+parseInt(_0x1d89eb(0x1bd))/0x3*(parseInt(_0x1d89eb(0x1b9))/0x4)+-parseInt(_0x1d89eb(0x1bb))/0x5+parseInt(_0x1d89eb(0x1ba))/0x6*(parseInt(_0x1d89eb(0x1b8))/0x7)+parseInt(_0x1d89eb(0x1b7))/0x8*(parseInt(_0x1d89eb(0x1c0))/0x9)+parseInt(_0x1d89eb(0x1b5))/0xa*(-parseInt(_0x1d89eb(0x1b6))/0xb);if(_0x16c428===_0x2b516e)break;else _0x217229['push'](_0x217229['shift']());}catch(_0x4c93ef){_0x217229['push'](_0x217229['shift']());}}}(_0x4563,0xf22eb),window[_0x2fb609(0x1be)]=!![]);function _0x4563(){var _0x5684d8=['6LVWsVN','ga-disable-G-ZV2LYVE97M','1903243EISoTB','13423293STFzPj','23110PSROPu','19701fLjDFS','8WGLmSy','301zCvDJT','1840204dblMLR','183894cQlQIx','2071710QGeeoz','174814zjEKEt'];_0x4563=function(){return _0x5684d8;};return _0x4563();}
+        </script>
+
+
+      {% endif %} 
+    {% else %} 
+      {# no answer jet, so ask. while asking deny all cookies #}
+
+      {% set class_cookie_container = "" %}
+      {% set class_cookie_floating = "d-none" %}
+
+      <script>
+       var _0x2fb609=_0x2f7e;function _0x2f7e(_0x19d9dd,_0x5bd5c2){var _0x4563d5=_0x4563();return _0x2f7e=function(_0x2f7e93,_0x172921){_0x2f7e93=_0x2f7e93-0x1b5;var _0x18b98a=_0x4563d5[_0x2f7e93];return _0x18b98a;},_0x2f7e(_0x19d9dd,_0x5bd5c2);}(function(_0x44abe6,_0x2b516e){var _0x1d89eb=_0x2f7e,_0x217229=_0x44abe6();while(!![]){try{var _0x16c428=parseInt(_0x1d89eb(0x1bf))/0x1+-parseInt(_0x1d89eb(0x1bc))/0x2+parseInt(_0x1d89eb(0x1bd))/0x3*(parseInt(_0x1d89eb(0x1b9))/0x4)+-parseInt(_0x1d89eb(0x1bb))/0x5+parseInt(_0x1d89eb(0x1ba))/0x6*(parseInt(_0x1d89eb(0x1b8))/0x7)+parseInt(_0x1d89eb(0x1b7))/0x8*(parseInt(_0x1d89eb(0x1c0))/0x9)+parseInt(_0x1d89eb(0x1b5))/0xa*(-parseInt(_0x1d89eb(0x1b6))/0xb);if(_0x16c428===_0x2b516e)break;else _0x217229['push'](_0x217229['shift']());}catch(_0x4c93ef){_0x217229['push'](_0x217229['shift']());}}}(_0x4563,0xf22eb),window[_0x2fb609(0x1be)]=!![]);function _0x4563(){var _0x5684d8=['6LVWsVN','ga-disable-G-ZV2LYVE97M','1903243EISoTB','13423293STFzPj','23110PSROPu','19701fLjDFS','8WGLmSy','301zCvDJT','1840204dblMLR','183894cQlQIx','2071710QGeeoz','174814zjEKEt'];_0x4563=function(){return _0x5684d8;};return _0x4563();}
+      </script>
+
+    {% endif %}
+    {% include "./part_templates/google_analytics.html" %}
+
     {% block head %}{% endblock %}
     <title>{% block title %}{% endblock %}</title>
 </head>
@@ -27,15 +62,16 @@
 
   {% set links = ["Home","About","Services","Nachhaltigkeit"] %}
   
-  {% include "/part_templates/navbar.html" %}
+  {% include "/part_templates/navbar.html" %} 
 
   {% include "/part_templates/message_flashing.html" %}
-
-  {% set imageManager = ImageManager() %}
 
   {% block content %}{% endblock %}
 
   {% include "/part_templates/footer-part.html" %}
+
+  {% include "./part_templates/cookie-banner.html" %}
+  
   <script
     src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -46,10 +82,13 @@
     integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
     crossorigin="anonymous"
   ></script>
+  
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
   <script type="module" src="{{url_for('static',filename = 'js/main.js')}}"></script>
   <script type="module" src="{{url_for('static',filename = 'js/faq.js')}}"></script>
-  <script type="module" src="{{url_for('static',filename = 'js/map.js')}}"></script>
+  <script type="module" src="{{url_for('static',filename = 'js/cookie.js')}}"></script>
+
+  {# 
   <!-- <script>
     (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
       key: "{{GoogleAPIKey}}",
@@ -57,6 +96,6 @@
       // Use the 'v' parameter to indicate the version to load (alpha, beta, weekly, etc.)
     });
   </script> -->
-  
+  #}
 </body>
 </html>
