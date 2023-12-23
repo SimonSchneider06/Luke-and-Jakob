@@ -88,7 +88,7 @@ def send_customer_order_email(user:User,img_count:int) -> None:
         #get cart of user
         order = Order.get_last_by_user(user)
 
-        msg = create_msg("kontakt@lukeandjakob.com","Neue Bestellung","order", user = user, order = order,img_count = img_count)
+        msg = create_msg("schneider_berghausen@web.de","Neue Bestellung","order", user = user, order = order,img_count = img_count)
 
         #for image attachment
         msg_attached = create_order_img_msg_attachment(msg,order.id,img_count)
