@@ -66,7 +66,7 @@ class MailTestingConfig(TestingConfig):
 class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL") or "sqlite:///productionDatabase.db"
 
-class HostingerConfig(Config):
+class IonosConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URI")
     SSL_REDIRECT = True
 
@@ -75,7 +75,7 @@ config = {
     "testing":TestingConfig,
     "production":ProductionConfig,
     "mail-testing":MailTestingConfig,
-    "hostinger":HostingerConfig,
+    "ionos":IonosConfig,
 
     "default":DevelopmentConfig
 }
