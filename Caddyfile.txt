@@ -1,7 +1,3 @@
-www.lukeandjakob.com{
-    redir https://lukeandjakob.com{uri}
-}
-
-lukeandjakob.com {
+http://85.215.154.189 {
     reverse_proxy localhost:8000
 }
