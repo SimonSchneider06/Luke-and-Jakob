@@ -5,3 +5,11 @@ www.lukeandjakob.com{
 lukeandjakob.com {
     reverse_proxy localhost:8000
 }
+
+https://lukeandjakob.com{
+    reverse_proxy localhost:8000
+}
+
+http://85.215.154.189{
+    reverse_proxy localhost:8000
+}
