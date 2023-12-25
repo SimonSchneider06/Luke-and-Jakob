@@ -24,10 +24,10 @@ def create_app(config_name):
     mail.init_app(app)
 
     #if should redirect all http to https requests
-    # if app.config["SSL_REDIRECT"]:
+    if app.config["SSL_REDIRECT"]:
         
-    #     from flask_sslify import SSLify
-    #     sslify = SSLify(app)
+        from flask_sslify import SSLify
+        sslify = SSLify(app)
 
     #configuring the stripe account
     # stripe.api_key = app.config["PAYMENT_SERVICES"]["stripe"]["secret_key"]
