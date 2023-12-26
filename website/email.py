@@ -76,11 +76,12 @@ def create_order_img_msg_attachment(msg:Message,order_id:int,img_count:int) -> M
     return msg
 
 
-def send_customer_order_email(user:User,img_count:int) -> None:
+def send_customer_order_email(user:User,img_count:int,imgs = False) -> None:
     '''
         Sends an email,from a customer order, to the production sector, to build the guitar.
         :param: `user` is the User, who bought something
         :param: `img_count` is the number of images in the order
+        :param: `imgs` is if imgs are given
     '''
 
     if User.check_user_exists(user):
@@ -91,33 +92,39 @@ def send_customer_order_email(user:User,img_count:int) -> None:
         msg = create_msg("schneider_berghausen@web.de","Neue Bestellung","order", user = user, order = order,img_count = img_count)
 
         #for image attachment
-        msg_attached = create_order_img_msg_attachment(msg,order.id,img_count)
+        if imgs:
+            msg_attached = create_order_img_msg_attachment(msg,order.id,img_count)
 
-        send_async_email(msg_attached)
+            send_async_email(msg_attached)
+
+        else:
+            send_async_email(msg)
 
 
-def send_customer_confirmation_email(user:User,img_count:int) -> None:
+def send_customer_confirmation_email(user:User,img_count:int,imgs = False) -> None:
     '''
         Sends an email to the customer to confirm his request
         :param: `user` is the Customer
         :param: `img_count` is the number of images in the user request
+        :param: `imgs` is if imgs are given
     '''
+
     if User.check_user_exists(user):
         
         order = Order.get_last_by_user(user)
 
         msg = create_msg(user.email,"Eingangsbestätigung","customer_confirmation",order = order,user = user,img_count = img_count)
 
-        msg_attached = create_order_img_msg_attachment(msg,order.id,img_count)
+        if imgs:
+            msg_attached = create_order_img_msg_attachment(msg,order.id,img_count)
 
-        #attach logo
-        msg_attached.attach("Logo.png","image/gif",open("./website/static/Bilder/Laptop/Logo.png","rb").read(),'inline', headers=[['Content-ID',"Logo"],])
-
-        #mail.send(msg_attached)
-        # thr = Thread(target = send_async_email,args = [app,msg_attached])
-        # thr.start()
-        # return thr
-        send_async_email(msg_attached)
+            #attach logo
+            msg_attached.attach("Logo.png","image/gif",open("./website/static/Bilder/Laptop/Logo.png","rb").read(),'inline', headers=[['Content-ID',"Logo"],])
+            send_async_email(msg_attached)
+        
+        else:
+            msg.attach("Logo.png","image/gif",open("./website/static/Bilder/Laptop/Logo.png","rb").read(),'inline', headers=[['Content-ID',"Logo"],])
+            send_async_email(msg)
 
 
 # def send_kontact_confirmation_email(user:User) ->  None:
