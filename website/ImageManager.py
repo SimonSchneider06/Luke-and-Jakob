@@ -261,7 +261,7 @@ class OrderImageManager(ImageManager):
 
             path = f'{app.config["UPLOAD_PATH_ORDER_IMGS"]}/{order_id}'
             #print(path)
-            print(os.path)
+            print(os.path.abspath())
             return path
             
     
