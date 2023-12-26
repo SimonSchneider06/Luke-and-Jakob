@@ -51,22 +51,15 @@ def contact_form():
             db.session.add(new_order)
             db.session.commit()
 
-            order = Order.get_last_by_user(user)
-
-            # save images
-            order_image_manager.save_image_list_by_order_id(imgs,order.id)
-
-            img_count = len(imgs)
-
-            send_customer_order_email(user,img_count,True)
-            send_customer_confirmation_email(user,img_count,True)
+            send_customer_order_email(user,imgs,True)
+            send_customer_confirmation_email(user,imgs,True)
 
             flash("Ihre Anfrage wurde erfolgreich abgesendet", category = "success")
             return redirect(url_for("views.Home"))
         
         else:
             flash("Bitte füllen Sie alle angegebenen Felder aus.", category = "error")
-            flash("Bei Bilddateien sind nur '.JPG' und '.png' erlaubt (max 5 MB)", category = "error")
+            flash("Bei Bilddateien sind nur '.JPG' und '.png' erlaubt (max 1 MB)", category = "error")
             return redirect(url_for("views.Home"))
     
     else:
@@ -99,10 +92,8 @@ def contact_form():
             db.session.add(new_order)
             db.session.commit()
 
-            img_count = len(imgs)
-
-            send_customer_order_email(user,img_count)
-            send_customer_confirmation_email(user,img_count)
+            send_customer_order_email(user,[])
+            send_customer_confirmation_email(user,[])
 
             flash("Ihre Anfrage wurde erfolgreich abgesendet", category = "success")
             return redirect(url_for("views.Home"))

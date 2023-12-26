@@ -53,7 +53,7 @@ def create_msg(to:str,subject:str,template:str,**kwargs) -> Message:
 #         token = user.generate_password_reset_token()
 #         send_email(user.email,"Password Reset","reset_password",user = user,token = token)
 
-def create_order_img_msg_attachment(msg:Message,order_id:int,img_count:int) -> Message:
+def create_order_img_msg_attachment(msg:Message,imgs:list[FileStorage]) -> Message:
     '''
         Creates the img message attachment of the order from the user
         :param: `msg` is the message to which it gets attached
@@ -62,26 +62,27 @@ def create_order_img_msg_attachment(msg:Message,order_id:int,img_count:int) -> M
     '''
 
     #for image attachment
-    for i in range(img_count):
-        img_path = OrderImageManager().get_image_path_by_order_and_img_number(order_id,i)
-
-        file_ext = OrderImageManager().get_file_path_ext(img_path)
+    for index,img in enumerate(imgs):
+        print(img)
+        print("index: ", index)
         
-        file_name = f'{i}{file_ext}'
+        file_name = img.filename
+        #get image as bytes
+        content = img.stream.read()
         
-        content_id = f"<Myimage-{i}>"
+        content_id = f"<Myimage-{index}>"
         
-        msg.attach(file_name,'image/gif',open(f"./website/static/Bilder/Kundenauftragsbilder/{order_id}/{file_name}", 'rb').read(), 'inline', headers=[['Content-ID',content_id],])
+        msg.attach(file_name,'image/gif',content, 'inline', headers=[['Content-ID',content_id],])
 
     return msg
 
 
-def send_customer_order_email(user:User,img_count:int,imgs = False) -> None:
+def send_customer_order_email(user:User,imgs:list[FileStorage],imgs_send = False) -> None:
     '''
         Sends an email,from a customer order, to the production sector, to build the guitar.
         :param: `user` is the User, who bought something
-        :param: `img_count` is the number of images in the order
-        :param: `imgs` is if imgs are given
+        :param: `imgs` are the images from the customer
+        :param: `imgs_send` is if imgs are given
     '''
 
     if User.check_user_exists(user):
@@ -89,11 +90,13 @@ def send_customer_order_email(user:User,img_count:int,imgs = False) -> None:
         #get cart of user
         order = Order.get_last_by_user(user)
 
+        img_count = len(imgs)
+
         msg = create_msg("schneider_berghausen@web.de","Neue Bestellung","order", user = user, order = order,img_count = img_count)
 
         #for image attachment
-        if imgs:
-            msg_attached = create_order_img_msg_attachment(msg,order.id,img_count)
+        if imgs_send:
+            msg_attached = create_order_img_msg_attachment(msg,imgs)
 
             send_async_email(msg_attached)
 
@@ -101,22 +104,23 @@ def send_customer_order_email(user:User,img_count:int,imgs = False) -> None:
             send_async_email(msg)
 
 
-def send_customer_confirmation_email(user:User,img_count:int,imgs = False) -> None:
+def send_customer_confirmation_email(user:User,imgs:list[FileStorage],imgs_send = False) -> None:
     '''
         Sends an email to the customer to confirm his request
         :param: `user` is the Customer
-        :param: `img_count` is the number of images in the user request
-        :param: `imgs` is if imgs are given
+        :param: `imgs` are the images from the customer
+        :param: `imgs_send` is if imgs are given
     '''
 
     if User.check_user_exists(user):
         
         order = Order.get_last_by_user(user)
+        img_count = len(imgs)
 
         msg = create_msg(user.email,"Eingangsbestätigung","customer_confirmation",order = order,user = user,img_count = img_count)
 
-        if imgs:
-            msg_attached = create_order_img_msg_attachment(msg,order.id,img_count)
+        if imgs_send:
+            msg_attached = create_order_img_msg_attachment(msg,imgs)
 
             #attach logo
             msg_attached.attach("Logo.png","image/gif",open("./website/static/Bilder/Laptop/Logo.png","rb").read(),'inline', headers=[['Content-ID',"Logo"],])

@@ -260,8 +260,6 @@ class OrderImageManager(ImageManager):
         if check_int_input_correct(order_id):
 
             path = f'{app.config["UPLOAD_PATH_ORDER_IMGS"]}/{order_id}'
-            #print(path)
-            print(os.path.abspath())
             return path
             
     
