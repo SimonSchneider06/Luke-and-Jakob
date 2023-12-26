@@ -31,6 +31,14 @@ def Nachhaltigkeit():
 def Kontakt():
     return render_template("contact.html", active = "Kontakt")
 
+@views.route("/impressum", methods = ["GET"])
+def impressum():
+    return render_template("impressum.html")
+
+@views.route("/datenschutz", methods = ["GET"])
+def datenschutz():
+    return render_template("datenschutz.html")
+
 # @views.route("/design-your-dream",methods = ["GET","POST"])
 # def design_your_dream():
 #     return render_template("design_your_dream.html")
