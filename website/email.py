@@ -63,8 +63,6 @@ def create_order_img_msg_attachment(msg:Message,imgs:list[FileStorage]) -> Messa
 
     #for image attachment
     for index,img in enumerate(imgs):
-        print(img)
-        print("index: ", index)
         
         file_name = img.filename
         #get image as bytes
