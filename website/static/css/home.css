@@ -143,6 +143,7 @@
     align-self: stretch;
     border-radius: 0rem 0.7619rem 0.7619rem 0rem;
     object-fit: cover;
+    width:50%;
 }
 
 .text-box-right-l{
@@ -156,6 +157,7 @@
     align-self: stretch;
     border-radius: 0.7619rem 0rem 0rem 0.7619rem;
     object-fit: cover;
+    width:50%;
 }
 .container-customer-projects{
     max-width: 63.2381rem;
@@ -274,10 +276,12 @@
     .img-right-l{
         border-radius: 0rem 0rem 0.7619rem 0.7619rem;
         max-width: 13.7142rem;
+        width:100%;
     }
     .img-left-l{
         border-radius: 0rem 0rem 0.7619rem 0.7619rem;
         max-width: 13.7142rem;
+        width:100%;
     }
     .img-text-container-left{
         flex-direction:column;
