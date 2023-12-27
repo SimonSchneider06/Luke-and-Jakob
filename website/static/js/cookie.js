@@ -5,12 +5,16 @@ const cookieFloating = document.getElementById("cookie-floating");
 
 cookieAllowBtn.addEventListener("click", () => {
     toggleBannerFloatingIcon()
-    document.cookie = "cookie_consent = true; SameSite = Lax";
+    let expiryDate = new Date()
+    expiryDate.setMonth(expiryDate.getMonth() + 1);
+    document.cookie = `cookie_consent = true; SameSite = Lax; expires=${expiryDate.toUTCString()}`;
     location.reload()
 }) 
 cookieDenyBtn.addEventListener("click", () => {
     toggleBannerFloatingIcon()
-    document.cookie = "cookie_consent = false; SameSite = Lax";
+    let expiryDate = new Date()
+    expiryDate.setMonth(expiryDate.getMonth() + 1);
+    document.cookie = `cookie_consent = false; SameSite = Lax; expires=${expiryDate.toUTCString()}`;
     location.reload()
 })
 cookieFloating.addEventListener("click", () => {
