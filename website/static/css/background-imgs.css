@@ -3,6 +3,7 @@
     background: url("/static/Bilder/Laptop/Home/Gitarre-Jakob.jpg");
     background-repeat: no-repeat;
     background-size: cover;
+    object-fit: contain;
 }
 
 
@@ -47,6 +48,11 @@
 }
 
 @media (max-width:500px){
+    .guitar-background{
+        background:url("/static/Bilder/Mobile/Home/Gitarre-Jakob-Vertikal.jpg");
+        background-size:cover;
+        background-repeat:no-repeat;
+    }
     .b-img-cnc{
         background:url("/static/Bilder/Mobile/About/CNC.jpg");
         background-size:cover;

@@ -14,6 +14,9 @@
                     </div>
                     {% endif %}
                 {% endfor %}
+                <div class="link-nav mobile">
+                    <a class="h6-l c-b" href="{{url_for('views.Kontakt')}}#faq">FAQ</a>
+                </div>
             </div>
             {% if "Kontakt" == active %}
             <a href="{{url_for('views.Kontakt')}}" class="cta-btn-l cta-active h6-l">
